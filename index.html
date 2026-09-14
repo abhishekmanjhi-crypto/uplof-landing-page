@@ -7,6 +7,32 @@
 <script src="./support.js"></script>
 </head>
 <body>
+<div id="splash" style="position:fixed;inset:0;z-index:9999;background:#0a0c0b;display:flex;align-items:center;justify-content:center;transition:opacity .5s ease;">
+  <video id="splash-video" autoplay muted playsinline style="width:min(50vw,360px);height:auto;">
+    <source src="/assets/logo-animation.mp4" type="video/mp4">
+  </video>
+</div>
+<script>
+(function(){
+  var splash = document.getElementById('splash');
+  var seen = sessionStorage.getItem('uplof-splash-seen');
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(seen || reduce){ splash.remove(); return; }
+  document.body.style.overflow = 'hidden';
+  var video = document.getElementById('splash-video');
+  var done = function(){
+    if(splash.dataset.done) return;
+    splash.dataset.done = '1';
+    sessionStorage.setItem('uplof-splash-seen','1');
+    splash.style.opacity = '0';
+    document.body.style.overflow = '';
+    setTimeout(function(){ splash.remove(); }, 500);
+  };
+  video.addEventListener('ended', done);
+  video.addEventListener('error', done);
+  setTimeout(done, 4000);
+})();
+</script>
 <x-dc>
 <helmet>
 <link rel="preconnect" href="https://fonts.googleapis.com">
