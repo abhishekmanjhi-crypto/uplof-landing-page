@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link rel="icon" href="/assets/logo.svg" type="image/svg+xml">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script src="./support.js"></script>
@@ -15,7 +16,7 @@
   html { background: #faf8f3; }
   body { margin: 0; background: #faf8f3; color: #12140f; font-family: Geist, system-ui, sans-serif; font-size: 16px; line-height: 1.65; -webkit-font-smoothing: antialiased; }
   * { box-sizing: border-box; }
-  a { color: #0d7a42; text-decoration: none; }
+  a { color: #7A1418; text-decoration: none; }
   a:hover { color: #12140f; }
   h1, h2, h3 { margin: 0; text-wrap: pretty; }
   p { margin: 0; text-wrap: pretty; }
@@ -43,15 +44,15 @@
   .compare-layout { grid-template-columns: minmax(0, 1fr); align-items: end; }
   .compare-row { display: grid; grid-template-columns: minmax(140px, .7fr) minmax(0, 1fr) minmax(0, 1fr); border-bottom: 1px solid #ddd8cc; }
   .approach-cell { background: #0a0c0b; color: #f2f1ea !important; border-color: #2a332d !important; }
-  .compare-row:first-child .approach-cell { color: #35d07a !important; }
+  .compare-row:first-child .approach-cell { color: #B3272B !important; }
   .cta-bar { margin-top: 32px; padding: 24px 28px; background: #0a0c0b; color: #f2f1ea; display: flex; flex-wrap: wrap; gap: 20px; align-items: center; justify-content: space-between; }
-  .call-button { display: inline-flex; justify-content: center; align-items: center; min-height: 48px; padding: 12px 24px; background: #35d07a; color: #07120b; border-radius: 6px; font-weight: 600; }
-  .call-button:hover { background: #60dd95; }
+  .call-button { display: inline-flex; justify-content: center; align-items: center; min-height: 48px; padding: 12px 24px; background: #B3272B; color: #fdf8f3; border-radius: 6px; font-weight: 600; }
+  .call-button:hover { background: #E28D90; }
   section img { mix-blend-mode: multiply; }
   .journey-flow { list-style: none; padding: 0; margin: 36px auto; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 28px; }
-  .journey-flow li { position: relative; text-align: center; border-top: 2px solid #35d07a; padding: 22px 8px; }
-  .journey-flow li + li::before { content: '→'; position: absolute; left: -24px; top: 24px; color: #0d7a42; }
-  .journey-flow span { display: block; color: #0d7a42; font-family: 'Geist Mono', monospace; font-size: 12px; margin-bottom: 8px; }
+  .journey-flow li { position: relative; text-align: center; border-top: 2px solid #B3272B; padding: 22px 8px; }
+  .journey-flow li + li::before { content: '→'; position: absolute; left: -24px; top: 24px; color: #7A1418; }
+  .journey-flow span { display: block; color: #7A1418; font-family: 'Geist Mono', monospace; font-size: 12px; margin-bottom: 8px; }
   .journey-flow small { display: block; color: #5c6157; margin-top: 8px; line-height: 1.5; }
   .journey-stack { display: grid !important; grid-template-columns: minmax(0, 1fr); gap: 12px !important; }
   .journey-stack > div { width: 100%; }
@@ -117,38 +118,38 @@
 
   <header style="position:sticky;top:0;z-index:20;background:rgba(250,248,243,.93);backdrop-filter:blur(8px);border-bottom:1px solid #ddd8cc">
     <div class="nav-shell" style="display:flex;align-items:center;gap:32px">
-      <a href="#top" style="font-size:19px;font-weight:600;letter-spacing:-0.03em;color:#12140f">uplof<span style="color:#0d7a42">↗</span></a>
+      <a href="#top" style="display:flex;align-items:center"><img src="/assets/logo.svg" alt="Uplof.me" style="height:40px;width:auto;display:block"></a>
       <nav style="display:flex;gap:26px;margin-left:auto;font-size:14px">
         <a href="#how" style="color:#5c6157">How it works</a>
         <a href="#services" style="color:#5c6157">Services</a>
         <a href="#work" style="color:#5c6157">Work</a>
         <a href="#faqs" style="color:#5c6157">FAQs</a>
       </nav>
-      <a href="#contact" style="background:#35d07a;color:#07120b;font-size:14px;font-weight:600;padding:10px 16px;border-radius:6px;white-space:nowrap" style-hover="filter:brightness(1.08)" style-active="filter:brightness(.88)">Find where you're losing leads ↗</a>
+      <a href="#contact" style="background:#B3272B;color:#fdf8f3;font-size:14px;font-weight:600;padding:10px 16px;border-radius:6px;white-space:nowrap" style-hover="filter:brightness(1.08)" style-active="filter:brightness(.88)">Find where you're losing leads ↗</a>
     </div>
   </header>
 
   <section id="top" style="background:#0a0c0b;color:#f2f1ea;border-bottom:1px solid #2a332d">
     <div class="page-shell hero-layout" style="position:relative">
       <div class="hero-copy">
-      <div style="font-family:'Geist Mono',ui-monospace,monospace;font-size:12px;letter-spacing:.14em;color:#35d07a;text-transform:uppercase">For service businesses that want more enquiries</div>
-      <h1 style="margin-top:22px;font-family:Archivo,Geist,system-ui,sans-serif;font-stretch:87.5%;font-size:clamp(46px,6.6vw,96px);line-height:.9;letter-spacing:-0.03em;font-weight:900;max-width:16ch">More enquiries. <em style="font-style:normal;color:#35d07a">Fewer lost.</em></h1>
+      <div style="font-family:'Geist Mono',ui-monospace,monospace;font-size:12px;letter-spacing:.14em;color:#B3272B;text-transform:uppercase">For service businesses that want more enquiries</div>
+      <h1 style="margin-top:22px;font-family:Archivo,Geist,system-ui,sans-serif;font-stretch:87.5%;font-size:clamp(46px,6.6vw,96px);line-height:.9;letter-spacing:-0.03em;font-weight:900;max-width:16ch">More enquiries. <em style="font-style:normal;color:#B3272B">Fewer lost.</em></h1>
       <p style="margin-top:26px;max-width:62ch;color:#a5ada6;font-size:17px">Uplof connects your website, SEO and follow-up so more of the right people can reach you, and your team has a clear next step when they do. Work directly with the founder on the parts of your lead journey where enquiries are getting lost.</p>
       <div style="margin-top:32px;display:flex;flex-wrap:wrap;gap:12px;align-items:center">
-        <a href="#contact" style="background:#35d07a;color:#07120b;font-size:15px;font-weight:600;padding:13px 20px;border-radius:6px" style-hover="filter:brightness(1.08)" style-active="filter:brightness(.88)">Find where you're losing leads</a>
-        <a href="{{ waLink }}" target="_blank" rel="noopener" style="border:1px solid #2a332d;color:#f2f1ea;font-size:15px;font-weight:500;padding:13px 20px;border-radius:6px" style-hover="border-color:#35d07a">Talk on WhatsApp</a>
+        <a href="#contact" style="background:#B3272B;color:#fdf8f3;font-size:15px;font-weight:600;padding:13px 20px;border-radius:6px" style-hover="filter:brightness(1.08)" style-active="filter:brightness(.88)">Find where you're losing leads</a>
+        <a href="{{ waLink }}" target="_blank" rel="noopener" style="border:1px solid #2a332d;color:#f2f1ea;font-size:15px;font-weight:500;padding:13px 20px;border-radius:6px" style-hover="border-color:#B3272B">Talk on WhatsApp</a>
       </div>
       <p style="margin-top:18px;max-width:58ch;color:#a5ada6;font-size:14px">Share your website and tell us where the enquiries are falling away. Your first lead audit is free, a quick, no-obligation look at where you're losing enquiries.</p>
 
       <div style="margin-top:52px;display:flex;flex-wrap:wrap;align-items:flex-end;gap:24px">
         <div style="flex:1 1 420px;border-top:1px solid #2a332d;padding-top:24px;display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:20px">
-          <div style="font-family:'Geist Mono',ui-monospace,monospace;font-size:13px;color:#a5ada6"><span style="color:#35d07a">12</span>-day optimisation window</div>
-          <div style="font-family:'Geist Mono',ui-monospace,monospace;font-size:13px;color:#a5ada6"><span style="color:#35d07a">9</span> recorded call actions</div>
+          <div style="font-family:'Geist Mono',ui-monospace,monospace;font-size:13px;color:#a5ada6"><span style="color:#B3272B">12</span>-day optimisation window</div>
+          <div style="font-family:'Geist Mono',ui-monospace,monospace;font-size:13px;color:#a5ada6"><span style="color:#B3272B">9</span> recorded call actions</div>
           <div style="font-family:'Geist Mono',ui-monospace,monospace;font-size:13px;color:#a5ada6">Landing page to CRM route</div>
           <div style="font-family:'Geist Mono',ui-monospace,monospace;font-size:13px;color:#a5ada6">Selected previous work</div>
         </div>
-        <div style="flex:0 0 auto;display:flex;align-items:center;gap:6px;color:#35d07a;padding-bottom:2px">
-          <svg viewBox="0 0 110 60" width="96" height="52" fill="none" stroke="#35d07a" strokeWidth="3.2" strokeLinecap="round" strokeLinejoin="round">
+        <div style="flex:0 0 auto;display:flex;align-items:center;gap:6px;color:#B3272B;padding-bottom:2px">
+          <svg viewBox="0 0 110 60" width="96" height="52" fill="none" stroke="#B3272B" strokeWidth="3.2" strokeLinecap="round" strokeLinejoin="round">
             <path d="M104 8 C 86 4, 54 6, 34 22 C 22 32, 20 42, 26 50"></path>
             <path d="M16 38 C 20 44, 24 49, 26 52 C 31 50, 36 47, 41 46"></path>
           </svg>
@@ -167,19 +168,19 @@
       <div class="outcome-grid" style="margin-top:44px;display:grid;gap:1px;background:#ddd8cc;border:1px solid #ddd8cc">
         <div style="background:#faf8f3;padding:28px 24px">
           <img src="assets/search-discovery-green.webp" alt="Magnifier illustration" style="display:block;width:96px;height:auto">
-          <div style="margin-top:16px;font-family:'Geist Mono',ui-monospace,monospace;font-size:12px;color:#0d7a42">01</div>
+          <div style="margin-top:16px;font-family:'Geist Mono',ui-monospace,monospace;font-size:12px;color:#7A1418">01</div>
           <h3 style="margin-top:10px;font-size:22px;letter-spacing:-0.02em;font-weight:600">Be found by people looking for your service.</h3>
           <p style="margin-top:12px;color:#5c6157;font-size:15px">SEO, Google Business Profile and service content to make the business easier to discover.</p>
         </div>
         <div style="background:#faf8f3;padding:28px 24px">
           <img src="assets/website-green.webp" alt="Website landing page illustration" style="display:block;width:96px;height:auto">
-          <div style="margin-top:16px;font-family:'Geist Mono',ui-monospace,monospace;font-size:12px;color:#0d7a42">02</div>
+          <div style="margin-top:16px;font-family:'Geist Mono',ui-monospace,monospace;font-size:12px;color:#7A1418">02</div>
           <h3 style="margin-top:10px;font-size:22px;letter-spacing:-0.02em;font-weight:600">Give visitors a reason to get in touch.</h3>
           <p style="margin-top:12px;color:#5c6157;font-size:15px">Clear websites and landing pages with relevant proof, useful answers and straightforward contact routes.</p>
         </div>
         <div style="background:#faf8f3;padding:28px 24px">
           <img src="assets/crm-green.webp" alt="CRM follow-up illustration" style="display:block;width:96px;height:auto">
-          <div style="margin-top:16px;font-family:'Geist Mono',ui-monospace,monospace;font-size:12px;color:#0d7a42">03</div>
+          <div style="margin-top:16px;font-family:'Geist Mono',ui-monospace,monospace;font-size:12px;color:#7A1418">03</div>
           <h3 style="margin-top:10px;font-size:22px;letter-spacing:-0.02em;font-weight:600">Give every enquiry a next step.</h3>
           <p style="margin-top:12px;color:#5c6157;font-size:15px">Capture, CRM, follow-up and tracking so an enquiry doesn't depend on someone remembering to respond.</p>
         </div>
@@ -191,7 +192,7 @@
     <div class="page-shell split-layout">
       <div>
         <div class="section-art"><img src="assets/founder-portrait-green.webp" alt="Hand-drawn portrait of the founder"></div>
-        <div style="margin-top:20px;font-family:'Geist Mono',ui-monospace,monospace;font-size:12px;letter-spacing:.14em;color:#0d7a42;text-transform:uppercase">A note from the founder</div>
+        <div style="margin-top:20px;font-family:'Geist Mono',ui-monospace,monospace;font-size:12px;letter-spacing:.14em;color:#7A1418;text-transform:uppercase">A note from the founder</div>
         <h2 style="margin-top:16px;font-family:Archivo,Geist,system-ui,sans-serif;font-stretch:87.5%;font-size:clamp(32px,3.6vw,50px);line-height:.94;letter-spacing:-0.025em;font-weight:800">Where does it break?</h2>
       </div>
       <div style="display:flex;flex-direction:column;gap:16px;max-width:56ch">
@@ -207,7 +208,7 @@
 
   <section id="how" style="border-bottom:1px solid #ddd8cc">
     <div class="page-shell">
-      <h2 style="font-family:Archivo,Geist,system-ui,sans-serif;font-stretch:87.5%;font-size:clamp(34px,3.9vw,58px);line-height:.94;letter-spacing:-0.025em;font-weight:800;max-width:22ch">The gaps <span style="position:relative;display:inline-block">cost you leads.<svg viewBox="0 0 300 70" preserveAspectRatio="none" style="position:absolute;left:-10px;top:-8px;width:calc(100% + 20px);height:calc(100% + 16px);overflow:visible" fill="none" stroke="#35d07a" strokeWidth="3.4" strokeLinecap="round"><path d="M288 24 C 248 6, 74 3, 26 18 C 4 26, 12 50, 56 60 C 118 72, 254 68, 284 46 C 294 38, 290 30, 272 22"></path></svg></span></h2>
+      <h2 style="font-family:Archivo,Geist,system-ui,sans-serif;font-stretch:87.5%;font-size:clamp(34px,3.9vw,58px);line-height:.94;letter-spacing:-0.025em;font-weight:800;max-width:22ch">The gaps <span style="position:relative;display:inline-block">cost you leads.<svg viewBox="0 0 300 70" preserveAspectRatio="none" style="position:absolute;left:-10px;top:-8px;width:calc(100% + 20px);height:calc(100% + 16px);overflow:visible" fill="none" stroke="#B3272B" strokeWidth="3.4" strokeLinecap="round"><path d="M288 24 C 248 6, 74 3, 26 18 C 4 26, 12 50, 56 60 C 118 72, 254 68, 284 46 C 294 38, 290 30, 272 22"></path></svg></span></h2>
 
       <div class="compare-layout" style="margin-top:44px">
         <div style="flex:1 1 560px;min-width:0;border:1px solid #ddd8cc">
@@ -241,19 +242,19 @@
 
       <div class="deliverables-grid" style="margin-top:40px;display:grid;gap:16px">
         <div style="background:#fffdf8;border:1px solid #ddd8cc;border-radius:10px;padding:22px">
-          <div style="font-family:'Geist Mono',ui-monospace,monospace;font-size:12px;color:#0d7a42">A page</div>
+          <div style="font-family:'Geist Mono',ui-monospace,monospace;font-size:12px;color:#7A1418">A page</div>
           <p style="margin-top:10px;font-size:15px;color:#5c6157">A service page written for the search a customer actually makes, with the proof and answers they need.</p>
         </div>
         <div style="background:#fffdf8;border:1px solid #ddd8cc;border-radius:10px;padding:22px">
-          <div style="font-family:'Geist Mono',ui-monospace,monospace;font-size:12px;color:#0d7a42">A contact journey</div>
+          <div style="font-family:'Geist Mono',ui-monospace,monospace;font-size:12px;color:#7A1418">A contact journey</div>
           <p style="margin-top:10px;font-size:15px;color:#5c6157">Form, call and message routes that all land somewhere your team checks.</p>
         </div>
         <div style="background:#fffdf8;border:1px solid #ddd8cc;border-radius:10px;padding:22px">
-          <div style="font-family:'Geist Mono',ui-monospace,monospace;font-size:12px;color:#0d7a42">A pipeline</div>
+          <div style="font-family:'Geist Mono',ui-monospace,monospace;font-size:12px;color:#7A1418">A pipeline</div>
           <p style="margin-top:10px;font-size:15px;color:#5c6157">A CRM stage for each enquiry, with the follow-up step written down rather than remembered.</p>
         </div>
         <div style="background:#fffdf8;border:1px solid #ddd8cc;border-radius:10px;padding:22px">
-          <div style="font-family:'Geist Mono',ui-monospace,monospace;font-size:12px;color:#0d7a42">A report</div>
+          <div style="font-family:'Geist Mono',ui-monospace,monospace;font-size:12px;color:#7A1418">A report</div>
           <p style="margin-top:10px;font-size:15px;color:#5c6157">Recorded events you can open yourself, so the work is checkable and not described to you.</p>
         </div>
       </div>
@@ -263,19 +264,19 @@
         <div style="margin-top:18px;display:flex;flex-wrap:wrap;align-items:center;gap:8px">
           <div style="background:#fffdf8;border:1px solid #ddd8cc;border-radius:6px;padding:9px 13px;font-family:'Geist Mono',ui-monospace,monospace;font-size:12.5px">Search or website</div>
           <div style="display:inline-flex;align-items:center;gap:8px">
-            <svg viewBox="0 0 54 22" width="46" height="19" fill="none" stroke="#35d07a" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"><path d="M3 15 C 13 5, 29 18, 45 8"></path><path d="M36 3 C 40 5, 44 7, 48 8 C 44 10, 40 13, 37 16"></path></svg>
+            <svg viewBox="0 0 54 22" width="46" height="19" fill="none" stroke="#B3272B" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"><path d="M3 15 C 13 5, 29 18, 45 8"></path><path d="M36 3 C 40 5, 44 7, 48 8 C 44 10, 40 13, 37 16"></path></svg>
             <div style="background:#fffdf8;border:1px solid #ddd8cc;border-radius:6px;padding:9px 13px;font-family:'Geist Mono',ui-monospace,monospace;font-size:12.5px">Service page</div>
           </div>
           <div style="display:inline-flex;align-items:center;gap:8px">
-            <svg viewBox="0 0 54 22" width="46" height="19" fill="none" stroke="#35d07a" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"><path d="M3 8 C 15 19, 29 5, 45 13"></path><path d="M36 7 C 40 9, 44 11, 48 12 C 44 14, 40 17, 37 20"></path></svg>
+            <svg viewBox="0 0 54 22" width="46" height="19" fill="none" stroke="#B3272B" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"><path d="M3 8 C 15 19, 29 5, 45 13"></path><path d="M36 7 C 40 9, 44 11, 48 12 C 44 14, 40 17, 37 20"></path></svg>
             <div style="background:#fffdf8;border:1px solid #ddd8cc;border-radius:6px;padding:9px 13px;font-family:'Geist Mono',ui-monospace,monospace;font-size:12.5px">Call or form</div>
           </div>
           <div style="display:inline-flex;align-items:center;gap:8px">
-            <svg viewBox="0 0 54 22" width="46" height="19" fill="none" stroke="#35d07a" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"><path d="M3 15 C 13 5, 29 18, 45 8"></path><path d="M36 3 C 40 5, 44 7, 48 8 C 44 10, 40 13, 37 16"></path></svg>
+            <svg viewBox="0 0 54 22" width="46" height="19" fill="none" stroke="#B3272B" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"><path d="M3 15 C 13 5, 29 18, 45 8"></path><path d="M36 3 C 40 5, 44 7, 48 8 C 44 10, 40 13, 37 16"></path></svg>
             <div style="background:#fffdf8;border:1px solid #ddd8cc;border-radius:6px;padding:9px 13px;font-family:'Geist Mono',ui-monospace,monospace;font-size:12.5px">CRM</div>
           </div>
           <div style="display:inline-flex;align-items:center;gap:8px">
-            <svg viewBox="0 0 54 22" width="46" height="19" fill="none" stroke="#35d07a" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"><path d="M3 8 C 15 19, 29 5, 45 13"></path><path d="M36 7 C 40 9, 44 11, 48 12 C 44 14, 40 17, 37 20"></path></svg>
+            <svg viewBox="0 0 54 22" width="46" height="19" fill="none" stroke="#B3272B" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"><path d="M3 8 C 15 19, 29 5, 45 13"></path><path d="M36 7 C 40 9, 44 11, 48 12 C 44 14, 40 17, 37 20"></path></svg>
             <div style="background:#fffdf8;border:1px solid #ddd8cc;border-radius:6px;padding:9px 13px;font-family:'Geist Mono',ui-monospace,monospace;font-size:12.5px">Team notification</div>
           </div>
         </div>
@@ -290,30 +291,30 @@
       </div>
       <div class="work-cards" style="margin-top:40px;display:grid;gap:1px;background:#ddd8cc;border:1px solid #ddd8cc">
         <div style="background:#faf8f3;padding:24px">
-          <div style="font-size:34px;font-weight:600;letter-spacing:-0.04em;color:#0d7a42">9</div>
+          <div style="font-size:34px;font-weight:600;letter-spacing:-0.04em;color:#7A1418">9</div>
           <div style="margin-top:8px;font-family:'Geist Mono',ui-monospace,monospace;font-size:12px;color:#5c6157">Recorded call actions</div>
         </div>
         <div style="background:#faf8f3;padding:24px">
-          <div style="font-size:34px;font-weight:600;letter-spacing:-0.04em;color:#0d7a42">12</div>
+          <div style="font-size:34px;font-weight:600;letter-spacing:-0.04em;color:#7A1418">12</div>
           <div style="margin-top:8px;font-family:'Geist Mono',ui-monospace,monospace;font-size:12px;color:#5c6157">Days in the window</div>
         </div>
         <div style="background:#faf8f3;padding:24px">
-          <div style="font-size:34px;font-weight:600;letter-spacing:-0.04em;color:#0d7a42">31,625</div>
+          <div style="font-size:34px;font-weight:600;letter-spacing:-0.04em;color:#7A1418">31,625</div>
           <div style="margin-top:8px;font-family:'Geist Mono',ui-monospace,monospace;font-size:12px;color:#5c6157">Recorded search impressions</div>
         </div>
         <div style="background:#faf8f3;padding:24px">
-          <div style="font-size:34px;font-weight:600;letter-spacing:-0.04em;color:#0d7a42">1</div>
+          <div style="font-size:34px;font-weight:600;letter-spacing:-0.04em;color:#7A1418">1</div>
           <div style="margin-top:8px;font-family:'Geist Mono',ui-monospace,monospace;font-size:12px;color:#5c6157">Connected route, page to CRM</div>
         </div>
       </div>
       <div style="margin-top:16px;display:flex;gap:14px;align-items:flex-start;flex-wrap:wrap">
         <p style="color:#5c6157;font-size:13px;max-width:70ch">These are recorded platform events. They are not confirmed sales, bookings, or qualified leads.</p>
-        <span style="font-family:Caveat,cursive;font-size:22px;color:#0d7a42;transform:rotate(-2deg);white-space:nowrap">I keep this line everywhere.</span>
+        <span style="font-family:Caveat,cursive;font-size:22px;color:#7A1418;transform:rotate(-2deg);white-space:nowrap">I keep this line everywhere.</span>
       </div>
 
       <div style="margin-top:44px;display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px">
         <div style="border:1px solid #ddd8cc;border-radius:10px;padding:26px;display:flex;flex-direction:column;gap:14px;background:#fffdf8">
-          <div style="font-family:'Geist Mono',ui-monospace,monospace;font-size:12px;color:#0d7a42">Roofing service business, 90-day snapshot</div>
+          <div style="font-family:'Geist Mono',ui-monospace,monospace;font-size:12px;color:#7A1418">Roofing service business, 90-day snapshot</div>
           <p style="font-size:15px">31,625 organic search appearances recorded across 84 landing-page-and-query combinations.</p>
           <div style="display:flex;align-items:flex-end;gap:10px">
             <img src="assets/search-discovery-green.webp" alt="Magnifier illustration" style="display:block;width:118px;height:auto">
@@ -322,7 +323,7 @@
           <p style="font-size:14px;color:#5c6157;margin-top:auto">What this proves: the service pages were being shown for the searches they were built for. Recorded impressions, not confirmed sales, bookings, or qualified leads.</p>
         </div>
         <div style="border:1px solid #ddd8cc;border-radius:10px;padding:26px;display:flex;flex-direction:column;gap:14px;background:#fffdf8">
-          <div style="font-family:'Geist Mono',ui-monospace,monospace;font-size:12px;color:#0d7a42">Home-improvement business, 12-day window</div>
+          <div style="font-family:'Geist Mono',ui-monospace,monospace;font-size:12px;color:#7A1418">Home-improvement business, 12-day window</div>
           <p style="font-size:15px">9 recorded phone-call conversion actions over 12 days, tracked against spend, clicks and impressions on the same landing page.</p>
           <div style="display:flex;align-items:flex-end;gap:10px">
             <img src="assets/lead-capture-green.webp" alt="Illustration of an enquiry form" style="display:block;width:118px;height:auto">
@@ -331,23 +332,23 @@
           <p style="font-size:14px;color:#5c6157;margin-top:auto">What this proves: the call route was working and being measured. Recorded call actions, not confirmed sales, bookings, or qualified leads.</p>
         </div>
         <div style="border:1px solid #ddd8cc;border-radius:10px;padding:26px;display:flex;flex-direction:column;gap:14px;background:#fffdf8">
-          <div style="font-family:'Geist Mono',ui-monospace,monospace;font-size:12px;color:#0d7a42">The lead journey, connected</div>
+          <div style="font-family:'Geist Mono',ui-monospace,monospace;font-size:12px;color:#7A1418">The lead journey, connected</div>
           <div class="journey-stack">
             <div style="background:#faf8f3;border:1px solid #ddd8cc;border-radius:6px;padding:7px 11px;font-family:'Geist Mono',ui-monospace,monospace;font-size:12px">Search or website</div>
             <div style="display:inline-flex;align-items:center;gap:8px">
-              <svg viewBox="0 0 54 22" width="42" height="17" fill="none" stroke="#35d07a" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"><path d="M3 15 C 13 5, 29 18, 45 8"></path><path d="M36 3 C 40 5, 44 7, 48 8 C 44 10, 40 13, 37 16"></path></svg>
+              <svg viewBox="0 0 54 22" width="42" height="17" fill="none" stroke="#B3272B" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"><path d="M3 15 C 13 5, 29 18, 45 8"></path><path d="M36 3 C 40 5, 44 7, 48 8 C 44 10, 40 13, 37 16"></path></svg>
               <div style="background:#faf8f3;border:1px solid #ddd8cc;border-radius:6px;padding:7px 11px;font-family:'Geist Mono',ui-monospace,monospace;font-size:12px">Service page</div>
             </div>
             <div style="display:inline-flex;align-items:center;gap:8px">
-              <svg viewBox="0 0 54 22" width="42" height="17" fill="none" stroke="#35d07a" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"><path d="M3 8 C 15 19, 29 5, 45 13"></path><path d="M36 7 C 40 9, 44 11, 48 12 C 44 14, 40 17, 37 20"></path></svg>
+              <svg viewBox="0 0 54 22" width="42" height="17" fill="none" stroke="#B3272B" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"><path d="M3 8 C 15 19, 29 5, 45 13"></path><path d="M36 7 C 40 9, 44 11, 48 12 C 44 14, 40 17, 37 20"></path></svg>
               <div style="background:#faf8f3;border:1px solid #ddd8cc;border-radius:6px;padding:7px 11px;font-family:'Geist Mono',ui-monospace,monospace;font-size:12px">Call or form</div>
             </div>
             <div style="display:inline-flex;align-items:center;gap:8px">
-              <svg viewBox="0 0 54 22" width="42" height="17" fill="none" stroke="#35d07a" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"><path d="M3 15 C 13 5, 29 18, 45 8"></path><path d="M36 3 C 40 5, 44 7, 48 8 C 44 10, 40 13, 37 16"></path></svg>
+              <svg viewBox="0 0 54 22" width="42" height="17" fill="none" stroke="#B3272B" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"><path d="M3 15 C 13 5, 29 18, 45 8"></path><path d="M36 3 C 40 5, 44 7, 48 8 C 44 10, 40 13, 37 16"></path></svg>
               <div style="background:#faf8f3;border:1px solid #ddd8cc;border-radius:6px;padding:7px 11px;font-family:'Geist Mono',ui-monospace,monospace;font-size:12px">CRM</div>
             </div>
             <div style="display:inline-flex;align-items:center;gap:8px">
-              <svg viewBox="0 0 54 22" width="42" height="17" fill="none" stroke="#35d07a" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"><path d="M3 8 C 15 19, 29 5, 45 13"></path><path d="M36 7 C 40 9, 44 11, 48 12 C 44 14, 40 17, 37 20"></path></svg>
+              <svg viewBox="0 0 54 22" width="42" height="17" fill="none" stroke="#B3272B" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"><path d="M3 8 C 15 19, 29 5, 45 13"></path><path d="M36 7 C 40 9, 44 11, 48 12 C 44 14, 40 17, 37 20"></path></svg>
               <div style="background:#faf8f3;border:1px solid #ddd8cc;border-radius:6px;padding:7px 11px;font-family:'Geist Mono',ui-monospace,monospace;font-size:12px">Team notification</div>
             </div>
           </div>
@@ -355,7 +356,7 @@
         </div>
       </div>
       <div style="margin-top:28px">
-        <a href="{{ waProofLink }}" target="_blank" rel="noopener" style="border:1px solid #ddd8cc;color:#12140f;font-size:15px;font-weight:500;padding:13px 20px;border-radius:6px;display:inline-block;background:#fffdf8" style-hover="border-color:#35d07a">Ask for an anonymised proof walkthrough</a>
+        <a href="{{ waProofLink }}" target="_blank" rel="noopener" style="border:1px solid #ddd8cc;color:#12140f;font-size:15px;font-weight:500;padding:13px 20px;border-radius:6px;display:inline-block;background:#fffdf8" style-hover="border-color:#B3272B">Ask for an anonymised proof walkthrough</a>
       </div>
     </div>
   </section>
@@ -364,10 +365,10 @@
     <div class="page-shell">
       <h2 style="font-family:Archivo,Geist,system-ui,sans-serif;font-stretch:87.5%;font-size:clamp(34px,3.9vw,58px);line-height:.94;letter-spacing:-0.025em;font-weight:800">Why Uplof.</h2>
       <div class="why-grid" style="margin-top:36px;display:grid">
-        <div><div style="font-family:'Geist Mono',ui-monospace,monospace;font-size:12px;color:#0d7a42">01</div><h3 style="margin-top:10px;font-size:18px;font-weight:600;letter-spacing:-0.02em">Direct access to the founder</h3><p style="margin-top:8px;font-size:15px;color:#5c6157">You speak to the person doing the work, not an account layer in between.</p></div>
-        <div><div style="font-family:'Geist Mono',ui-monospace,monospace;font-size:12px;color:#0d7a42">02</div><h3 style="margin-top:10px;font-size:18px;font-weight:600;letter-spacing:-0.02em">A plan based on your starting point</h3><p style="margin-top:8px;font-size:15px;color:#5c6157">The audit decides the plan, so you are not sold a package you do not need.</p></div>
-        <div><div style="font-family:'Geist Mono',ui-monospace,monospace;font-size:12px;color:#0d7a42">03</div><h3 style="margin-top:10px;font-size:18px;font-weight:600;letter-spacing:-0.02em">Clear boundaries before the project begins</h3><p style="margin-top:8px;font-size:15px;color:#5c6157">Deliverables, platforms and ongoing work are written down before anything starts.</p></div>
-        <div><div style="font-family:'Geist Mono',ui-monospace,monospace;font-size:12px;color:#0d7a42">04</div><h3 style="margin-top:10px;font-size:18px;font-weight:600;letter-spacing:-0.02em">Improvement beyond launch</h3><p style="margin-top:8px;font-size:15px;color:#5c6157">Launch is a checkpoint. The recorded evidence decides what changes next.</p></div>
+        <div><div style="font-family:'Geist Mono',ui-monospace,monospace;font-size:12px;color:#7A1418">01</div><h3 style="margin-top:10px;font-size:18px;font-weight:600;letter-spacing:-0.02em">Direct access to the founder</h3><p style="margin-top:8px;font-size:15px;color:#5c6157">You speak to the person doing the work, not an account layer in between.</p></div>
+        <div><div style="font-family:'Geist Mono',ui-monospace,monospace;font-size:12px;color:#7A1418">02</div><h3 style="margin-top:10px;font-size:18px;font-weight:600;letter-spacing:-0.02em">A plan based on your starting point</h3><p style="margin-top:8px;font-size:15px;color:#5c6157">The audit decides the plan, so you are not sold a package you do not need.</p></div>
+        <div><div style="font-family:'Geist Mono',ui-monospace,monospace;font-size:12px;color:#7A1418">03</div><h3 style="margin-top:10px;font-size:18px;font-weight:600;letter-spacing:-0.02em">Clear boundaries before the project begins</h3><p style="margin-top:8px;font-size:15px;color:#5c6157">Deliverables, platforms and ongoing work are written down before anything starts.</p></div>
+        <div><div style="font-family:'Geist Mono',ui-monospace,monospace;font-size:12px;color:#7A1418">04</div><h3 style="margin-top:10px;font-size:18px;font-weight:600;letter-spacing:-0.02em">Improvement beyond launch</h3><p style="margin-top:8px;font-size:15px;color:#5c6157">Launch is a checkpoint. The recorded evidence decides what changes next.</p></div>
       </div>
     </div>
   </section>
@@ -375,7 +376,7 @@
   <section style="border-bottom:1px solid #ddd8cc">
     <div class="page-shell split-layout">
       <div>
-        <div style="font-family:'Geist Mono',ui-monospace,monospace;font-size:12px;letter-spacing:.14em;color:#0d7a42;text-transform:uppercase">How I think about the work.</div>
+        <div style="font-family:'Geist Mono',ui-monospace,monospace;font-size:12px;letter-spacing:.14em;color:#7A1418;text-transform:uppercase">How I think about the work.</div>
         <h2 style="margin-top:18px;font-family:Archivo,Geist,system-ui,sans-serif;font-stretch:87.5%;font-size:clamp(32px,3.6vw,50px);line-height:.94;letter-spacing:-0.025em;font-weight:800">Traffic needs a next step.</h2>
         <div class="section-art" style="margin-top:26px"><img src="assets/founder-desk-green.webp" alt="Illustration of the founder working at a laptop"></div>
       </div>
@@ -404,7 +405,7 @@
         <sc-for list="{{ services }}" as="s" hint-placeholder-count="9">
           <div style="background:#faf8f3;padding:24px">
             <img src="{{ s.icon }}" alt="" style="display:block;width:88px;height:auto;margin-bottom:14px">
-            <div style="font-family:'Geist Mono',ui-monospace,monospace;font-size:12px;color:#0d7a42">{{ s.n }}</div>
+            <div style="font-family:'Geist Mono',ui-monospace,monospace;font-size:12px;color:#7A1418">{{ s.n }}</div>
             <h3 style="margin-top:12px;font-size:17px;font-weight:600;letter-spacing:-0.02em">{{ s.title }}</h3>
             <p style="margin-top:8px;font-size:14px;color:#5c6157">{{ s.body }}</p>
           </div>
@@ -412,7 +413,7 @@
       </div>
       <div style="margin-top:22px;display:flex;gap:16px;flex-wrap:wrap;align-items:flex-start">
         <p style="max-width:60ch;color:#5c6157;font-size:15px">Your proposal defines the deliverables, platforms, integrations and ongoing work. You do not need every service to start.</p>
-        <span style="font-family:Caveat,cursive;font-size:24px;color:#0d7a42;transform:rotate(-2deg)">start with one. really.</span>
+        <span style="font-family:Caveat,cursive;font-size:24px;color:#7A1418;transform:rotate(-2deg)">start with one. really.</span>
       </div>
     </div>
   </section>
@@ -424,7 +425,7 @@
       <div style="margin-top:32px;border-top:1px solid #ddd8cc">
         <sc-for list="{{ fit }}" as="f" hint-placeholder-count="5">
           <div style="border-bottom:1px solid #ddd8cc;padding:18px 0;display:flex;gap:14px;align-items:center">
-            <svg viewBox="0 0 30 20" width="26" height="17" fill="none" stroke="#35d07a" strokeWidth="3.2" strokeLinecap="round" strokeLinejoin="round" style="flex:0 0 auto"><path d="M2 12 C 9 4, 17 16, 26 8"></path><path d="M19 3 C 22 5, 24 7, 27 8 C 24 10, 21 12, 19 15"></path></svg>
+            <svg viewBox="0 0 30 20" width="26" height="17" fill="none" stroke="#B3272B" strokeWidth="3.2" strokeLinecap="round" strokeLinejoin="round" style="flex:0 0 auto"><path d="M2 12 C 9 4, 17 16, 26 8"></path><path d="M19 3 C 22 5, 24 7, 27 8 C 24 10, 21 12, 19 15"></path></svg>
             <p style="font-size:16px">{{ f }}</p>
           </div>
         </sc-for>
@@ -456,7 +457,7 @@
         <sc-for list="{{ faqs }}" as="q" hint-placeholder-count="9">
           <details style="border-bottom:1px solid #ddd8cc">
             <summary style="list-style:none;cursor:pointer;padding:20px 0;display:flex;gap:18px;align-items:baseline;font-size:17px;font-weight:500;letter-spacing:-0.015em">
-              <span style="color:#0d7a42;font-family:Caveat,cursive;font-size:26px;line-height:1">+</span>
+              <span style="color:#7A1418;font-family:Caveat,cursive;font-size:26px;line-height:1">+</span>
               <span>{{ q.q }}</span>
             </summary>
             <p style="padding:0 0 22px 38px;color:#5c6157;font-size:15px;max-width:68ch">{{ q.a }}</p>
@@ -475,25 +476,25 @@
         <div style="margin-top:28px;display:flex;flex-wrap:wrap;align-items:center;gap:8px">
           <div style="background:#121713;border:1px solid #2a332d;border-radius:6px;padding:7px 11px;font-family:'Geist Mono',ui-monospace,monospace;font-size:12px">Search or website</div>
           <div style="display:inline-flex;align-items:center;gap:8px">
-            <svg viewBox="0 0 54 22" width="42" height="17" fill="none" stroke="#35d07a" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"><path d="M3 15 C 13 5, 29 18, 45 8"></path><path d="M36 3 C 40 5, 44 7, 48 8 C 44 10, 40 13, 37 16"></path></svg>
+            <svg viewBox="0 0 54 22" width="42" height="17" fill="none" stroke="#B3272B" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"><path d="M3 15 C 13 5, 29 18, 45 8"></path><path d="M36 3 C 40 5, 44 7, 48 8 C 44 10, 40 13, 37 16"></path></svg>
             <div style="background:#121713;border:1px solid #2a332d;border-radius:6px;padding:7px 11px;font-family:'Geist Mono',ui-monospace,monospace;font-size:12px">Service page</div>
           </div>
           <div style="display:inline-flex;align-items:center;gap:8px">
-            <svg viewBox="0 0 54 22" width="42" height="17" fill="none" stroke="#35d07a" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"><path d="M3 8 C 15 19, 29 5, 45 13"></path><path d="M36 7 C 40 9, 44 11, 48 12 C 44 14, 40 17, 37 20"></path></svg>
+            <svg viewBox="0 0 54 22" width="42" height="17" fill="none" stroke="#B3272B" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"><path d="M3 8 C 15 19, 29 5, 45 13"></path><path d="M36 7 C 40 9, 44 11, 48 12 C 44 14, 40 17, 37 20"></path></svg>
             <div style="background:#121713;border:1px solid #2a332d;border-radius:6px;padding:7px 11px;font-family:'Geist Mono',ui-monospace,monospace;font-size:12px">Call or form</div>
           </div>
           <div style="display:inline-flex;align-items:center;gap:8px">
-            <svg viewBox="0 0 54 22" width="42" height="17" fill="none" stroke="#35d07a" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"><path d="M3 15 C 13 5, 29 18, 45 8"></path><path d="M36 3 C 40 5, 44 7, 48 8 C 44 10, 40 13, 37 16"></path></svg>
+            <svg viewBox="0 0 54 22" width="42" height="17" fill="none" stroke="#B3272B" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"><path d="M3 15 C 13 5, 29 18, 45 8"></path><path d="M36 3 C 40 5, 44 7, 48 8 C 44 10, 40 13, 37 16"></path></svg>
             <div style="background:#121713;border:1px solid #2a332d;border-radius:6px;padding:7px 11px;font-family:'Geist Mono',ui-monospace,monospace;font-size:12px">CRM</div>
           </div>
           <div style="display:inline-flex;align-items:center;gap:8px">
-            <svg viewBox="0 0 54 22" width="42" height="17" fill="none" stroke="#35d07a" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"><path d="M3 8 C 15 19, 29 5, 45 13"></path><path d="M36 7 C 40 9, 44 11, 48 12 C 44 14, 40 17, 37 20"></path></svg>
+            <svg viewBox="0 0 54 22" width="42" height="17" fill="none" stroke="#B3272B" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"><path d="M3 8 C 15 19, 29 5, 45 13"></path><path d="M36 7 C 40 9, 44 11, 48 12 C 44 14, 40 17, 37 20"></path></svg>
             <div style="background:#121713;border:1px solid #2a332d;border-radius:6px;padding:7px 11px;font-family:'Geist Mono',ui-monospace,monospace;font-size:12px">Team notification</div>
           </div>
         </div>
         <div style="margin-top:30px;display:flex;align-items:center;gap:8px">
-          <span style="font-family:Caveat,cursive;font-size:26px;color:#35d07a;transform:rotate(-3deg)">no obligation, I just look.</span>
-          <svg viewBox="0 0 90 40" width="80" height="36" fill="none" stroke="#35d07a" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"><path d="M4 10 C 26 4, 56 10, 78 26"></path><path d="M66 28 C 72 27, 78 27, 82 28 C 81 23, 80 18, 80 14"></path></svg>
+          <span style="font-family:Caveat,cursive;font-size:26px;color:#B3272B;transform:rotate(-3deg)">no obligation, I just look.</span>
+          <svg viewBox="0 0 90 40" width="80" height="36" fill="none" stroke="#B3272B" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"><path d="M4 10 C 26 4, 56 10, 78 26"></path><path d="M66 28 C 72 27, 78 27, 82 28 C 81 23, 80 18, 80 14"></path></svg>
         </div>
       </div>
 
@@ -501,25 +502,25 @@
         <div style="font-family:'Geist Mono',ui-monospace,monospace;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#a5ada6">Draft your message</div>
         <div style="margin-top:20px;display:grid;gap:14px">
           <label style="display:grid;gap:6px;font-size:13px;color:#a5ada6">Your name
-            <input name="name" value="{{ name }}" onChange="{{ setName }}" placeholder="Name" required style="background:#0a0c0b;border:1px solid #2a332d;border-radius:6px;color:#f2f1ea;font-family:Geist,system-ui,sans-serif;font-size:15px;padding:11px 12px;outline:none" style-focus="border-color:#35d07a">
+            <input name="name" value="{{ name }}" onChange="{{ setName }}" placeholder="Name" required style="background:#0a0c0b;border:1px solid #2a332d;border-radius:6px;color:#f2f1ea;font-family:Geist,system-ui,sans-serif;font-size:15px;padding:11px 12px;outline:none" style-focus="border-color:#B3272B">
           </label>
           <label style="display:grid;gap:6px;font-size:13px;color:#a5ada6">Business name
-            <input name="business" value="{{ business }}" onChange="{{ setBusiness }}" placeholder="Business" required style="background:#0a0c0b;border:1px solid #2a332d;border-radius:6px;color:#f2f1ea;font-family:Geist,system-ui,sans-serif;font-size:15px;padding:11px 12px;outline:none" style-focus="border-color:#35d07a">
+            <input name="business" value="{{ business }}" onChange="{{ setBusiness }}" placeholder="Business" required style="background:#0a0c0b;border:1px solid #2a332d;border-radius:6px;color:#f2f1ea;font-family:Geist,system-ui,sans-serif;font-size:15px;padding:11px 12px;outline:none" style-focus="border-color:#B3272B">
           </label>
           <label style="display:grid;gap:6px;font-size:13px;color:#a5ada6">Your email
-            <input type="email" name="email" value="{{ email }}" onChange="{{ setEmail }}" placeholder="you@company.com" required style="background:#0a0c0b;border:1px solid #2a332d;border-radius:6px;color:#f2f1ea;font-family:Geist,system-ui,sans-serif;font-size:15px;padding:11px 12px;outline:none" style-focus="border-color:#35d07a">
+            <input type="email" name="email" value="{{ email }}" onChange="{{ setEmail }}" placeholder="you@company.com" required style="background:#0a0c0b;border:1px solid #2a332d;border-radius:6px;color:#f2f1ea;font-family:Geist,system-ui,sans-serif;font-size:15px;padding:11px 12px;outline:none" style-focus="border-color:#B3272B">
           </label>
           <label style="display:grid;gap:6px;font-size:13px;color:#a5ada6">Website or Google Business Profile link (optional)
-            <input name="website" value="{{ site }}" onChange="{{ setSite }}" placeholder="https://" style="background:#0a0c0b;border:1px solid #2a332d;border-radius:6px;color:#f2f1ea;font-family:Geist,system-ui,sans-serif;font-size:15px;padding:11px 12px;outline:none" style-focus="border-color:#35d07a">
+            <input name="website" value="{{ site }}" onChange="{{ setSite }}" placeholder="https://" style="background:#0a0c0b;border:1px solid #2a332d;border-radius:6px;color:#f2f1ea;font-family:Geist,system-ui,sans-serif;font-size:15px;padding:11px 12px;outline:none" style-focus="border-color:#B3272B">
           </label>
           <label style="display:grid;gap:6px;font-size:13px;color:#a5ada6">Phone
-            <input name="phone" value="{{ phone }}" onChange="{{ setPhone }}" placeholder="+91" style="background:#0a0c0b;border:1px solid #2a332d;border-radius:6px;color:#f2f1ea;font-family:Geist,system-ui,sans-serif;font-size:15px;padding:11px 12px;outline:none" style-focus="border-color:#35d07a">
+            <input name="phone" value="{{ phone }}" onChange="{{ setPhone }}" placeholder="+91" style="background:#0a0c0b;border:1px solid #2a332d;border-radius:6px;color:#f2f1ea;font-family:Geist,system-ui,sans-serif;font-size:15px;padding:11px 12px;outline:none" style-focus="border-color:#B3272B">
           </label>
           <label style="display:grid;gap:6px;font-size:13px;color:#a5ada6">What would you like to improve
-            <textarea name="message" value="{{ note }}" onChange="{{ setNote }}" rows="3" placeholder="Where do the enquiries fall away?" style="background:#0a0c0b;border:1px solid #2a332d;border-radius:6px;color:#f2f1ea;font-family:Geist,system-ui,sans-serif;font-size:15px;padding:11px 12px;outline:none;resize:vertical" style-focus="border-color:#35d07a"></textarea>
+            <textarea name="message" value="{{ note }}" onChange="{{ setNote }}" rows="3" placeholder="Where do the enquiries fall away?" style="background:#0a0c0b;border:1px solid #2a332d;border-radius:6px;color:#f2f1ea;font-family:Geist,system-ui,sans-serif;font-size:15px;padding:11px 12px;outline:none;resize:vertical" style-focus="border-color:#B3272B"></textarea>
           </label>
-          <button type="submit" style="background:#35d07a;color:#07120b;border:0;font-family:Geist,system-ui,sans-serif;font-size:15px;font-weight:600;padding:13px 18px;border-radius:6px;cursor:pointer" style-hover="filter:brightness(1.08)" style-active="filter:brightness(.88)">Send enquiry by email ↗</button>
-          <a href="{{ formLink }}" target="_blank" rel="noopener" style="border:1px solid #2a332d;color:#f2f1ea;font-size:15px;font-weight:500;padding:13px 18px;border-radius:6px;text-align:center" style-hover="border-color:#35d07a">Continue on WhatsApp</a>
+          <button type="submit" style="background:#B3272B;color:#fdf8f3;border:0;font-family:Geist,system-ui,sans-serif;font-size:15px;font-weight:600;padding:13px 18px;border-radius:6px;cursor:pointer" style-hover="filter:brightness(1.08)" style-active="filter:brightness(.88)">Send enquiry by email ↗</button>
+          <a href="{{ formLink }}" target="_blank" rel="noopener" style="border:1px solid #2a332d;color:#f2f1ea;font-size:15px;font-weight:500;padding:13px 18px;border-radius:6px;text-align:center" style-hover="border-color:#B3272B">Continue on WhatsApp</a>
           <p style="font-size:13px;color:#a5ada6">Your enquiry is handled by Uplof. WhatsApp remains available if you prefer to start there.</p>
         </div>
       </form>
