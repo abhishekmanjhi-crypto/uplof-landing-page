@@ -1,0 +1,6 @@
+{
+  "name": "uplof-landing-page",
+  "compatibility_date": "2026-09-11",
+  "compatibility_flags": ["nodejs_compat"],
+  "pages_build_output_dir": "."
+}
