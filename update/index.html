@@ -1,0 +1,281 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Uplof — Updated Landing Page</title>
+<meta name="description" content="Preview build of the updated Uplof landing page design.">
+<link rel="icon" href="/assets/logo.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@87.5,700..900&family=Geist:wght@100..900&family=Geist+Mono:wght@400..600&display=swap" rel="stylesheet">
+<style>
+  html { background: #f9f9f9; scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+  body { margin: 0; background: #f9f9f9; color: #12140f; font-family: Geist, system-ui, sans-serif; font-size: 16px; line-height: 1.65; -webkit-font-smoothing: antialiased; }
+  * { box-sizing: border-box; }
+  a { color: inherit; text-decoration: none; }
+  h1, h2, h3 { margin: 0; text-wrap: pretty; }
+  p { margin: 0; text-wrap: pretty; }
+  img { display: block; max-width: 100%; }
+  :root { --page-max: 1180px; --page-gutter: clamp(20px, 4vw, 48px); }
+  .shell { width: min(calc(100% - (var(--page-gutter) * 2)), var(--page-max)); max-width: var(--page-max); margin-inline: auto; }
+
+  /* ---- hero ---- */
+  .hero { position: relative; background: #d12d34; overflow: hidden; color: #f0e7dd; padding-bottom: clamp(64px, 9vw, 112px); }
+  .hero-bg-lines { position: absolute; top: -25vw; left: 20%; width: 190vw; max-width: 2644px; opacity: .45; pointer-events: none; }
+  .hero-bg-glow { position: absolute; top: 18vw; left: 28%; width: min(90vw, 1206px); transform: rotate(135deg); pointer-events: none; mix-blend-mode: screen; }
+  .hero-nav { position: relative; z-index: 1; display: flex; align-items: center; justify-content: space-between; padding: 40px 0 clamp(48px, 8vw, 96px); }
+  .hero-nav img { height: 44px; width: auto; }
+  .hero-nav a { border: 1px solid #fff; color: #fff; font-weight: 600; font-size: 15px; padding: 15px 30px; white-space: nowrap; }
+  .hero-nav a:hover { background: rgba(255,255,255,.12); }
+  .hero-copy { position: relative; z-index: 1; max-width: 800px; margin-inline: auto; text-align: center; }
+  .hero-copy h1 { font-family: Archivo, Geist, system-ui, sans-serif; font-stretch: 87.5%; font-size: clamp(38px, 6vw, 75px); line-height: 1.01; letter-spacing: -0.01em; font-weight: 800; }
+  .hero-copy p { margin-top: 26px; font-size: clamp(16px, 1.6vw, 20px); line-height: 1.43; color: #f0d9d9; }
+  .hero-cta { margin-top: 40px; display: flex; background: rgba(255,255,255,.9); border: 1px solid #fff; box-shadow: 4px 4px 0 #650208; max-width: 617px; margin-inline: auto; }
+  .hero-cta input { flex: 1; min-width: 0; border: 0; background: transparent; padding: 0 20px; font-family: Geist, system-ui, sans-serif; font-size: 16px; color: #12140f; }
+  .hero-cta input::placeholder { color: rgba(18,20,15,.4); }
+  .hero-cta button { margin: 7px; background: #121212; color: #fff; border: 0; font-weight: 600; font-size: 15px; padding: 0 26px; cursor: pointer; white-space: nowrap; }
+  .hero-cta button:hover { filter: brightness(1.15); }
+  .hero-badges { position: relative; z-index: 1; margin-top: 30px; display: flex; flex-wrap: wrap; gap: 32px; justify-content: center; }
+  .hero-badges div { display: flex; align-items: center; gap: 8px; font-size: 14px; }
+  .hero-badges img { width: 20px; height: 20px; }
+  @media (max-width: 600px) { .hero-cta { flex-direction: column; box-shadow: 3px 3px 0 #650208; } .hero-cta input { padding: 14px 16px; } .hero-cta button { margin: 7px; padding: 12px; } }
+
+  /* ---- feature grid (shared with homepage) ---- */
+  .feature-section { border-bottom: 1px solid #ddd8cc; background: #f9f9f9; padding: clamp(64px, 9vw, 112px) 0; }
+  .feature-heading { display: flex; flex-direction: column; gap: 32px; max-width: 800px; }
+  .feature-heading h2 { font-family: Archivo, Geist, system-ui, sans-serif; font-stretch: 87.5%; font-size: clamp(34px, 4.2vw, 54px); line-height: 1.01; letter-spacing: -0.02em; font-weight: 800; background: linear-gradient(105deg, #002A78 3%, #D12D34 51%, #242424 101%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .feature-heading p { color: #303030; font-size: 20px; line-height: 1.32; letter-spacing: -0.02em; max-width: 56ch; }
+  .feature-grid { margin-top: 45px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); background: #f9f9f9; border: 1px solid #d4d4d4; box-shadow: 4px 4px 0 #d12e35; }
+  .feature-grid > div { padding: 30px; border-right: 1px solid #d4d4d4; }
+  .feature-grid > div:last-child { border-right: none; }
+  .feature-icon { position: relative; width: 100%; max-width: 344px; height: 118px; overflow: hidden; }
+  .feature-grid h3 { margin-top: 17px; font-size: clamp(24px, 2.4vw, 32px); line-height: 1.13; letter-spacing: -0.05em; font-weight: 600; }
+  .feature-grid h3 + p { margin-top: 17px; color: #5c6157; font-size: 16px; line-height: 1.2; letter-spacing: -0.05em; }
+  @media (max-width: 820px) { .feature-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (max-width: 600px) { .feature-grid { grid-template-columns: 1fr; } .feature-grid > div { border-right: none; border-bottom: 1px solid #d4d4d4; } .feature-grid > div:last-child { border-bottom: none; } }
+
+  /* ---- leak / scroll-cutout section ---- */
+  .leak-section { position: relative; background: #040608; }
+  .leak-scroller { height: 420vh; }
+  .leak-sticky { position: sticky; top: 0; height: 100vh; display: flex; align-items: center; overflow: hidden; }
+  .leak-layout { display: grid; grid-template-columns: minmax(260px, .82fr) minmax(0, 1.18fr); gap: clamp(32px, 5vw, 72px); align-items: center; width: 100%; }
+  .leak-copy h2 { font-family: Archivo, Geist, system-ui, sans-serif; font-stretch: 87.5%; font-size: clamp(30px, 3.6vw, 54px); line-height: 1.01; letter-spacing: -0.02em; font-weight: 800; background: linear-gradient(96deg, #bbd3ff 3%, #fff 51%, #ffa4a4 101%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .leak-copy p { margin-top: 24px; color: #7a7a7a; font-size: 18px; line-height: 1.32; max-width: 46ch; }
+  .leak-progress { margin-top: 32px; max-width: 223px; }
+  .leak-progress-bar { display: flex; gap: 6px; height: 8px; }
+  .leak-progress-bar span { height: 8px; background: #232f3b; transition: flex-basis .35s ease, background-color .35s ease; }
+  .leak-progress-bar span.is-active { background: #5762ff; }
+  .leak-progress-label { margin-top: 9px; font-weight: 700; font-size: 16px; color: #fff; }
+  .leak-art { display: flex; flex-direction: column; align-items: center; gap: 18px; }
+  .leak-art-frame { position: relative; width: 100%; aspect-ratio: 541 / 403; border-radius: 4px; overflow: hidden; background: #000; }
+  .leak-art-frame img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity .4s ease; }
+  .leak-art-frame img.is-active { opacity: 1; }
+  .leak-caption { font-size: clamp(18px, 1.6vw, 23px); text-align: center; color: #fff; max-width: 320px; min-height: 2.6em; }
+  @media (max-width: 820px) { .leak-layout { grid-template-columns: 1fr; } .leak-scroller { height: 340vh; } }
+
+  /* ---- connect the journey ---- */
+  .journey-section { background: #f9f9f9; padding-top: clamp(64px, 9vw, 112px); }
+  .journey-heading { text-align: center; max-width: 995px; margin-inline: auto; display: flex; flex-direction: column; gap: 32px; }
+  .journey-heading h2 { font-family: Archivo, Geist, system-ui, sans-serif; font-stretch: 87.5%; font-size: clamp(34px, 4.2vw, 54px); line-height: 1.01; letter-spacing: -0.02em; font-weight: 800; background: linear-gradient(108deg, #002A78 3%, #D12D34 51%, #242424 101%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .journey-heading p { color: #303030; font-size: 20px; line-height: 1.32; letter-spacing: -0.02em; }
+  .journey-video-wrap { margin-top: 56px; width: 100%; aspect-ratio: 1440 / 639; background: #0a0c0b; overflow: hidden; }
+  .journey-video-wrap video { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+  /* ---- closing CTA / footer ---- */
+  .closing { background: #0a0c0b; color: #f2f1ea; padding: clamp(64px, 9vw, 112px) 0; text-align: center; }
+  .closing h2 { font-family: Archivo, Geist, system-ui, sans-serif; font-stretch: 87.5%; font-size: clamp(30px, 3.6vw, 48px); line-height: .96; letter-spacing: -0.02em; font-weight: 800; }
+  .closing p { margin-top: 18px; color: #a5ada6; max-width: 52ch; margin-inline: auto; }
+  .closing-actions { margin-top: 30px; display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; }
+  .closing-actions a { display: inline-flex; align-items: center; font-size: 15px; font-weight: 600; padding: 13px 22px; border-radius: 6px; }
+  .closing-actions a.primary { background: #D12D34; color: #fdf8f3; }
+  .closing-actions a.primary:hover { filter: brightness(1.08); }
+  .closing-actions a.secondary { border: 1px solid #2a332d; color: #f2f1ea; }
+  .closing-actions a.secondary:hover { border-color: #D12D34; }
+  footer.site-footer { background: #f9f9f9; border-top: 1px solid #ddd8cc; padding: 28px 0; display: flex; flex-wrap: wrap; gap: 16px; align-items: baseline; justify-content: space-between; }
+  footer.site-footer p { font-size: 14px; color: #5c6157; }
+  footer.site-footer nav { display: flex; gap: 14px; flex-wrap: wrap; font-size: 13px; }
+  footer.site-footer nav a:hover { color: #D12D34; }
+</style>
+</head>
+<body>
+
+<section class="hero">
+  <img class="hero-bg-lines" src="/assets/hero-line-pattern.svg" alt="" aria-hidden="true">
+  <img class="hero-bg-glow" src="/assets/hero-ellipse-glow.svg" alt="" aria-hidden="true">
+  <div class="shell hero-nav">
+    <a href="/"><img src="/assets/logo.svg" alt="Uplof.me"></a>
+    <a href="#contact">Let's talk</a>
+  </div>
+  <div class="shell hero-copy">
+    <h1>Turn attention into enquiries.</h1>
+    <p>We find where potential customers drop off — from Google to your website to follow-up — and fix the journey so fewer ready-to-buy leads disappear.</p>
+    <form class="hero-cta" action="https://wa.me/917710894943" method="GET" onsubmit="var v=this.number.value.trim(); this.action='https://wa.me/917710894943?text='+encodeURIComponent('Hi Uplof, I\'d like a call back. My number: '+v);">
+      <input name="number" type="tel" placeholder="Enter your number" required>
+      <button type="submit">Request a call</button>
+    </form>
+    <div class="hero-badges">
+      <div><img src="/assets/trust-badge-founder.svg" alt="">Founder led, strategy to execution</div>
+      <div><img src="/assets/trust-badge-endtoend.svg" alt="">End to end, search to follow-up</div>
+    </div>
+  </div>
+</section>
+
+<section class="feature-section">
+  <div class="shell">
+    <div class="feature-heading">
+      <h2>More found. More enquiries. Fewer lost.</h2>
+      <p>You don't need another disconnected marketing service. You need the journey to make sense from the first search to the moment your team follows up.</p>
+    </div>
+    <div class="feature-grid">
+      <div>
+        <div class="feature-icon">
+          <div style="position:absolute;left:calc(50% - 73px);top:-36px;width:244px;height:160px;overflow:hidden">
+            <img src="/assets/found-people-green.webp" alt="Illustration of someone searching for and finding a nearby service provider" style="position:absolute;left:-12.63%;top:-14.1%;width:112.63%;height:114.36%;max-width:none">
+          </div>
+        </div>
+        <h3>Be found by the right people.</h3>
+        <p>Show up where people are already looking for the service you sell, with pages and information that help them understand what you do.</p>
+      </div>
+      <div>
+        <div class="feature-icon">
+          <img src="/assets/reason-to-act-green.webp" alt="Illustration of someone pointing at a call to action on a webpage" style="position:absolute;left:2px;top:-15px;width:158px;height:158px;object-fit:cover">
+        </div>
+        <h3>Give them a reason to act.</h3>
+        <p>Show up where people are already looking for the service you sell, with pages and information that help them understand what you do.</p>
+      </div>
+      <div>
+        <div class="feature-icon">
+          <img src="/assets/keep-moving-green.webp" alt="Illustration of someone pushing an enquiry card forward" style="position:absolute;left:calc(50% - 73px);top:-26px;width:188px;height:188px;object-fit:cover">
+        </div>
+        <h3>Keep every enquiry moving.</h3>
+        <p>Show up where people are already looking for the service you sell, with pages and information that help them understand what you do.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="leak-section" id="leak">
+  <div class="leak-scroller">
+    <div class="leak-sticky">
+      <div class="shell leak-layout">
+        <div class="leak-copy">
+          <h2>The leak isn't always where you think.</h2>
+          <p>A business can have a website, search visibility, forms, calls and a CRM — and still lose enquiries because the pieces don't connect.</p>
+          <div class="leak-progress">
+            <div class="leak-progress-bar" id="leakProgressBar">
+              <span class="is-active"></span><span></span><span></span><span></span><span></span>
+            </div>
+            <div class="leak-progress-label" id="leakProgressLabel">01. Search</div>
+          </div>
+        </div>
+        <div class="leak-art">
+          <div class="leak-art-frame">
+            <img class="is-active" data-step="0" src="/assets/cutout-01-search.webp" alt="Illustration of someone searching for a service on their phone">
+            <img data-step="1" src="/assets/cutout-02-visit.webp" alt="Illustration of someone arriving on a service page">
+            <img data-step="2" src="/assets/cutout-03-enquiry.webp" alt="Illustration of someone submitting a contact form">
+            <img data-step="3" src="/assets/cutout-04-followup.webp" alt="Illustration of an enquiry waiting on a CRM board">
+            <img data-step="4" src="/assets/cutout-05-improve.webp" alt="Illustration of someone reviewing what worked">
+          </div>
+          <p class="leak-caption" id="leakCaption">Someone is looking for the service you provide.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+(function(){
+  var steps = [
+    { label: '01. Search', caption: 'Someone is looking for the service you provide.' },
+    { label: '02. Visit', caption: 'They land somewhere and decide whether to trust you.' },
+    { label: '03. Enquiry', caption: 'They call, message or fill in a form.' },
+    { label: '04. Follow-up', caption: 'The enquiry needs a clear next step and an owner.' },
+    { label: '05. Improve', caption: 'What happens next tells you what to fix.' }
+  ];
+  var section = document.getElementById('leak');
+  var images = section.querySelectorAll('.leak-art-frame img');
+  var bars = section.querySelectorAll('#leakProgressBar span');
+  var label = document.getElementById('leakProgressLabel');
+  var caption = document.getElementById('leakCaption');
+  var current = 0;
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function setStep(i){
+    if (i === current) return;
+    current = i;
+    images.forEach(function(img){ img.classList.toggle('is-active', +img.dataset.step === i); });
+    bars.forEach(function(bar, idx){ bar.classList.toggle('is-active', idx === i); bar.style.flex = idx === i ? '0 0 139px' : '0 0 15px'; });
+    label.textContent = steps[i].label;
+    caption.textContent = steps[i].caption;
+  }
+  setStep(0);
+  bars.forEach(function(bar, idx){ bar.style.flex = idx === 0 ? '0 0 139px' : '0 0 15px'; });
+
+  if (reduce) return;
+
+  function onScroll(){
+    var rect = section.getBoundingClientRect();
+    var total = rect.height - window.innerHeight;
+    if (total <= 0) return;
+    var progress = Math.min(1, Math.max(0, -rect.top / total));
+    var idx = Math.min(4, Math.floor(progress * 5));
+    setStep(idx);
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+})();
+</script>
+
+<section class="journey-section">
+  <div class="shell journey-heading">
+    <h2>Connect the journey.<br>Then improve it.</h2>
+    <p>You don't need another disconnected marketing service. You need the journey to make sense from the first search to the moment your team follows up.</p>
+  </div>
+  <div class="journey-video-wrap">
+    <video id="journeyVideo" muted loop playsinline preload="none">
+      <source src="/assets/connect-journey-loop.mp4" type="video/mp4">
+    </video>
+  </div>
+</section>
+
+<script>
+(function(){
+  var video = document.getElementById('journeyVideo');
+  if (!('IntersectionObserver' in window)) { video.setAttribute('autoplay',''); video.load(); return; }
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if (entry.isIntersecting) {
+        if (!video.src && !video.currentSrc) video.load();
+        video.play().catch(function(){});
+      } else {
+        video.pause();
+      }
+    });
+  }, { threshold: 0.2 });
+  io.observe(video);
+})();
+</script>
+
+<section class="closing" id="contact">
+  <div class="shell">
+    <h2>Let's find the leak.</h2>
+    <p>Your first lead audit is free. Share your website and where the enquiries are falling away, and you'll get a clear read on where the journey breaks before anything is quoted.</p>
+    <div class="closing-actions">
+      <a class="primary" href="https://wa.me/917710894943?text=Hi%20Uplof%2C%20I%27d%20like%20a%20free%20lead%20audit." target="_blank" rel="noopener">Talk on WhatsApp</a>
+      <a class="secondary" href="/#contact">Use the full enquiry form</a>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="shell" style="display:flex;flex-wrap:wrap;gap:16px;align-items:baseline;justify-content:space-between;width:100%">
+    <p>Uplof. Websites, search and follow-up, connected.</p>
+    <p style="font-family:'Geist Mono',ui-monospace,monospace;font-size:13px;color:#5c6157">+91 77108 94943</p>
+    <nav aria-label="Legal"><a href="/privacy-policy/">Privacy</a><a href="/terms-of-service/">Terms</a><a href="/refund-cancellation-policy/">Refunds</a><a href="/cookie-tracking-notice/">Cookies</a></nav>
+  </div>
+</footer>
+
+</body>
+</html>
