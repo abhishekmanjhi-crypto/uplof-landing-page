@@ -57,10 +57,8 @@
   @media (max-width: 600px) { .feature-grid { grid-template-columns: 1fr; } .feature-grid > div { border-right: none; border-bottom: 1px solid #d4d4d4; } .feature-grid > div:last-child { border-bottom: none; } }
 
   /* ---- leak / scroll-cutout section ---- */
-  .leak-section { position: relative; background: #040608; }
-  .leak-scroller { height: 420vh; }
-  .leak-sticky { position: sticky; top: 0; height: 100vh; display: flex; align-items: center; overflow: hidden; }
-  .leak-layout { display: grid; grid-template-columns: minmax(260px, .82fr) minmax(0, 1.18fr); gap: clamp(32px, 5vw, 72px); align-items: center; width: 100%; }
+  .leak-section { position: relative; background: #040608; padding: clamp(64px, 9vw, 112px) 0; }
+  .leak-layout { display: grid; grid-template-columns: minmax(260px, .82fr) minmax(0, 1.18fr); gap: clamp(32px, 5vw, 72px); align-items: center; }
   .leak-copy h2 { font-family: Archivo, Geist, system-ui, sans-serif; font-stretch: 87.5%; font-size: clamp(30px, 3.6vw, 54px); line-height: 1.01; letter-spacing: -0.02em; font-weight: 800; background: linear-gradient(96deg, #bbd3ff 3%, #fff 51%, #ffa4a4 101%); -webkit-background-clip: text; background-clip: text; color: transparent; }
   .leak-copy p { margin-top: 24px; color: #7a7a7a; font-size: 18px; line-height: 1.32; max-width: 46ch; }
   .leak-progress { margin-top: 32px; max-width: 223px; }
@@ -73,7 +71,7 @@
   .leak-art-frame img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity .4s ease; }
   .leak-art-frame img.is-active { opacity: 1; }
   .leak-caption { font-size: clamp(18px, 1.6vw, 23px); text-align: center; color: #fff; max-width: 320px; min-height: 2.6em; }
-  @media (max-width: 820px) { .leak-layout { grid-template-columns: 1fr; } .leak-scroller { height: 340vh; } }
+  @media (max-width: 820px) { .leak-layout { grid-template-columns: 1fr; } }
 
   /* ---- connect the journey ---- */
   .journey-section { background: #f9f9f9; padding-top: clamp(64px, 9vw, 112px); }
@@ -157,30 +155,26 @@
 </section>
 
 <section class="leak-section" id="leak">
-  <div class="leak-scroller">
-    <div class="leak-sticky">
-      <div class="shell leak-layout">
-        <div class="leak-copy">
-          <h2>The leak isn't always where you think.</h2>
-          <p>A business can have a website, search visibility, forms, calls and a CRM — and still lose enquiries because the pieces don't connect.</p>
-          <div class="leak-progress">
-            <div class="leak-progress-bar" id="leakProgressBar">
-              <span class="is-active"></span><span></span><span></span><span></span><span></span>
-            </div>
-            <div class="leak-progress-label" id="leakProgressLabel">01. Search</div>
-          </div>
+  <div class="shell leak-layout">
+    <div class="leak-copy">
+      <h2>The leak isn't always where you think.</h2>
+      <p>A business can have a website, search visibility, forms, calls and a CRM — and still lose enquiries because the pieces don't connect.</p>
+      <div class="leak-progress">
+        <div class="leak-progress-bar" id="leakProgressBar">
+          <span class="is-active"></span><span></span><span></span><span></span><span></span>
         </div>
-        <div class="leak-art">
-          <div class="leak-art-frame">
-            <img class="is-active" data-step="0" src="/assets/cutout-01-search.webp" alt="Illustration of someone searching for a service on their phone">
-            <img data-step="1" src="/assets/cutout-02-visit.webp" alt="Illustration of someone arriving on a service page">
-            <img data-step="2" src="/assets/cutout-03-enquiry.webp" alt="Illustration of someone submitting a contact form">
-            <img data-step="3" src="/assets/cutout-04-followup.webp" alt="Illustration of an enquiry waiting on a CRM board">
-            <img data-step="4" src="/assets/cutout-05-improve.webp" alt="Illustration of someone reviewing what worked">
-          </div>
-          <p class="leak-caption" id="leakCaption">Someone is looking for the service you provide.</p>
-        </div>
+        <div class="leak-progress-label" id="leakProgressLabel">01. Search</div>
       </div>
+    </div>
+    <div class="leak-art">
+      <div class="leak-art-frame">
+        <img class="is-active" data-step="0" src="/assets/cutout-01-search.webp" alt="Illustration of someone searching for a service on their phone">
+        <img data-step="1" src="/assets/cutout-02-visit.webp" alt="Illustration of someone arriving on a service page">
+        <img data-step="2" src="/assets/cutout-03-enquiry.webp" alt="Illustration of someone submitting a contact form">
+        <img data-step="3" src="/assets/cutout-04-followup.webp" alt="Illustration of an enquiry waiting on a CRM board">
+        <img data-step="4" src="/assets/cutout-05-improve.webp" alt="Illustration of someone reviewing what worked">
+      </div>
+      <p class="leak-caption" id="leakCaption">Someone is looking for the service you provide.</p>
     </div>
   </div>
 </section>
@@ -217,9 +211,10 @@
 
   function onScroll(){
     var rect = section.getBoundingClientRect();
-    var total = rect.height - window.innerHeight;
+    var total = rect.height + window.innerHeight;
     if (total <= 0) return;
-    var progress = Math.min(1, Math.max(0, -rect.top / total));
+    var traveled = window.innerHeight - rect.top;
+    var progress = Math.min(1, Math.max(0, traveled / total));
     var idx = Math.min(4, Math.floor(progress * 5));
     setStep(idx);
   }
