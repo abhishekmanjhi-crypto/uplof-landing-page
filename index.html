@@ -8,9 +8,7 @@
 </head>
 <body>
 <div id="splash" style="position:fixed;inset:0;z-index:9999;background:#0a0c0b;display:flex;align-items:center;justify-content:center;transition:opacity .5s ease;">
-  <video id="splash-video" autoplay muted playsinline style="width:min(50vw,360px);height:auto;">
-    <source src="/assets/logo-animation.mp4" type="video/mp4">
-  </video>
+  <iframe src="/assets/uplof-logo-animation/" title="Uplof logo animation" style="width:100%;height:100%;border:0;display:block;background:#0a0c0b;"></iframe>
 </div>
 <script>
 (function(){
@@ -19,7 +17,6 @@
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if(seen || reduce){ splash.remove(); return; }
   document.body.style.overflow = 'hidden';
-  var video = document.getElementById('splash-video');
   var done = function(){
     if(splash.dataset.done) return;
     splash.dataset.done = '1';
@@ -28,9 +25,7 @@
     document.body.style.overflow = '';
     setTimeout(function(){ splash.remove(); }, 500);
   };
-  video.addEventListener('ended', done);
-  video.addEventListener('error', done);
-  setTimeout(done, 4000);
+  setTimeout(done, 12000);
 })();
 </script>
 <x-dc>
@@ -63,6 +58,9 @@
   .page-shell > h2 { max-width: 26ch !important; }
   .hero-art { width: min(100%, 560px); justify-self: end; }
   .hero-art img, .section-art img { display: block; width: 100%; height: auto; }
+  @keyframes uplofNavLogo { 0%,100% { transform: translateY(0) rotate(0deg); filter: brightness(1); } 50% { transform: translateY(-2px) rotate(-1deg); filter: brightness(1.12); } }
+  .nav-logo { animation: uplofNavLogo 3.2s ease-in-out infinite; transform-origin: 50% 60%; }
+  @media (prefers-reduced-motion: reduce) { .nav-logo { animation: none; } }
   .outcome-grid { grid-template-columns: 1.12fr .94fr .94fr !important; }
   .outcome-grid > div { min-width: 0; }
   .outcome-grid > div:first-child img { width: 132px !important; }
@@ -121,7 +119,7 @@
     .hero-layout, .split-layout, .compare-layout, .one-person-intro, .work-intro, .faq-layout, .contact-layout { grid-template-columns: 1fr !important; }
     .hero-art, .compare-art { justify-self: center; }
     .outcome-grid, .service-grid { grid-template-columns: 1fr !important; }
-    .work-cards, .why-grid, .steps-grid { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
+    .work-cards, .why-grid, .steps-grid, .feature-grid { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
     .faq-art { position: static; }
   }
   @media (max-width: 600px) {
@@ -136,7 +134,9 @@
     .compare-row > div:first-child { grid-column: 1 / -1; padding: 12px 16px !important; }
     .compare-row:first-child > div:first-child { display: none; }
     .compare-row > div { padding: 16px !important; overflow-wrap: anywhere; }
-    .work-cards, .why-grid, .steps-grid { grid-template-columns: 1fr !important; }
+    .work-cards, .why-grid, .steps-grid, .feature-grid { grid-template-columns: 1fr !important; }
+    .feature-grid > div { border-right: none !important; border-bottom: 1px solid #d4d4d4; }
+    .feature-grid > div:last-child { border-bottom: none; }
   }
 </style>
 </helmet>
@@ -145,7 +145,7 @@
 
   <header style="position:sticky;top:0;z-index:20;background:rgba(250,248,243,.93);backdrop-filter:blur(8px);border-bottom:1px solid #ddd8cc">
     <div class="nav-shell" style="display:flex;align-items:center;gap:32px">
-      <a href="#top" style="display:flex;align-items:center"><img src="/assets/logo.svg" alt="Uplof.me" style="height:40px;width:auto;display:block"></a>
+      <a href="#top" style="display:flex;align-items:center"><img class="nav-logo" src="/assets/logo.svg" alt="Uplof.me" style="height:40px;width:auto;display:block"></a>
       <nav style="display:flex;gap:26px;margin-left:auto;font-size:14px">
         <a href="#how" style="color:#5c6157">How it works</a>
         <a href="#services" style="color:#5c6157">Services</a>
@@ -188,28 +188,35 @@
     </div>
   </section>
 
-  <section style="border-bottom:1px solid #ddd8cc">
-    <div class="page-shell">
-      <h2 style="font-family:Archivo,Geist,system-ui,sans-serif;font-stretch:87.5%;font-size:clamp(34px,3.9vw,58px);line-height:.94;letter-spacing:-0.025em;font-weight:800;max-width:20ch">Found. Contacted. Followed up.</h2>
-      <p style="margin-top:20px;max-width:62ch;color:#5c6157">You need more than visits to a website. You need the right people to find your service, a clear reason to contact you and a route your team can use before a warm enquiry goes cold.</p>
-      <div class="outcome-grid" style="margin-top:44px;display:grid;gap:1px;background:#ddd8cc;border:1px solid #ddd8cc">
-        <div style="background:#faf8f3;padding:28px 24px">
-          <img src="assets/search-discovery-green.webp" alt="Magnifier illustration" style="display:block;width:96px;height:auto">
-          <div style="margin-top:16px;font-family:'Geist Mono',ui-monospace,monospace;font-size:12px;color:#7A1418">01</div>
-          <h3 style="margin-top:10px;font-size:22px;letter-spacing:-0.02em;font-weight:600">Be found by people looking for your service.</h3>
-          <p style="margin-top:12px;color:#5c6157;font-size:15px">SEO, Google Business Profile and service content to make the business easier to discover.</p>
+  <section style="border-bottom:1px solid #ddd8cc;background:#f9f9f9">
+    <div class="page-shell" style="display:flex;flex-direction:column;gap:45px">
+      <div style="display:flex;flex-direction:column;gap:32px;max-width:800px">
+        <h2 style="font-family:Archivo,Geist,system-ui,sans-serif;font-stretch:87.5%;font-size:clamp(34px,4.2vw,54px);line-height:1.01;letter-spacing:-0.02em;font-weight:800;background:linear-gradient(105deg,#002A78 3%,#D12D34 51%,#242424 101%);-webkit-background-clip:text;background-clip:text;color:transparent">More found. More enquiries. Fewer lost.</h2>
+        <p style="color:#303030;font-size:20px;line-height:1.32;letter-spacing:-0.02em;max-width:56ch">You don't need another disconnected marketing service. You need the journey to make sense from the first search to the moment your team follows up.</p>
+      </div>
+      <div class="feature-grid" style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));background:#f9f9f9;border:1px solid #d4d4d4;box-shadow:4px 4px 0 #d12e35">
+        <div style="padding:30px;border-right:1px solid #d4d4d4">
+          <div style="position:relative;width:100%;max-width:344px;height:118px;overflow:hidden">
+            <div style="position:absolute;left:calc(50% - 73px);top:-36px;width:244px;height:160px;overflow:hidden">
+              <img src="assets/found-people-green.webp" alt="Illustration of someone searching for and finding a nearby service provider" style="position:absolute;left:-12.63%;top:-14.1%;width:112.63%;height:114.36%;max-width:none">
+            </div>
+          </div>
+          <h3 style="margin-top:17px;font-size:clamp(24px,2.4vw,32px);line-height:1.13;letter-spacing:-0.05em;font-weight:600">Be found by the right people.</h3>
+          <p style="margin-top:17px;color:#5c6157;font-size:16px;line-height:1.2;letter-spacing:-0.05em">Show up where people are already looking for the service you sell, with pages and information that help them understand what you do.</p>
         </div>
-        <div style="background:#faf8f3;padding:28px 24px">
-          <img src="assets/website-green.webp" alt="Website landing page illustration" style="display:block;width:96px;height:auto">
-          <div style="margin-top:16px;font-family:'Geist Mono',ui-monospace,monospace;font-size:12px;color:#7A1418">02</div>
-          <h3 style="margin-top:10px;font-size:22px;letter-spacing:-0.02em;font-weight:600">Give visitors a reason to get in touch.</h3>
-          <p style="margin-top:12px;color:#5c6157;font-size:15px">Clear websites and landing pages with relevant proof, useful answers and straightforward contact routes.</p>
+        <div style="padding:30px;border-right:1px solid #d4d4d4">
+          <div style="position:relative;width:100%;max-width:344px;height:118px;overflow:hidden">
+            <img src="assets/reason-to-act-green.webp" alt="Illustration of someone pointing at a call to action on a webpage" style="position:absolute;left:2px;top:-15px;width:158px;height:158px;object-fit:cover">
+          </div>
+          <h3 style="margin-top:17px;font-size:clamp(24px,2.4vw,32px);line-height:1.13;letter-spacing:-0.05em;font-weight:600">Give them a reason to act.</h3>
+          <p style="margin-top:17px;color:#5c6157;font-size:16px;line-height:1.2;letter-spacing:-0.05em">Show up where people are already looking for the service you sell, with pages and information that help them understand what you do.</p>
         </div>
-        <div style="background:#faf8f3;padding:28px 24px">
-          <img src="assets/crm-green.webp" alt="CRM follow-up illustration" style="display:block;width:96px;height:auto">
-          <div style="margin-top:16px;font-family:'Geist Mono',ui-monospace,monospace;font-size:12px;color:#7A1418">03</div>
-          <h3 style="margin-top:10px;font-size:22px;letter-spacing:-0.02em;font-weight:600">Give every enquiry a next step.</h3>
-          <p style="margin-top:12px;color:#5c6157;font-size:15px">Capture, CRM, follow-up and tracking so an enquiry doesn't depend on someone remembering to respond.</p>
+        <div style="padding:30px">
+          <div style="position:relative;width:100%;max-width:344px;height:118px;overflow:hidden">
+            <img src="assets/keep-moving-green.webp" alt="Illustration of someone pushing an enquiry card forward" style="position:absolute;left:calc(50% - 73px);top:-26px;width:188px;height:188px;object-fit:cover">
+          </div>
+          <h3 style="margin-top:17px;font-size:clamp(24px,2.4vw,32px);line-height:1.13;letter-spacing:-0.05em;font-weight:600">Keep every enquiry moving.</h3>
+          <p style="margin-top:17px;color:#5c6157;font-size:16px;line-height:1.2;letter-spacing:-0.05em">Show up where people are already looking for the service you sell, with pages and information that help them understand what you do.</p>
         </div>
       </div>
     </div>
