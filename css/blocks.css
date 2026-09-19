@@ -449,3 +449,28 @@
   .reasons,
   .kit { text-align: center; }
 }
+
+/* ------------------------------------------------- v5 — PROCESS ON MOBILE
+   One beat per screen: a big numbered badge, its icon, then the copy, with a
+   rule between steps so they never run together. */
+@media (max-width: 720px) {
+  .timeline { gap: 0; }
+  .tstep {
+    align-items: center;
+    text-align: center;
+    padding-inline: 0;
+    padding-block: var(--space-10);
+    border-block-start: var(--border-width) solid var(--border-hairline);
+    gap: var(--space-3);
+  }
+  .tstep:first-child { border-block-start: 0; padding-block-start: var(--space-2); }
+  .tstep__n {
+    inline-size: 56px;
+    block-size: 56px;
+    font-size: var(--text-h3);
+    box-shadow: none;
+  }
+  .tstep .icon { font-size: 1.5rem; }
+  .tstep__title { min-block-size: 0; font-size: var(--text-h3); }
+  .tstep__line { max-inline-size: 30ch; margin-inline: auto; }
+}
