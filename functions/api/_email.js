@@ -73,11 +73,13 @@ function signature() {
     </td></tr>
     <tr>
       <td style="vertical-align:top;padding-right:18px;width:108px;">
-        <!-- Animated: a light glare sweeps the mark, borrowed from the site's
-             logo animation. Frame one is the finished logo on purpose, because
-             Outlook on Windows renders only the first frame of a GIF. It loops
-             three times rather than forever so a signature does not shimmer at
-             the reader. Hosted, not attached, so the message itself stays ~4KB. -->
+        <!-- The full 9s brand sequence: Get Found. / Get Leads / Get Growing /
+             With -> / the mark. The loop is ROTATED to enter on the finished
+             mark rather than on the empty red block the sequence naturally
+             starts with, because Outlook on Windows renders only the first
+             frame of a GIF — unrotated, those recipients got a blank box as
+             the signature. It then runs the whole sequence and loops back.
+             Hosted, not attached, so the message itself stays ~4KB. -->
         <img src="${ASSET}/logo-animated.gif" width="108" height="69" alt="Uplof.me" style="display:block;border:0;">
       </td>
       <td style="vertical-align:top;${FONT}">
