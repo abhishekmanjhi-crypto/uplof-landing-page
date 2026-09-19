@@ -110,10 +110,11 @@
   inset-block-start: var(--space-4);
   inline-size: 60%;
   max-inline-size: 300px;
-  block-size: auto;      /* the height attribute would otherwise win over aspect-ratio */
-  aspect-ratio: 1;
-  object-fit: contain;
-  object-position: right top;
+  /* Sized by WIDTH only, natural height. A forced `aspect-ratio: 1` letterboxed
+     the one 3:2 illustration (ill-found-dark, 720x480) inside a square box, so
+     it drew 120px tall where its square neighbours drew 179px — the same slot,
+     visibly less ink. Equal width is what reads as equal size. */
+  block-size: auto;
   z-index: -1;
   transition: transform var(--dur-slow) var(--ease-out);
 }
@@ -351,9 +352,44 @@
 
 /* --------------------------------------------------------- RESPONSIVE */
 @media (max-width: 1100px) {
-  .bento { grid-template-columns: repeat(2, 1fr); grid-auto-rows: 240px; }
+  .bento { grid-template-columns: repeat(2, 1fr); }
   .tile--span2 { grid-column: span 2; grid-row: span 1; }
-  .tile--span2 .tile__art { inline-size: 40%; }
+
+  /* BELOW THE 4-COLUMN GRID the corner overlay stops working, and it fails
+     WORST here rather than on phones. The full-width layout gives each tile a
+     300px-tall row and enough width that art in the top-right and text in the
+     bottom-left never meet. Two columns kept a 240px row but let the art stay
+     60% wide, so the tile got wider while the row got shorter: measured 311px
+     of art-over-text overlap at 1100px, 184px at 768px — an iPad hit this
+     harder than any phone did.
+     So below 1100px the art leaves the background and joins the flow:
+     right-aligned, one size everywhere, rows grown to fit. It cannot overlap
+     because nothing is absolutely positioned any more. */
+  .bento { grid-auto-rows: auto; }
+  .tile { min-block-size: 240px; }
+  .tile__art,
+  .tile--span2 .tile__art {
+    position: static;
+    align-self: flex-end;
+    /* Sized against the VIEWPORT, not the tile. A percentage resolves against
+       each tile's own width, so the 2-column span2 tile drew 136px while its
+       single-column neighbours drew 120px — the same "oddly sized" split in a
+       smaller dose. Viewport units give every tile the identical figure. */
+    inline-size: min(136px, 30vw);
+    max-inline-size: none;
+    margin-block-end: auto;
+    z-index: auto;
+  }
+  /* The 05 tile carries a ghost numeral instead of an illustration. Put it on
+     the same rail at a size that balances the art beside it, or that tile
+     reads as the one that forgot its picture. */
+  .tile__numeral {
+    position: static;
+    align-self: flex-end;
+    margin-block-end: auto;
+    font-size: 4.5rem;
+    line-height: 1.1;
+  }
   .kit, .reasons, .timeline { grid-template-columns: repeat(2, 1fr); }
   .kit__item:nth-child(2n) { border-inline-end: 0; }
   .kit__item:nth-child(-n+2) { border-block-end: var(--border-width) solid var(--border-hairline); }
@@ -362,8 +398,8 @@
 }
 @media (max-width: 720px) {
   .bento, .kit, .reasons, .timeline, .evidence, .services { grid-template-columns: 1fr; }
-  .bento { grid-auto-rows: 220px; }
   .tile--span2 { grid-column: span 1; }
+  .tile { min-block-size: 220px; }
   .kit__item { border-inline-end: 0; border-block-end: var(--border-width) solid var(--border-hairline); }
   .kit__item:last-child { border-block-end: 0; }
   .ledger__head { display: none; }
@@ -373,6 +409,7 @@
   .ledger__bad { grid-area: b; }
   .ledger__good { grid-area: g; }
 }
+
 @media (prefers-reduced-motion: reduce) {
   .tile:hover .tile__art { transform: none; }
 }
