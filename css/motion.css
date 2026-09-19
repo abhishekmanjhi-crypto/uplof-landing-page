@@ -13,8 +13,6 @@
   --ease-reveal: cubic-bezier(0.16, 1, 0.3, 1);   /* expo-out: fast in, long settle */
 }
 
-html { scroll-padding-top: 88px; }
-
 /* ------------------------------------------------------------ 1. REVEALS
    A block with data-reveal fades up as one unit. A block with data-stagger
    stays put and reveals its direct children in sequence instead; site.js

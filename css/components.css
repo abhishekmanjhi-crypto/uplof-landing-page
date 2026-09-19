@@ -214,6 +214,12 @@
 
 .stepview__caption {
   position: relative;
+  /* The spans below are absolutely positioned and translated out to the sides.
+     .stepview__stage clips its frames the same way; without this the captions
+     escaped and gave the whole document a horizontal scroll on narrow screens
+     (measured: 93px of stray scroll at 370px wide). clip, not hidden, so no
+     scroll container is created. */
+  overflow: clip;
   min-block-size: 3.2em;
   inline-size: min(360px, 100%);
   text-align: center;

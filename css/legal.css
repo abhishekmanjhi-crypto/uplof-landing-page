@@ -210,8 +210,26 @@
 @media print {
   .navbar,
   .legal-more,
+  .skip-link,
+  .cookie-consent,
+  .footer__logo,
+  .footer__nav,
+  .footer__strap { display: none !important; }
+
+  /* The footer is NOT hidden outright: a legal page attached to a contract has
+     to say who it is from and how to reach them. Keep the identity line, drop
+     the navigation and the brand surface around it. */
+  .footer {
+    padding-block: var(--space-5) 0;
+    background: none !important;
+    border-block-start: 1px solid #000;
+  }
   .footer,
-  .skip-link { display: none !important; }
+  .footer__tagline,
+  .footer__tel,
+  .footer__tel a,
+  .footer__legal,
+  .footer__legal a { color: #000 !important; }
 
   .masthead {
     padding-block: 0 var(--space-6);

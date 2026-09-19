@@ -43,6 +43,9 @@
 html {
   -webkit-text-size-adjust: 100%;
   scroll-behavior: smooth;
+  /* Cleared by the sticky .navbar. Lives here, not in motion.css, so every
+     page that has a navbar gets it regardless of which sheets it loads. */
+  scroll-padding-top: calc(var(--nav-height) + var(--space-6));
 }
 
 body {
@@ -79,6 +82,16 @@ a {
 ::selection {
   background: var(--red-500);
   color: var(--paper-000);
+}
+/* The brand surface IS --red-500, so the default highlight is invisible there;
+   on the dark surface --red-500 is too dark to read. Re-point per context. */
+.on-brand::selection, .on-brand ::selection {
+  background: var(--ink-900);
+  color: var(--paper-000);
+}
+.on-dark::selection, .on-dark ::selection {
+  background: var(--red-400);
+  color: var(--ink-900);
 }
 
 /* ------------------------------------------------------------- TYPOGRAPHY */
