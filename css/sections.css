@@ -15,6 +15,11 @@
 }
 
 /* Decorative corner line-work, exported from Figma (2644×2644). */
+/* The decorative art is sized in absolute pixels and is wider than any
+   viewport, so the global `img { max-width: 100% }` was squeezing it to the
+   hero's width while `block-size` kept its full height — the line-work came
+   out horizontally crushed to ~37%%. It is purely decorative and clipped by
+   `overflow: hidden`, so it opts out of that clamp and keeps its geometry. */
 .hero__lines {
   position: absolute;
   inline-size: 2644px;
@@ -24,6 +29,7 @@
   z-index: var(--z-base);
   opacity: 0.9;
   pointer-events: none;
+  max-inline-size: none;
 }
 
 /* Soft rotated glow behind the headline. */
@@ -37,6 +43,7 @@
   z-index: var(--z-decor);
   pointer-events: none;
   opacity: 0.85;
+  max-inline-size: none;
 }
 
 .hero__body {
@@ -156,6 +163,7 @@
   z-index: var(--z-base);
   opacity: 0.55;
   pointer-events: none;
+  max-inline-size: none;
 }
 .cta__inner {
   position: relative;
