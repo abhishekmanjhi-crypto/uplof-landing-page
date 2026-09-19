@@ -181,10 +181,14 @@
 
 .stepview { display: flex; flex-direction: column; gap: var(--space-5); align-items: center; inline-size: 100%; }
 
+/* A filmstrip window. Each frame is parked one stage-width apart and the whole
+   strip slides sideways as the scroll advances, so the movement reads as
+   connected to the scroll instead of one image swapping for another. */
 .stepview__stage {
   position: relative;
   inline-size: 100%;
   aspect-ratio: 541 / 403;
+  overflow: hidden;
 }
 .stepview__frame {
   position: absolute;
@@ -192,11 +196,16 @@
   display: grid;
   place-items: center;
   opacity: 0;
-  transform: scale(0.97);
-  transition: opacity var(--dur-base) var(--ease-out),
-              transform var(--dur-slow) var(--ease-out);
+  /* js sets --offset (frames away from the current step) */
+  transform: translateX(calc(var(--offset, 0) * 100%));
+  transition: transform var(--dur-slow) var(--ease-out),
+              opacity var(--dur-base) var(--ease-out);
+  will-change: transform, opacity;
 }
-.stepview__frame.is-active { opacity: 1; transform: none; }
+.stepview__frame.is-active { opacity: 1; }
+/* the neighbours stay faintly visible at the edges so the strip reads as one
+   continuous thing rather than a single image teleporting */
+.stepview__frame.is-adjacent { opacity: 0.18; }
 .stepview__frame img {
   inline-size: 100%;
   block-size: 100%;
@@ -218,9 +227,11 @@
   inset-inline: 0;
   inset-block-start: 0;
   opacity: 0;
-  transition: opacity var(--dur-base) var(--ease-out);
+  transform: translateX(calc(var(--offset, 0) * 40%));
+  transition: transform var(--dur-slow) var(--ease-out),
+              opacity var(--dur-base) var(--ease-out);
 }
-.stepview__caption span.is-active { opacity: 1; }
+.stepview__caption span.is-active { opacity: 1; transform: none; }
 
 /* ------------------------------------------------------- 7. JOURNEY CARDS
    Dark cards on a light band, presented as a perspective carousel. */
@@ -461,8 +472,17 @@
   gap: var(--space-4);
   padding-block-end: var(--space-10);
 }
-.footer__logo { display: inline-block; }
-.footer__logo img { inline-size: 102px; block-size: auto; }
+.footer__logo { display: inline-block; line-height: 0; }
+/* The animated lockup, extracted from the original splash as a self-contained
+   SVG (CSS keyframes travel inside the file, so they still run through <img>).
+   It is the same white-plate-and-red-block mark as the static logo, so it drops
+   straight into the footer slot. Static mark is the reduced-motion fallback. */
+.footer__logo-anim { inline-size: 150px; block-size: auto; display: block; }
+.footer__logo-static { inline-size: 102px; block-size: auto; display: none; }
+@media (prefers-reduced-motion: reduce) {
+  .footer__logo-anim { display: none; }
+  .footer__logo-static { display: block; }
+}
 .footer__tagline { font-size: var(--text-sm); line-height: var(--leading-relaxed); color: var(--fg-small); }
 .footer__tel a {
   display: inline-flex;

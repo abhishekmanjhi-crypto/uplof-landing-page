@@ -126,8 +126,20 @@
         seg.classList.toggle("is-active", i === index);
         seg.classList.toggle("is-done", i < index);
       });
-      frames.forEach(function (f, i) { f.classList.toggle("is-active", i === index); });
-      captions.forEach(function (c, i) { c.classList.toggle("is-active", i === index); });
+      // park every frame (index - current) stage-widths away so the strip slides
+      // clamp to +/-1: distant frames park just off-stage instead of translating
+      // metres away, which would extend the document's scrollable width
+      frames.forEach(function (f, i) {
+        var d = i - index;
+        f.style.setProperty("--offset", String(Math.max(-1, Math.min(1, d))));
+        f.classList.toggle("is-active", d === 0);
+        f.classList.toggle("is-adjacent", Math.abs(d) === 1);
+      });
+      captions.forEach(function (c, i) {
+        var d = i - index;
+        c.style.setProperty("--offset", String(Math.max(-1, Math.min(1, d))));
+        c.classList.toggle("is-active", d === 0);
+      });
       if (label && labels[index]) label.textContent = labels[index];
     }
     show(0);

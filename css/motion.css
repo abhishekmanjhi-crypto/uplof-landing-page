@@ -136,3 +136,21 @@ html { scroll-padding-top: 88px; }
   .faq__item[open] .faq__a { animation: none; }
   .readout:hover, .btn:active, .btn--solid:hover, .btn--accent:hover { transform: none; }
 }
+
+/* ------------------------------------------- 6. HORIZONTAL CARD ENTRANCE
+   The reason and step cards read as a sequence, so they arrive left to right
+   rather than rising together. Transform only, and the stagger index is
+   already written onto each child by site.js. */
+.reasons[data-stagger] > *,
+.timeline[data-stagger] > * {
+  transform: translateX(28px);
+}
+.reasons[data-stagger].is-revealed > *,
+.timeline[data-stagger].is-revealed > * {
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reasons[data-stagger] > *,
+  .timeline[data-stagger] > * { transform: none !important; }
+}
