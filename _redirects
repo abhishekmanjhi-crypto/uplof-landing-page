@@ -1,0 +1,4 @@
+# Build tooling lives in the repo but must not be reachable on the site.
+# wrangler uploads the whole working directory (pages_build_output_dir is "."),
+# and Pages does NOT skip dot-directories, so exclude it explicitly.
+/.tools/* /404.html 404
