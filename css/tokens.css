@@ -1,0 +1,204 @@
+/* ============================================================================
+   UPLOF DESIGN SYSTEM — TOKENS
+   Extracted from Figma: Uplof Branding file › node 21:190
+   ----------------------------------------------------------------------------
+   Layer 1 = primitives (raw brand values, never used directly in components)
+   Layer 2 = semantic aliases (what components actually reference)
+   Layer 3 = context overrides (.on-dark / .on-brand re-point the semantics)
+   ========================================================================== */
+
+:root {
+  /* ---------------------------------------------------------------- 1. COLOR
+     Primitives. Named by hue + weight, not by usage. */
+
+  /* Brand red — the single accent. There is no second accent colour. */
+  --red-500: #d12d34;  /* brand surface: hero, CTA, rules, shadows */
+  --red-600: #cf1a21;  /* logo block, pressed states */
+  --red-900: #650208;  /* offset shadow only — never as a fill behind text */
+
+  /* Ink — neutral dark ramp. Warm-tinted toward --cream-100 so the neutrals
+     belong to the brand rather than reading as generic UI grey. */
+  --ink-900: #070605;  /* darkest surface */
+  --ink-800: #141211;  /* inset dark controls */
+  --ink-700: #262320;  /* gradient terminus */
+  --ink-600: #332f2b;  /* body copy on light */
+  --ink-500: #5e5853;
+  --ink-400: #9b948c;  /* muted copy on dark (raised from Figma #7a7a7a for AA) */
+
+  /* Paper — neutral light ramp, warm-tinted to match the ink ramp. */
+  --paper-000: #ffffff;
+  --paper-050: #faf8f5; /* default light section surface */
+  --paper-100: #f4f1ec;
+  --paper-200: #d8d2c9; /* hairline borders on light */
+  --cream-100: #f0e7dd; /* warm off-white used on red + dark surfaces */
+
+  /* Support — used only inside gradients and the progress indicator */
+  --blue-900: #002a78;
+  --blue-200: #bbd3ff;
+  --rose-200: #ffa4a4;
+  --indigo-500: #5762ff;
+  --slate-800: #232f3b;
+
+  /* Gradients. Two only: one for light surfaces, one for dark. */
+  --gradient-heading-light: linear-gradient(
+    104.6deg, var(--blue-900) 3.35%, var(--red-500) 50.68%, var(--ink-700) 100.93%);
+  --gradient-heading-dark: linear-gradient(
+    96.19deg, var(--blue-200) 3.35%, var(--paper-000) 50.68%, var(--rose-200) 100.93%);
+
+  /* -------------------------------------------------------- 2. SEMANTIC COLOR
+     Default context = light surface. Overridden by .on-dark / .on-brand. */
+  --bg-page: var(--paper-050);
+  --bg-raised: var(--paper-050);
+  --bg-inset: var(--paper-000);
+  --fg-default: var(--ink-900);
+  --fg-small: var(--ink-600);   /* text at or below --text-sm */
+  --fg-body: var(--ink-600);
+  --fg-muted: var(--ink-500);
+  --fg-accent: var(--red-500);
+  --border-hairline: var(--paper-200);
+  --gradient-heading: var(--gradient-heading-light);
+
+  /* Interactive */
+  --btn-solid-bg: var(--ink-800);
+  --btn-solid-fg: var(--paper-000);
+  --btn-ghost-fg: var(--ink-900);
+  --btn-ghost-border: var(--ink-900);
+  --focus-ring: var(--red-500);
+
+  /* ------------------------------------------------------------ 3. ELEVATION
+     The system has exactly one elevation device: a hard, zero-blur offset.
+     No soft shadows anywhere. */
+  --shadow-brand: 4px 4px 0 0 var(--red-500);
+  --shadow-deep: 4px 4px 0 0 var(--red-900);
+  --shadow-ink: 4px 4px 0 0 var(--ink-900);
+  --shadow-offset: 4px;
+
+  /* --------------------------------------------------------------- 4. SHAPE
+     Uplof is square. Radius exists as a token so the rule is explicit and
+     enforceable — do not invent rounded corners in components. */
+  --radius-none: 0px;
+  --radius-pill: 999px; /* permitted only on the step dots */
+  --border-width: 1px;
+
+  /* ------------------------------------------------------------ 5. TYPOGRAPHY
+     Display = Glancyr (brand). Text = Satoshi. Two families, no others. */
+  --font-display: "Glancyr", "Outfit", "Century Gothic", system-ui, sans-serif;
+  --font-text: "Satoshi", "Inter", system-ui, -apple-system, sans-serif;
+
+  /* Fluid scale. Upper bounds are the exact Figma desktop values. */
+  --text-display: clamp(2.75rem, 1.2rem + 5.2vw, 4.7rem);   /* → 75.2px */
+  --text-h2:      clamp(2.125rem, 1.15rem + 2.9vw, 3.375rem);/* → 54px  */
+  --text-h3:      clamp(1.625rem, 1.1rem + 1.1vw, 2rem);     /* → 32px  */
+  --text-h4:      1.5rem;                                    /*    24px — card + deliverable titles */
+  --text-caption: 1.4375rem;                                 /*    23px — step caption, Figma-exact */
+  --text-stat:    clamp(2rem, 1.2rem + 2vw, 3rem);           /* → 48px — stat figures */
+  --text-lead:    clamp(1rem, 0.9rem + 0.3vw, 1.125rem);      /* → 18px, was 20 */
+  --text-body:    1rem;                                      /*    16px */
+  --text-ui:      1.125rem;                                  /*    18px — buttons, fields */
+  --text-sm:      0.875rem;                                  /*    14px */
+  --text-label:   0.75rem;                                   /*    12px — eyebrows */
+  --text-micro:   0.6875rem;                                 /*    11px — mono micro-labels only.
+                                                                   Mono reads larger than sans at the
+                                                                   same size; 11px is the optical match
+                                                                   for --text-label. */
+
+  --leading-display: 1.01;
+  --leading-tight: 1.13;
+  --leading-snug: 1.2;
+  --leading-normal: 1.32;
+  --leading-relaxed: 1.43;
+  --leading-flat: 0.874;  /* single-line UI labels, from Figma */
+
+  --tracking-display: -0.01em;
+  --tracking-title: -0.05em;  /* card titles, Satoshi Bold 32 */
+  --tracking-body: -0.01em;
+  --tracking-label: 0.14em;   /* eyebrows / uppercase micro-labels */
+
+  --weight-light: 300;
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-bold: 700;
+
+  /* ---------------------------------------------------------------- 6. SPACE
+     4px base. Section rhythm is its own token so every band matches. */
+  --space-1: 0.25rem;  /*  4 */
+  --space-2: 0.5rem;   /*  8 */
+  --space-3: 0.75rem;  /* 12 */
+  --space-4: 1rem;     /* 16 */
+  --space-5: 1.25rem;  /* 20 */
+  --space-6: 1.5rem;   /* 24 */
+  --space-8: 2rem;     /* 32 */
+  --space-10: 2.5rem;  /* 40 */
+  --space-11: 2.8125rem;/*45 */
+  --space-14: 3.375rem;/* 54 */
+  --space-16: 4rem;    /* 64 */
+  --space-20: 5rem;    /* 80 */
+  --space-24: 6rem;    /* 96 */
+  --space-30: 7.5rem;  /*120 */
+
+  --section-padding-block: clamp(4rem, 2rem + 6vw, 7.5rem);
+  --stack-gap: var(--space-8);   /* heading → lead */
+  --block-gap: var(--space-11);  /* header block → content block */
+
+  /* ------------------------------------------------------------- 7. LAYOUT */
+  --container: 1200px;
+  --gutter: clamp(1.25rem, 0.4rem + 3.6vw, 7.5rem);
+  --nav-height: 65px;
+
+  /* ------------------------------------------------------------- 8. MOTION */
+  --ease-out: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-fast: 160ms;
+  --dur-base: 320ms;
+  --dur-slow: 640ms;
+
+  /* --------------------------------------------------------------- 9. LAYER */
+  --z-base: 0;
+  --z-decor: 1;
+  --z-content: 2;
+  --z-nav: 50;
+}
+
+/* ---------------------------------------------------------------------------
+   CONTEXTS
+   Drop .on-dark or .on-brand on any container and every component inside it
+   re-themes without a single component-level override.
+   ------------------------------------------------------------------------ */
+
+.on-dark {
+  --bg-page: var(--ink-900);
+  --bg-raised: var(--ink-900);
+  --bg-inset: var(--ink-800);
+  --fg-default: var(--cream-100);
+  --fg-small: var(--ink-400);
+  --fg-body: var(--ink-400);
+  --fg-muted: var(--ink-400);
+  --border-hairline: #262a2e;
+  --gradient-heading: var(--gradient-heading-dark);
+  --btn-solid-bg: var(--paper-000);
+  --btn-solid-fg: var(--ink-900);
+  --btn-ghost-fg: var(--paper-000);
+  --btn-ghost-border: var(--paper-000);
+  --focus-ring: var(--rose-200);
+  color: var(--fg-body);
+  background-color: var(--bg-page);
+}
+
+.on-brand {
+  --bg-page: var(--red-500);
+  --bg-raised: var(--red-500);
+  --bg-inset: var(--ink-800);
+  --fg-default: var(--cream-100);
+  --fg-small: var(--paper-000);  /* cream is 4.15:1 on red — under AA below 18px */
+  --fg-body: var(--cream-100);
+  --fg-muted: rgba(240, 231, 221, 0.78);
+  --fg-accent: var(--paper-000);
+  --border-hairline: rgba(255, 255, 255, 0.35);
+  --btn-solid-bg: var(--ink-800);
+  --btn-solid-fg: var(--paper-000);
+  --btn-ghost-fg: var(--paper-000);
+  --btn-ghost-border: var(--paper-000);
+  --focus-ring: var(--paper-000);
+  color: var(--fg-body);
+  background-color: var(--bg-page);
+}

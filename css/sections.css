@@ -1,0 +1,236 @@
+/* ============================================================================
+   UPLOF — SECTION LAYOUTS
+   Page-level composition. Anything reusable lives in components.css instead.
+   ========================================================================== */
+
+/* ------------------------------------------------------------------ HERO */
+
+.hero {
+  position: relative;
+  min-block-size: 741px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+/* Decorative corner line-work, exported from Figma (2644×2644). */
+.hero__lines {
+  position: absolute;
+  inline-size: 2644px;
+  block-size: 2644px;
+  inset-block-start: -362px;
+  inset-inline-start: calc(25% + 76px);
+  z-index: var(--z-base);
+  opacity: 0.9;
+  pointer-events: none;
+}
+
+/* Soft rotated glow behind the headline. */
+.hero__glow {
+  position: absolute;
+  inline-size: 1206px;
+  block-size: 1206px;
+  inset-block-start: 292px;
+  inset-inline-start: calc(33.33% + 96px);
+  rotate: 135deg;
+  z-index: var(--z-decor);
+  pointer-events: none;
+  opacity: 0.85;
+}
+
+.hero__body {
+  position: relative;
+  z-index: var(--z-content);
+  flex: 1 1 auto;
+  display: flex;
+  align-items: center;
+  padding-block: var(--space-16) var(--space-20);
+}
+
+.hero__content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 21px;
+  inline-size: min(794px, 100%);
+  margin-inline: auto;
+  text-align: center;
+}
+.hero__content .display,
+.hero__content .lead { color: var(--cream-100); }
+.hero__lead { max-inline-size: 70ch; }
+
+.hero__form { display: flex; flex-direction: column; align-items: center; gap: var(--space-14); inline-size: 100%; }
+.hero__copy { display: flex; flex-direction: column; gap: var(--space-8); }
+.hero .trust { justify-content: center; }
+
+/* ----------------------------------------------------------- THE LEAK */
+
+/* A tall scroll track with a pinned viewport: scroll progress drives the
+   step index, per the Figma annotation on the progress-bar component. */
+.leak { padding-block: 0; }
+.leak__track { position: relative; min-block-size: 320vh; }
+
+.leak__pin {
+  position: sticky;
+  inset-block-start: 0;
+  min-block-size: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-block: var(--space-16);
+}
+
+.leak__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 597px) minmax(0, 541px);
+  gap: var(--space-16);
+  align-items: center;
+  justify-content: space-between;
+}
+
+.leak__copy { display: flex; flex-direction: column; gap: var(--space-8); align-items: flex-start; }
+.leak__copy .lead { max-inline-size: 42ch; }
+
+/* ------------------------------------------------------------- JOURNEY */
+
+.journey__head { margin-block-end: var(--block-gap); }
+
+/* Bleed the carousel to the viewport edge so off-screen cards read as a
+   continuing row rather than a clipped box. */
+.journey__rail {
+  margin-inline: calc(50% - 50vw);
+  padding-inline-start: max(var(--gutter), calc(50vw - (var(--container) / 2)));
+  padding-inline-end: 0;
+}
+.journey__controls { inline-size: min(var(--container), 100% - (2 * var(--gutter))); margin-inline: auto; }
+
+/* --------------------------------------------------------------- PROOF */
+
+.proof__grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-5);
+  margin-block-start: var(--block-gap);
+}
+
+/* ----------------------------------------------------------------- FIT */
+
+.fit__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: var(--space-16);
+  align-items: start;
+}
+
+/* -------------------------------------------------------------- FOUNDER */
+
+.founder__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+  gap: var(--space-16);
+  align-items: center;
+}
+.founder__prose { display: flex; flex-direction: column; gap: var(--space-5); }
+.founder__prose p {
+  font-size: var(--text-lead);
+  line-height: var(--leading-normal);
+  color: var(--fg-body);
+  max-inline-size: 60ch;
+}
+.founder__sign { margin-block-start: var(--space-6); display: flex; flex-direction: column; gap: var(--space-2); }
+
+/* ----------------------------------------------------------------- CTA */
+
+.cta {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  text-align: center;
+}
+.cta__lines {
+  position: absolute;
+  inline-size: 1800px;
+  block-size: 1800px;
+  inset-block-start: -640px;
+  inset-inline-start: calc(50% - 200px);
+  z-index: var(--z-base);
+  opacity: 0.55;
+  pointer-events: none;
+}
+.cta__inner {
+  position: relative;
+  z-index: var(--z-content);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-8);
+}
+.cta .display, .cta .lead { color: var(--cream-100); }
+.cta__lead { max-inline-size: 58ch; }
+
+/* -------------------------------------------------------- RESPONSIVE */
+
+@media (max-width: 1100px) {
+  .leak__grid { grid-template-columns: 1fr; gap: var(--space-10); justify-items: start; }
+  .leak__track { min-block-size: 260vh; }
+  .fit__grid, .founder__grid { grid-template-columns: 1fr; gap: var(--space-10); }
+  .founder__media { max-inline-size: 360px; }
+}
+
+@media (max-width: 900px) {
+  .hero { min-block-size: 0; }
+  .hero__lines { inline-size: 1600px; block-size: 1600px; inset-block-start: -260px; inset-inline-start: 20%; }
+  .hero__glow { inline-size: 800px; block-size: 800px; inset-block-start: 200px; }
+  .proof__grid { grid-template-columns: 1fr; }
+  .leak__track { min-block-size: 0; }
+  .leak__pin { position: static; min-block-size: 0; padding-block: var(--section-padding-block); }
+}
+
+/* Without a pinned scroll track there is nothing to drive the steps, so the
+   script falls back to auto-advance — see site.js. */
+@media (prefers-reduced-motion: reduce) {
+  .leak__track { min-block-size: 0; }
+  .leak__pin { position: static; min-block-size: 0; padding-block: var(--section-padding-block); }
+}
+
+/* ---------------------------------------------------- SECTIONS — v2 -------- */
+
+/* Stat strip sits directly under the hero and reads as part of the hero band. */
+.statband { padding-block: var(--space-16); }
+.statband .stats { border-block-start: 0; }
+
+.compare__wrap { margin-block-start: var(--block-gap); }
+
+.deliverables__wrap,
+.services__wrap,
+.process__wrap,
+.faq__wrap { margin-block-start: var(--block-gap); }
+
+.why__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr);
+  gap: var(--space-16);
+  align-items: start;
+}
+
+.longform__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr);
+  gap: var(--space-16);
+  align-items: start;
+}
+.longform__prose { display: flex; flex-direction: column; gap: var(--space-5); }
+.longform__prose p {
+  font-size: var(--text-lead);
+  line-height: var(--leading-normal);
+  color: var(--fg-body);
+}
+
+.cta__form { inline-size: min(760px, 100%); }
+.cta__route { margin-block: var(--space-4); }
+
+@media (max-width: 1100px) {
+  .why__grid, .longform__grid { grid-template-columns: 1fr; gap: var(--space-10); }
+}

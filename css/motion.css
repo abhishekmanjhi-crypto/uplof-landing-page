@@ -1,0 +1,138 @@
+/* ============================================================================
+   UPLOF — MOTION
+   Every movement here has one job: to say "this arrived" (reveals), "this
+   is live data" (counters), or "this responded to you" (hover, open).
+   Only transform and opacity animate. Everything collapses to static under
+   prefers-reduced-motion, and nothing becomes unreachable without JS.
+   ========================================================================== */
+
+:root {
+  --reveal-distance: 22px;
+  --reveal-dur: 720ms;
+  --stagger-step: 70ms;
+  --ease-reveal: cubic-bezier(0.16, 1, 0.3, 1);   /* expo-out: fast in, long settle */
+}
+
+html { scroll-padding-top: 88px; }
+
+/* ------------------------------------------------------------ 1. REVEALS
+   A block with data-reveal fades up as one unit. A block with data-stagger
+   stays put and reveals its direct children in sequence instead; site.js
+   writes --i onto each child. */
+
+[data-reveal]:not([data-stagger]) {
+  opacity: 0;
+  transform: translateY(var(--reveal-distance));
+  transition:
+    opacity var(--reveal-dur) var(--ease-reveal),
+    transform var(--reveal-dur) var(--ease-reveal),
+    box-shadow var(--dur-base) var(--ease-out),
+    background-color var(--dur-fast) var(--ease-out);
+  transition-delay: var(--reveal-delay, 0ms);
+  will-change: opacity, transform;
+}
+[data-reveal]:not([data-stagger]).is-revealed { opacity: 1; transform: none; }
+
+[data-stagger] > * {
+  opacity: 0;
+  transform: translateY(var(--reveal-distance));
+  /* box-shadow and background-color ride along so hover rules never need the
+     shorthand, which would reset the delay and the opacity transition. */
+  transition:
+    opacity var(--reveal-dur) var(--ease-reveal),
+    transform var(--reveal-dur) var(--ease-reveal),
+    box-shadow var(--dur-base) var(--ease-out),
+    background-color var(--dur-fast) var(--ease-out);
+  transition-delay: calc(var(--i, 0) * var(--stagger-step) + var(--reveal-delay, 0ms));
+  will-change: opacity, transform;
+}
+[data-stagger].is-revealed > * { opacity: 1; transform: none; }
+
+/* Hairline-divided grids paint their dividers through the gap, so a child
+   sliding in reveals a flash of background. Fade those without the slide. */
+.ledger[data-stagger] > *,
+.services[data-stagger] > *,
+.bento[data-stagger] > * { transform: none; }
+
+/* Headline blocks get a slightly longer, softer arrival than cards. */
+.section-head[data-reveal],
+.section-head--center[data-reveal] { --reveal-dur: 900ms; --reveal-distance: 16px; }
+
+/* --------------------------------------------------------- 2. HERO ENTRANCE
+   Runs once on load, no scroll needed: eyebrow, headline, lead, actions,
+   micro, trust, in that order. */
+@keyframes rise {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: none; }
+}
+@keyframes drift {
+  from { opacity: 0; transform: translateY(-10px); }
+  to   { opacity: 1; transform: none; }
+}
+.hero__copy > *,
+.hero__form > :not(.hero__copy),
+.hero .trust {
+  opacity: 0;
+  animation: rise 900ms var(--ease-reveal) forwards;
+}
+.hero__copy > :nth-child(1) { animation-delay: 80ms; }
+.hero__copy > :nth-child(2) { animation-delay: 160ms; }
+.hero__copy > :nth-child(3) { animation-delay: 280ms; }
+.hero__form > :nth-child(2) { animation-delay: 420ms; }
+.hero__form > :nth-child(3) { animation-delay: 520ms; }
+.hero .trust               { animation-delay: 640ms; }
+.navbar { opacity: 0; animation: drift 700ms var(--ease-reveal) 40ms forwards; }
+.hero__lines, .hero__glow { opacity: 0; animation: rise 1400ms var(--ease-reveal) 200ms forwards; }
+
+/* ----------------------------------------------------------- 3. COUNTERS
+   Figures carry data-count; site.js tweens the text. Keep the box from
+   reflowing while digits change. */
+[data-count] { font-variant-numeric: tabular-nums; }
+
+/* ------------------------------------------------- 4. MICRO-INTERACTIONS */
+
+/* Cards lift toward the pointer, shadow grows one step. Transitions come from
+   the reveal rules above; these only set the destination state. */
+.readout:hover { transform: translate(-3px, -3px); box-shadow: 7px 7px 0 0 var(--red-500); }
+.tile:hover { background-color: #0c0a08; }
+
+/* Buttons: arrows nudge on hover, everything presses on click. */
+.btn { will-change: transform; }
+.btn:active { transform: translate(1px, 1px) scale(0.985); }
+.btn--solid:hover, .btn--accent:hover { transform: translate(-2px, -2px); }
+
+/* Ledger rows and checklist items brighten on hover. */
+.ledger__row:hover { background-color: var(--bg-page); }
+.checklist li:hover { background-color: rgba(255, 255, 255, 0.03); }
+
+/* Progress bar segment growth already eases; give the label a quick swap. */
+.progress__label { transition: opacity var(--dur-fast) var(--ease-out); }
+
+/* FAQ answers unfold. details toggles display, so this is a keyframe on open
+   rather than a transition. The marker rotates between + and ×. */
+@keyframes unfold {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: none; }
+}
+.faq__item[open] .faq__a { animation: unfold 320ms var(--ease-reveal); }
+.faq__q::before { transition: transform var(--dur-base) var(--ease-out); display: inline-block; }
+.faq__item[open] .faq__q::before { content: "+"; transform: rotate(45deg); }
+
+/* Route nodes tick in when the CTA reveals. */
+.cta .route__node { transition: border-color var(--dur-fast) var(--ease-out), background-color var(--dur-fast) var(--ease-out); }
+.cta .route__node:hover { background-color: rgba(255, 255, 255, 0.08); }
+
+/* ------------------------------------------------------- 5. REDUCED MOTION */
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal]:not([data-stagger]),
+  [data-stagger] > *,
+  .hero__copy > *, .hero__form > :not(.hero__copy), .hero .trust,
+  .navbar, .hero__lines, .hero__glow {
+    opacity: 1 !important;
+    transform: none !important;
+    animation: none !important;
+    transition: none !important;
+  }
+  .faq__item[open] .faq__a { animation: none; }
+  .readout:hover, .btn:active, .btn--solid:hover, .btn--accent:hover { transform: none; }
+}

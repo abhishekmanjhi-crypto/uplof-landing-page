@@ -1,661 +1,567 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en">
 <head>
-<link rel="icon" href="/assets/logo.svg" type="image/svg+xml">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<script src="./support.js"></script>
+<title>Uplof — Turn attention into enquiries</title>
+<meta name="description" content="Your website, search and follow-up were built at different times and never joined up. That is where enquiries go missing. Founder-led. First lead audit is free.">
+<link rel="canonical" href="https://uplof.me/">
+<link rel="icon" href="/assets/logo.svg" type="image/svg+xml">
+<link rel="stylesheet" href="css/tokens.css">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/components.css">
+<link rel="stylesheet" href="css/sections.css">
+<link rel="stylesheet" href="css/blocks.css">
+<link rel="stylesheet" href="css/motion.css">
 </head>
 <body>
-<div id="splash" style="position:fixed;inset:0;z-index:9999;background:#0a0c0b;display:flex;align-items:center;justify-content:center;transition:opacity .5s ease;">
-  <iframe src="/assets/uplof-logo-animation/" title="Uplof logo animation" style="width:100%;height:100%;border:0;display:block;background:#0a0c0b;"></iframe>
-</div>
-<script>
-(function(){
-  var splash = document.getElementById('splash');
-  var seen = sessionStorage.getItem('uplof-splash-seen');
-  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if(seen || reduce){ splash.remove(); return; }
-  document.body.style.overflow = 'hidden';
-  var done = function(){
-    if(splash.dataset.done) return;
-    splash.dataset.done = '1';
-    sessionStorage.setItem('uplof-splash-seen','1');
-    splash.style.opacity = '0';
-    document.body.style.overflow = '';
-    setTimeout(function(){ splash.remove(); }, 500);
-  };
-  setTimeout(done, 12000);
-})();
-</script>
-<x-dc>
-<helmet>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@87.5,700..900&family=Geist:wght@100..900&family=Geist+Mono:wght@400..600&family=Caveat:wght@400..700&display=swap" rel="stylesheet">
-<style>
-  html { background: #faf8f3; scroll-behavior: smooth; }
-  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
-  body { margin: 0; background: #faf8f3; color: #12140f; font-family: Geist, system-ui, sans-serif; font-size: 16px; line-height: 1.65; -webkit-font-smoothing: antialiased; }
-  * { box-sizing: border-box; }
-  a { color: #7A1418; text-decoration: none; }
-  a:hover { color: #12140f; }
-  h1, h2, h3 { margin: 0; text-wrap: pretty; }
-  p { margin: 0; text-wrap: pretty; }
-  summary::-webkit-details-marker { display: none; }
-  :root { --page-max: 1180px; --page-gutter: clamp(20px, 4vw, 48px); --section-space: clamp(64px, 9vw, 112px); }
-  .page-shell { width: min(calc(100% - (var(--page-gutter) * 2)), var(--page-max)) !important; max-width: var(--page-max) !important; margin-inline: auto !important; padding: var(--section-space) 0 !important; }
-  .nav-shell { width: min(calc(100% - (var(--page-gutter) * 2)), var(--page-max)) !important; max-width: var(--page-max) !important; margin-inline: auto !important; padding: 14px 0 !important; }
-  .hero-layout, .split-layout, .compare-layout, .faq-layout, .contact-layout { display: grid !important; gap: clamp(32px, 5vw, 72px) !important; align-items: center; }
-  .hero-layout { grid-template-columns: minmax(0, 1fr); }
-  .hero-copy { min-width: 0; text-align: center; width: min(100%, 940px); margin-inline: auto; }
-  .hero-copy > h1, .hero-copy > p { margin-inline: auto; }
-  .hero-copy > div { justify-content: center; }
-  .hero-copy > div:nth-last-of-type(1) { display: block !important; }
-  .hero-copy > div:nth-last-of-type(1) > div:last-child { display: none !important; }
-  .hero-copy > div:nth-last-of-type(1) > div:first-child { grid-template-columns: repeat(4, minmax(0, 1fr)) !important; }
-  .page-shell > h2, .page-shell > p, .one-person-intro h2, .one-person-intro p, .work-intro h2, .fit-content > h2 { text-align: center; margin-inline: auto; }
-  .page-shell > h2 { max-width: 26ch !important; }
-  .hero-art { width: min(100%, 560px); justify-self: end; }
-  .hero-art img, .section-art img { display: block; width: 100%; height: auto; }
-  @keyframes uplofNavLogo { 0%,100% { transform: translateY(0) rotate(0deg); filter: brightness(1); } 50% { transform: translateY(-2px) rotate(-1deg); filter: brightness(1.12); } }
-  .nav-logo { animation: uplofNavLogo 3.2s ease-in-out infinite; transform-origin: 50% 60%; }
-  @media (prefers-reduced-motion: reduce) { .nav-logo { animation: none; } }
-  .outcome-grid { grid-template-columns: 1.12fr .94fr .94fr !important; }
-  .outcome-grid > div { min-width: 0; }
-  .outcome-grid > div:first-child img { width: 132px !important; }
-  .split-layout { grid-template-columns: minmax(260px, .82fr) minmax(0, 1.18fr); }
-  .split-layout .section-art { width: min(100%, 430px); justify-self: center; }
-  .compare-layout { grid-template-columns: minmax(0, 1fr); align-items: end; }
-  .compare-row { display: grid; grid-template-columns: minmax(140px, .7fr) minmax(0, 1fr) minmax(0, 1fr); border-bottom: 1px solid #ddd8cc; }
-  .approach-cell { background: #0a0c0b; color: #f2f1ea !important; border-color: #2a332d !important; }
-  .compare-row:first-child .approach-cell { color: #B3272B !important; }
-  .cta-bar { margin-top: 32px; padding: 24px 28px; background: #0a0c0b; color: #f2f1ea; display: flex; flex-wrap: wrap; gap: 20px; align-items: center; justify-content: space-between; }
-  .call-button { display: inline-flex; justify-content: center; align-items: center; min-height: 48px; padding: 12px 24px; background: #B3272B; color: #fdf8f3; border-radius: 6px; font-weight: 600; }
-  .call-button:hover { background: #E28D90; }
-  section img { mix-blend-mode: multiply; }
-  .journey-flow { list-style: none; padding: 0; margin: 36px auto; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 28px; }
-  .journey-flow li { position: relative; text-align: center; border-top: 2px solid #B3272B; padding: 22px 8px; }
-  .journey-flow li + li::before { content: '→'; position: absolute; left: -24px; top: 24px; color: #7A1418; }
-  .journey-flow span { display: block; color: #7A1418; font-family: 'Geist Mono', monospace; font-size: 12px; margin-bottom: 8px; }
-  .journey-flow small { display: block; color: #5c6157; margin-top: 8px; line-height: 1.5; }
-  .journey-stack { display: grid !important; grid-template-columns: minmax(0, 1fr); gap: 12px !important; }
-  .journey-stack > div { width: 100%; }
-  .journey-stack > div:not(:first-child) { flex-direction: column; }
-  .journey-stack svg { transform: rotate(90deg); width: 24px; height: 24px; }
-  .journey-stack > div > div { width: 100%; text-align: center; }
-  .journey-stack > div:first-child { text-align: center; }
-  .deliverables-grid { grid-template-columns: repeat(4, minmax(0, 1fr)) !important; }
-  @media (max-width: 1050px) { .deliverables-grid { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; } }
-  .outcome-grid { text-align: center; grid-template-columns: repeat(3, minmax(0, 1fr)) !important; }
-  .outcome-grid img, .outcome-grid > div:first-child img { width: 132px !important; height: 104px !important; object-fit: contain; margin-inline: auto; }
-  #services .page-shell > div:last-of-type { justify-content: center; text-align: center; }
-  .split-layout .section-art { margin-inline: auto; }
-  .compare-art { width: min(100%, 320px); justify-self: center; padding-bottom: 18px; }
-  .compare-art img { display: block; width: 100%; height: auto; }
-  .one-person-intro { display: block !important; max-width: 760px; margin-inline: auto; }
-  .work-intro { display: block; }
-  .work-intro img { display: block; width: min(100%, 390px); height: auto; justify-self: center; }
-  .work-cards { grid-template-columns: repeat(4, minmax(0, 1fr)) !important; text-align: center; }
-  .why-grid { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; gap: 1px !important; background: #ddd8cc; border: 1px solid #ddd8cc; }
-  .why-grid > div { background: #faf8f3; padding: 26px; }
-  .service-banner { width: min(100%, 1040px) !important; max-width: none !important; margin-inline: auto; }
-  .service-grid { grid-template-columns: repeat(3, minmax(0, 1fr)) !important; }
-  .fit-content { width: min(100%, 880px); margin-inline: auto; }
-  .steps-grid { grid-template-columns: repeat(4, minmax(0, 1fr)) !important; }
-  .faq-layout { grid-template-columns: minmax(0, 1fr); align-items: start; }
-  .faq-layout > div { width: min(100%, 880px); margin-inline: auto; }
-  .faq-layout h2 { text-align: center; }
-  .faq-art { width: min(100%, 250px); justify-self: center; position: sticky; top: 105px; }
-  .faq-art img { display: block; width: 100%; height: auto; }
-  .contact-layout { grid-template-columns: minmax(0, 1fr); }
-  .contact-layout > div { width: min(100%, 680px); margin-inline: auto; min-width: 0; }
-  .contact-layout > div:first-child { text-align: center; }
-  .contact-layout h2, .contact-layout p { margin-inline: auto; }
-  .contact-layout > div:first-child > div { justify-content: center; }
-  input, textarea { min-width: 0; width: 100%; }
-  section { scroll-margin-top: 84px; }
-  @media (max-width: 820px) {
-    .hero-layout, .split-layout, .compare-layout, .one-person-intro, .work-intro, .faq-layout, .contact-layout { grid-template-columns: 1fr !important; }
-    .hero-art, .compare-art { justify-self: center; }
-    .outcome-grid, .service-grid { grid-template-columns: 1fr !important; }
-    .work-cards, .why-grid, .steps-grid, .feature-grid { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
-    .faq-art { position: static; }
-  }
-  @media (max-width: 600px) {
-    .hero-copy > div:nth-last-of-type(1) > div:first-child { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
-    .deliverables-grid { grid-template-columns: 1fr !important; }
-    .journey-flow { grid-template-columns: 1fr; gap: 18px; max-width: 360px; }
-    .journey-flow li + li::before { content: '↓'; left: calc(50% - 7px); top: -27px; }
-    header nav { display: none !important; }
-    header .nav-shell { gap: 12px !important; justify-content: space-between; }
-    header .nav-shell > a:last-child { white-space: normal !important; max-width: 200px; font-size: 12px !important; }
-    .compare-row { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
-    .compare-row > div:first-child { grid-column: 1 / -1; padding: 12px 16px !important; }
-    .compare-row:first-child > div:first-child { display: none; }
-    .compare-row > div { padding: 16px !important; overflow-wrap: anywhere; }
-    .work-cards, .why-grid, .steps-grid, .feature-grid { grid-template-columns: 1fr !important; }
-    .feature-grid > div { border-right: none !important; border-bottom: 1px solid #d4d4d4; }
-    .feature-grid > div:last-child { border-bottom: none; }
-  }
-</style>
-</helmet>
 
-<div style="background:#faf8f3;color:#12140f;font-family:Geist,system-ui,sans-serif;min-height:100%">
+<a class="skip-link" href="#main">Skip to content</a>
 
-  <header style="position:sticky;top:0;z-index:20;background:rgba(250,248,243,.93);backdrop-filter:blur(8px);border-bottom:1px solid #ddd8cc">
-    <div class="nav-shell" style="display:flex;align-items:center;gap:32px">
-      <a href="#top" style="display:flex;align-items:center"><img class="nav-logo" src="/assets/logo.svg" alt="Uplof.me" style="height:40px;width:auto;display:block"></a>
-      <nav style="display:flex;gap:26px;margin-left:auto;font-size:14px">
-        <a href="#how" style="color:#5c6157">How it works</a>
-        <a href="#services" style="color:#5c6157">Services</a>
-        <a href="#work" style="color:#5c6157">Work</a>
-        <a href="#faqs" style="color:#5c6157">FAQs</a>
-      </nav>
-      <a href="#contact" style="background:#B3272B;color:#fdf8f3;font-size:14px;font-weight:600;padding:10px 16px;border-radius:6px;white-space:nowrap" style-hover="filter:brightness(1.08)" style-active="filter:brightness(.88)">Find where you're losing leads ↗</a>
+<!-- ======================================================= HERO + NAVBAR -->
+<header class="hero on-brand">
+  <img class="hero__lines" src="assets/img/hero-lines.svg" alt="" aria-hidden="true">
+  <img class="hero__glow" src="assets/img/hero-glow.svg" alt="" aria-hidden="true">
+
+  <nav class="navbar" aria-label="Primary">
+    <div class="container navbar__inner">
+      <a class="navbar__logo" href="#" aria-label="Uplof.me, home">
+        <img src="assets/img/logo-uplof.svg" alt="Uplof.me" width="102" height="65">
+      </a>
+      <div class="navbar__links">
+        <a href="#journey">Approach</a>
+        <a href="#proof">Proof</a>
+        <a href="#services">Services</a>
+        <a href="#faq">FAQ</a>
+      </div>
+      <a class="btn btn--ghost btn--sm" href="#contact">Let’s talk</a>
     </div>
-  </header>
+  </nav>
 
-  <section id="top" style="background:#0a0c0b;color:#f2f1ea;border-bottom:1px solid #2a332d">
-    <div class="page-shell hero-layout" style="position:relative">
-      <div class="hero-copy">
-      <div style="font-family:'Geist Mono',ui-monospace,monospace;font-size:12px;letter-spacing:.14em;color:#B3272B;text-transform:uppercase">For service businesses that want more enquiries</div>
-      <h1 style="margin-top:22px;font-family:Archivo,Geist,system-ui,sans-serif;font-stretch:87.5%;font-size:clamp(46px,6.6vw,96px);line-height:.9;letter-spacing:-0.03em;font-weight:900;max-width:16ch">More enquiries. <em style="font-style:normal;color:#B3272B">Fewer lost.</em></h1>
-      <p style="margin-top:26px;max-width:62ch;color:#a5ada6;font-size:17px">Uplof connects your website, SEO and follow-up so more of the right people can reach you, and your team has a clear next step when they do. Work directly with the founder on the parts of your lead journey where enquiries are getting lost.</p>
-      <div style="margin-top:32px;display:flex;flex-wrap:wrap;gap:12px;align-items:center">
-        <a href="#contact" style="background:#B3272B;color:#fdf8f3;font-size:15px;font-weight:600;padding:13px 20px;border-radius:6px" style-hover="filter:brightness(1.08)" style-active="filter:brightness(.88)">Find where you're losing leads</a>
-        <a href="{{ waLink }}" target="_blank" rel="noopener" style="border:1px solid #2a332d;color:#f2f1ea;font-size:15px;font-weight:500;padding:13px 20px;border-radius:6px" style-hover="border-color:#B3272B">Talk on WhatsApp</a>
-      </div>
-      <p style="margin-top:18px;max-width:58ch;color:#a5ada6;font-size:14px">Share your website and tell us where the enquiries are falling away. Your first lead audit is free, a quick, no-obligation look at where you're losing enquiries.</p>
+  <div class="hero__body">
+    <div class="container">
+      <div class="hero__content">
+        <div class="hero__form">
+          <div class="hero__copy">
+            <p class="eyebrow eyebrow--bare">For service businesses that want more enquiries</p>
+            <h1 class="display">Turn attention into enquiries.</h1>
+            <p class="lead hero__lead">
+              Your website, search and follow-up were built at different times and never
+              joined up. That is where enquiries go missing. I find the gaps and close them.
+            </p>
+          </div>
 
-      <div style="margin-top:52px;display:flex;flex-wrap:wrap;align-items:flex-end;gap:24px">
-        <div style="flex:1 1 420px;border-top:1px solid #2a332d;padding-top:24px;display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:20px">
-          <div style="font-family:'Geist Mono',ui-monospace,monospace;font-size:13px;color:#a5ada6"><span style="color:#B3272B">12</span>-day optimisation window</div>
-          <div style="font-family:'Geist Mono',ui-monospace,monospace;font-size:13px;color:#a5ada6"><span style="color:#B3272B">9</span> recorded call actions</div>
-          <div style="font-family:'Geist Mono',ui-monospace,monospace;font-size:13px;color:#a5ada6">Landing page to CRM route</div>
-          <div style="font-family:'Geist Mono',ui-monospace,monospace;font-size:13px;color:#a5ada6">Selected previous work</div>
+          <div style="display:flex;gap:var(--space-3);flex-wrap:wrap;justify-content:center">
+            <a class="btn btn--solid" href="#contact">Find where you’re losing leads ↗</a>
+            <a class="btn btn--ghost" href="https://wa.me/917710894943?text=Hi%20Uplof%2C%20I%27d%20like%20to%20talk%20about%20my%20lead%20journey." rel="noopener">Talk on WhatsApp</a>
+          </div>
+
+          <p class="micro">First lead audit is free. No obligation, no quote attached.</p>
         </div>
-        <div style="flex:0 0 auto;display:flex;align-items:center;gap:6px;color:#B3272B;padding-bottom:2px">
-          <svg viewBox="0 0 110 60" width="96" height="52" fill="none" stroke="#B3272B" strokeWidth="3.2" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M104 8 C 86 4, 54 6, 34 22 C 22 32, 20 42, 26 50"></path>
-            <path d="M16 38 C 20 44, 24 49, 26 52 C 31 50, 36 47, 41 46"></path>
-          </svg>
-          <span style="font-family:Caveat,cursive;font-size:24px;line-height:1.15;color:#f2f1ea;transform:rotate(-4deg);display:inline-block">real recorded events,<br>nothing invented</span>
-        </div>
+
+        <ul class="trust">
+          <li class="trust__item">
+            <img src="assets/img/icon-founder.svg" alt="" aria-hidden="true">
+            Founder-led, first search to follow-up
+          </li>
+          <li class="trust__item">
+            <img src="assets/img/icon-endtoend.svg" alt="" aria-hidden="true">
+            Scope agreed before any work begins
+          </li>
+        </ul>
       </div>
-      <p style="margin-top:26px;color:#a5ada6;font-size:14px">Founder-led. From first search to follow-up. Clear scope before work begins.</p>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- ==================================================== 01 — STAT STRIP -->
+  <section class="section statband on-dark" aria-label="Recorded events from previous work">
+    <div class="container">
+      <div class="stats" data-reveal data-stagger>
+        <div class="stats__item"><p class="stats__figure" data-count="31625">31,625</p><p class="stats__label">Recorded search impressions</p></div>
+        <div class="stats__item"><p class="stats__figure" data-count="9">9</p><p class="stats__label">Recorded call actions</p></div>
+        <div class="stats__item"><p class="stats__figure" data-count="12">12</p><p class="stats__label">Days in the measured window</p></div>
+        <div class="stats__item"><p class="stats__figure" data-count="1">1</p><p class="stats__label">Connected route, page to CRM</p></div>
+      </div>
+      <p class="stats__note">Recorded platform events. Not confirmed sales, bookings or qualified leads.</p>
+    </div>
+  </section>
+
+  <!-- ==================================================== 02 — THE OUTCOME -->
+  <section class="section" id="outcome" aria-labelledby="outcome-title">
+    <div class="container stack stack--loose">
+      <div class="section-head stack" data-reveal>
+        <p class="eyebrow">The outcome</p>
+        <h2 class="heading heading--gradient" id="outcome-title">More found. More<br>enquiries. Fewer lost.</h2>
+      </div>
+
+      <div class="cluster" data-reveal data-stagger style="--reveal-delay:120ms">
+        <article class="cluster__card">
+          <div class="cluster__media"><img src="assets/img/ill-found.png" alt="" width="520" height="347" loading="lazy"></div>
+          <div class="cluster__body">
+            <h3 class="title">Be found by the<br>right people.</h3>
+            <p class="body">Pages built for the searches that end in work.</p>
+          </div>
+        </article>
+        <article class="cluster__card">
+          <div class="cluster__media"><img src="assets/img/ill-convince.png" alt="" width="520" height="520" loading="lazy"></div>
+          <div class="cluster__body">
+            <h3 class="title">Give them a<br>reason to act.</h3>
+            <p class="body">One obvious next step, easy to take on a phone.</p>
+          </div>
+        </article>
+        <article class="cluster__card">
+          <div class="cluster__media"><img src="assets/img/ill-capture.png" alt="" width="520" height="520" loading="lazy"></div>
+          <div class="cluster__body">
+            <h3 class="title">Keep every<br>enquiry moving.</h3>
+            <p class="body">One inbox, an owner, a written next step.</p>
+          </div>
+        </article>
       </div>
     </div>
   </section>
 
-  <section style="border-bottom:1px solid #ddd8cc;background:#f9f9f9">
-    <div class="page-shell" style="display:flex;flex-direction:column;gap:45px">
-      <div style="display:flex;flex-direction:column;gap:32px;max-width:800px">
-        <h2 style="font-family:Archivo,Geist,system-ui,sans-serif;font-stretch:87.5%;font-size:clamp(34px,4.2vw,54px);line-height:1.01;letter-spacing:-0.02em;font-weight:800;background:linear-gradient(105deg,#002A78 3%,#D12D34 51%,#242424 101%);-webkit-background-clip:text;background-clip:text;color:transparent">More found. More enquiries. Fewer lost.</h2>
-        <p style="color:#303030;font-size:20px;line-height:1.32;letter-spacing:-0.02em;max-width:56ch">You don't need another disconnected marketing service. You need the journey to make sense from the first search to the moment your team follows up.</p>
-      </div>
-      <div class="feature-grid" style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));background:#f9f9f9;border:1px solid #d4d4d4;box-shadow:4px 4px 0 #d12e35">
-        <div style="padding:30px;border-right:1px solid #d4d4d4">
-          <div style="position:relative;width:100%;max-width:344px;height:118px;overflow:hidden">
-            <div style="position:absolute;left:calc(50% - 73px);top:-36px;width:244px;height:160px;overflow:hidden">
-              <img src="assets/found-people-green.webp" alt="Illustration of someone searching for and finding a nearby service provider" style="position:absolute;left:-12.63%;top:-14.1%;width:112.63%;height:114.36%;max-width:none">
+  <!-- ====================================================== 03 — THE LEAK -->
+  <section class="section leak on-dark" id="leak" aria-labelledby="leak-title">
+    <div class="leak__track" data-stepper>
+      <div class="leak__pin">
+        <div class="container leak__grid">
+          <div class="leak__copy">
+            <h2 class="heading heading--gradient" id="leak-title">The leak isn’t always where you think.</h2>
+            <p class="lead">Website, rankings, forms, phone, CRM. None of them built to hand over to the next.</p>
+            <div class="progress" role="group" aria-label="Journey stage">
+              <div class="progress__track" data-stepper-track aria-hidden="true">
+                <span class="progress__seg is-active"></span><span class="progress__seg"></span><span class="progress__seg"></span><span class="progress__seg"></span><span class="progress__seg"></span>
+              </div>
+              <p class="progress__label" data-stepper-label aria-live="polite">01. Search</p>
             </div>
+            <p class="micro">Five steps. Four handovers. The handovers are where the money goes.</p>
           </div>
-          <h3 style="margin-top:17px;font-size:clamp(24px,2.4vw,32px);line-height:1.13;letter-spacing:-0.05em;font-weight:600">Be found by the right people.</h3>
-          <p style="margin-top:17px;color:#5c6157;font-size:16px;line-height:1.2;letter-spacing:-0.05em">Show up where people are already looking for the service you sell, with pages and information that help them understand what you do.</p>
+
+          <div class="stepview">
+            <div class="stepview__stage" data-stepper-stage>
+              <figure class="stepview__frame is-active"><img src="assets/img/ill-search-dark.png" alt="Someone searching for a service" width="720" height="720"></figure>
+              <figure class="stepview__frame"><img src="assets/img/ill-convince-dark.png" alt="A visitor reading a service page" width="720" height="720"></figure>
+              <figure class="stepview__frame"><img src="assets/img/ill-found-dark.png" alt="A person making contact" width="720" height="480"></figure>
+              <figure class="stepview__frame"><img src="assets/img/ill-capture-dark.png" alt="An enquiry moved to the next step" width="720" height="720"></figure>
+              <figure class="stepview__frame"><img src="assets/img/ill-search-dark.png" alt="Reviewing what was recorded" width="720" height="720"></figure>
+            </div>
+            <p class="stepview__caption" data-stepper-caption>
+              <span class="is-active">Someone types the problem you solve into Google.</span>
+              <span>They land on a page and decide, in seconds, whether to call.</span>
+              <span>They call, message or fill in a form. It goes somewhere.</span>
+              <span>Somebody has to own it and move it forward.</span>
+              <span>What happened next tells you what to fix first.</span>
+            </p>
+          </div>
         </div>
-        <div style="padding:30px;border-right:1px solid #d4d4d4">
-          <div style="position:relative;width:100%;max-width:344px;height:118px;overflow:hidden">
-            <img src="assets/reason-to-act-green.webp" alt="Illustration of someone pointing at a call to action on a webpage" style="position:absolute;left:2px;top:-15px;width:158px;height:158px;object-fit:cover">
-          </div>
-          <h3 style="margin-top:17px;font-size:clamp(24px,2.4vw,32px);line-height:1.13;letter-spacing:-0.05em;font-weight:600">Give them a reason to act.</h3>
-          <p style="margin-top:17px;color:#5c6157;font-size:16px;line-height:1.2;letter-spacing:-0.05em">Show up where people are already looking for the service you sell, with pages and information that help them understand what you do.</p>
+      </div>
+    </div>
+    <script type="application/json" data-stepper-labels>["01. Search","02. Visit","03. Enquiry","04. Follow-up","05. Improve"]</script>
+  </section>
+
+  <!-- ==================================================== 04 — THE LEDGER -->
+  <section class="section" id="gaps" aria-labelledby="gaps-title">
+    <div class="container stack stack--loose">
+      <div class="section-head stack" data-reveal>
+        <h2 class="heading heading--gradient" id="gaps-title">Six places the join fails.</h2>
+        <p class="lead">The ordinary result of a web designer one year, an SEO the next, a CRM consultant after that.</p>
+      </div>
+
+      <div class="ledger" data-reveal data-stagger style="--reveal-delay:120ms">
+        <div class="ledger__head" aria-hidden="true">
+          <span></span><span>Piece</span><span>Disconnected</span><span class="is-good">Connected</span>
         </div>
-        <div style="padding:30px">
-          <div style="position:relative;width:100%;max-width:344px;height:118px;overflow:hidden">
-            <img src="assets/keep-moving-green.webp" alt="Illustration of someone pushing an enquiry card forward" style="position:absolute;left:calc(50% - 73px);top:-26px;width:188px;height:188px;object-fit:cover">
-          </div>
-          <h3 style="margin-top:17px;font-size:clamp(24px,2.4vw,32px);line-height:1.13;letter-spacing:-0.05em;font-weight:600">Keep every enquiry moving.</h3>
-          <p style="margin-top:17px;color:#5c6157;font-size:16px;line-height:1.2;letter-spacing:-0.05em">Show up where people are already looking for the service you sell, with pages and information that help them understand what you do.</p>
+        <div class="ledger__row">
+          <svg class="icon ledger__icon" aria-hidden="true"><use href="assets/icons/sprite.svg#i-browsers"/></svg>
+          <p class="ledger__label">Website</p>
+          <p class="ledger__bad"><span class="ledger__mark">✕</span>Built before the search was known</p>
+          <p class="ledger__good"><span class="ledger__mark">✓</span>Planned around the search</p>
+        </div>
+        <div class="ledger__row">
+          <svg class="icon ledger__icon" aria-hidden="true"><use href="assets/icons/sprite.svg#i-magnifying-glass"/></svg>
+          <p class="ledger__label">SEO</p>
+          <p class="ledger__bad"><span class="ledger__mark">✕</span>Rankings pointed at a page that can’t convert</p>
+          <p class="ledger__good"><span class="ledger__mark">✓</span>Aimed at pages built to convert</p>
+        </div>
+        <div class="ledger__row">
+          <svg class="icon ledger__icon" aria-hidden="true"><use href="assets/icons/sprite.svg#i-envelope-simple"/></svg>
+          <p class="ledger__label">Contact</p>
+          <p class="ledger__bad"><span class="ledger__mark">✕</span>One inbox, a WhatsApp nobody owns</p>
+          <p class="ledger__good"><span class="ledger__mark">✓</span>Every route lands in one place</p>
+        </div>
+        <div class="ledger__row">
+          <svg class="icon ledger__icon" aria-hidden="true"><use href="assets/icons/sprite.svg#i-phone-call"/></svg>
+          <p class="ledger__label">Follow-up</p>
+          <p class="ledger__bad"><span class="ledger__mark">✕</span>Depends on someone remembering</p>
+          <p class="ledger__good"><span class="ledger__mark">✓</span>Written step, named owner</p>
+        </div>
+        <div class="ledger__row">
+          <svg class="icon ledger__icon" aria-hidden="true"><use href="assets/icons/sprite.svg#i-chart-bar"/></svg>
+          <p class="ledger__label">Reporting</p>
+          <p class="ledger__bad"><span class="ledger__mark">✕</span>Dashboards that disagree</p>
+          <p class="ledger__good"><span class="ledger__mark">✓</span>One journey, recorded end to end</p>
+        </div>
+        <div class="ledger__row">
+          <svg class="icon ledger__icon" aria-hidden="true"><use href="assets/icons/sprite.svg#i-star"/></svg>
+          <p class="ledger__label">Reviews</p>
+          <p class="ledger__bad"><span class="ledger__mark">✕</span>Asked when someone has time</p>
+          <p class="ledger__good"><span class="ledger__mark">✓</span>Asked inside the follow-up</p>
         </div>
       </div>
     </div>
   </section>
 
-  <section style="border-bottom:1px solid #ddd8cc">
-    <div class="page-shell split-layout">
+  <!-- =================================================== 05 — THE APPROACH -->
+  <section class="section" id="journey" aria-labelledby="journey-title">
+    <div class="container stack stack--loose">
+      <div class="section-head--center stack" data-reveal>
+        <h2 class="heading heading--gradient" id="journey-title">Connect the journey.<br>Then improve it.</h2>
+        <p class="lead">Five stages. Start with the one that is costing you enquiries.</p>
+      </div>
+
+      <div class="bento" data-reveal data-stagger style="--reveal-delay:120ms">
+        <article class="tile tile--span2">
+          <img class="tile__art" src="assets/img/ill-search-dark.png" alt="" width="720" height="720">
+          <p class="index-label tile__index">01 / Discover</p>
+          <h3 class="tile__title">Get found.</h3>
+          <p class="tile__line">Search work aimed at the searches that end in work.</p>
+        </article>
+        <article class="tile">
+          <img class="tile__art" src="assets/img/ill-convince-dark.png" alt="" width="720" height="720">
+          <p class="index-label tile__index">02 / Convince</p>
+          <h3 class="tile__title">Build trust.</h3>
+          <p class="tile__line">Pages that answer the objection before the call.</p>
+        </article>
+        <article class="tile">
+          <img class="tile__art" src="assets/img/ill-found-dark.png" alt="" width="720" height="480">
+          <p class="index-label tile__index">03 / Capture</p>
+          <h3 class="tile__title">Start a conversation.</h3>
+          <p class="tile__line">Call, form or WhatsApp. One place it arrives.</p>
+        </article>
+        <article class="tile">
+          <img class="tile__art" src="assets/img/ill-capture-dark.png" alt="" width="720" height="720">
+          <p class="index-label tile__index">04 / Follow up</p>
+          <h3 class="tile__title">Keep it moving.</h3>
+          <p class="tile__line">A stage, an owner, a reminder.</p>
+        </article>
+        <article class="tile">
+          <span class="tile__numeral" aria-hidden="true">05</span>
+          <p class="index-label tile__index">05 / Improve</p>
+          <h3 class="tile__title">See what works.</h3>
+          <p class="tile__line">Recorded evidence decides what changes next.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================= 06 — WHAT YOU GET -->
+  <section class="section on-dark" id="deliverables" aria-labelledby="deliverables-title">
+    <div class="container stack stack--loose">
+      <div class="section-head stack" data-reveal>
+        <h2 class="heading heading--gradient" id="deliverables-title">Four things that exist when I’m done.</h2>
+      </div>
+      <div class="kit" data-reveal data-stagger style="--reveal-delay:120ms">
+        <div class="kit__item">
+          <svg class="icon icon--xl icon--accent" aria-hidden="true"><use href="assets/icons/sprite.svg#i-file-text"/></svg>
+          <h3 class="kit__name">A page</h3>
+          <p class="kit__line">Written for the search a customer really makes.</p>
+        </div>
+        <div class="kit__item">
+          <svg class="icon icon--xl icon--accent" aria-hidden="true"><use href="assets/icons/sprite.svg#i-chats-circle"/></svg>
+          <h3 class="kit__name">A contact journey</h3>
+          <p class="kit__line">Form, call and message routes in one place.</p>
+        </div>
+        <div class="kit__item">
+          <svg class="icon icon--xl icon--accent" aria-hidden="true"><use href="assets/icons/sprite.svg#i-kanban"/></svg>
+          <h3 class="kit__name">A pipeline</h3>
+          <p class="kit__line">A stage for every enquiry, next step written down.</p>
+        </div>
+        <div class="kit__item">
+          <svg class="icon icon--xl icon--accent" aria-hidden="true"><use href="assets/icons/sprite.svg#i-chart-bar"/></svg>
+          <h3 class="kit__name">A report</h3>
+          <p class="kit__line">Recorded events you can open yourself.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================================================== 07 — THE PROOF -->
+  <section class="section" id="proof" aria-labelledby="proof-title">
+    <div class="container stack stack--loose">
+      <div class="section-head stack" data-reveal>
+        <p class="eyebrow">Proof, not promises</p>
+        <h2 class="heading heading--gradient" id="proof-title">Recorded. Not claimed.</h2>
+        <p class="lead">Platform events you can open yourself. Not sales, bookings or qualified leads.</p>
+      </div>
+
+      <div class="evidence" data-reveal data-stagger style="--reveal-delay:120ms">
+        <article class="readout">
+          <p class="readout__source">Roofing · 90 days · Search Console</p>
+          <p class="readout__figure" data-count="31625">31,625</p>
+          <p class="readout__unit">organic search impressions</p>
+          <p class="readout__sub"><b>84</b> page × query combinations</p>
+          <p class="readout__proves"><svg class="icon" aria-hidden="true"><use href="assets/icons/sprite.svg#i-check"/></svg>Pages shown for the searches they were built for.</p>
+        </article>
+        <article class="readout">
+          <p class="readout__source">Home improvement · 12 days · Ads</p>
+          <p class="readout__figure" data-count="9">9</p>
+          <p class="readout__unit">recorded phone-call actions</p>
+          <p class="readout__sub"><b>1</b> landing page, tracked against spend</p>
+          <p class="readout__proves"><svg class="icon" aria-hidden="true"><use href="assets/icons/sprite.svg#i-check"/></svg>The call route was live and measured.</p>
+        </article>
+        <article class="readout">
+          <p class="readout__source">The connected route</p>
+          <div class="route-v" aria-label="Search, service page, call or form, CRM, team notified">
+            <p class="route-v__node"><svg class="icon" aria-hidden="true"><use href="assets/icons/sprite.svg#i-magnifying-glass"/></svg>Search or website<span class="route-v__check">✓</span></p>
+            <p class="route-v__node"><svg class="icon" aria-hidden="true"><use href="assets/icons/sprite.svg#i-browsers"/></svg>Service page<span class="route-v__check">✓</span></p>
+            <p class="route-v__node"><svg class="icon" aria-hidden="true"><use href="assets/icons/sprite.svg#i-phone-call"/></svg>Call or form<span class="route-v__check">✓</span></p>
+            <p class="route-v__node"><svg class="icon" aria-hidden="true"><use href="assets/icons/sprite.svg#i-kanban"/></svg>CRM stage<span class="route-v__check">✓</span></p>
+            <p class="route-v__node"><svg class="icon" aria-hidden="true"><use href="assets/icons/sprite.svg#i-bell"/></svg>Team notified<span class="route-v__check">✓</span></p>
+          </div>
+          <p class="readout__proves"><svg class="icon" aria-hidden="true"><use href="assets/icons/sprite.svg#i-check"/></svg>Every step exists and can be checked.</p>
+        </article>
+      </div>
+
       <div>
-        <div class="section-art"><img src="assets/founder-portrait-green.webp" alt="Hand-drawn portrait of the founder"></div>
-        <div style="margin-top:20px;font-family:'Geist Mono',ui-monospace,monospace;font-size:12px;letter-spacing:.14em;color:#7A1418;text-transform:uppercase">A note from the founder</div>
-        <h2 style="margin-top:16px;font-family:Archivo,Geist,system-ui,sans-serif;font-stretch:87.5%;font-size:clamp(32px,3.6vw,50px);line-height:.94;letter-spacing:-0.025em;font-weight:800">Where does it break?</h2>
+        <p class="evidence__note">Recorded platform events. Not confirmed sales, bookings or qualified leads. No guarantee on rankings, enquiries or revenue.</p>
+        <p style="margin-block-start:var(--space-6)"><a class="btn btn--accent" href="https://wa.me/917710894943?text=Hi%20Uplof%2C%20could%20you%20walk%20me%20through%20an%20anonymised%20proof%20example%3F%20My%20website%20is%3A%20%2C%20my%20service%20is%3A%20%2C%20and%20I%20think%20leads%20are%20leaking%20at%3A%20" rel="noopener">Ask for a walkthrough ↗</a></p>
       </div>
-      <div style="display:flex;flex-direction:column;gap:16px;max-width:56ch">
-        <p style="color:#5c6157">Most businesses I speak to are already doing something. There is a website, some search visibility, a form, maybe a CRM someone set up a while ago. The problem is rarely that nothing exists. It is that the pieces were built at different times and never joined up.</p>
-        <p style="color:#5c6157">So I start by walking the journey the way a real enquiry does, from the first search to the moment someone on your team replies. Where it breaks is usually obvious once you look. That audit comes before any recommendation, because it decides what is actually worth building.</p>
-        <div style="margin-top:10px">
-          <div style="font-family:Caveat,cursive;font-size:38px;line-height:1;color:#12140f;transform:rotate(-3deg);display:inline-block">Abhishek Manjhi</div>
-          <div style="font-family:'Geist Mono',ui-monospace,monospace;font-size:12px;color:#5c6157;margin-top:10px">Founder, Uplof.</div>
+    </div>
+  </section>
+
+  <!-- ===================================================== 08 — WHY UPLOF -->
+  <section class="section" id="why" aria-labelledby="why-title">
+    <div class="container stack stack--loose">
+      <div class="section-head stack" data-reveal>
+        <h2 class="heading heading--gradient" id="why-title">Why this works differently.</h2>
+      </div>
+      <div class="reasons" data-reveal data-stagger style="--reveal-delay:120ms">
+        <div class="reason">
+          <p class="reason__n">01</p>
+          <svg class="icon" aria-hidden="true"><use href="assets/icons/sprite.svg#i-user"/></svg>
+          <h3 class="reason__title">You talk to me.</h3>
+          <p class="reason__line">No account manager in between.</p>
+        </div>
+        <div class="reason">
+          <p class="reason__n">02</p>
+          <svg class="icon" aria-hidden="true"><use href="assets/icons/sprite.svg#i-clipboard-text"/></svg>
+          <h3 class="reason__title">The audit writes the plan.</h3>
+          <p class="reason__line">Not a package.</p>
+        </div>
+        <div class="reason">
+          <p class="reason__n">03</p>
+          <svg class="icon" aria-hidden="true"><use href="assets/icons/sprite.svg#i-handshake"/></svg>
+          <h3 class="reason__title">Scope written first.</h3>
+          <p class="reason__line">Deliverables and cost, before work starts.</p>
+        </div>
+        <div class="reason">
+          <p class="reason__n">04</p>
+          <svg class="icon" aria-hidden="true"><use href="assets/icons/sprite.svg#i-flag-checkered"/></svg>
+          <h3 class="reason__title">Launch is a checkpoint.</h3>
+          <p class="reason__line">Evidence decides what changes next.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <section id="how" style="border-bottom:1px solid #ddd8cc">
-    <div class="page-shell">
-      <h2 style="font-family:Archivo,Geist,system-ui,sans-serif;font-stretch:87.5%;font-size:clamp(34px,3.9vw,58px);line-height:.94;letter-spacing:-0.025em;font-weight:800;max-width:22ch">The gaps <span style="position:relative;display:inline-block">cost you leads.<svg viewBox="0 0 300 70" preserveAspectRatio="none" style="position:absolute;left:-10px;top:-8px;width:calc(100% + 20px);height:calc(100% + 16px);overflow:visible" fill="none" stroke="#B3272B" strokeWidth="3.4" strokeLinecap="round"><path d="M288 24 C 248 6, 74 3, 26 18 C 4 26, 12 50, 56 60 C 118 72, 254 68, 284 46 C 294 38, 290 30, 272 22"></path></svg></span></h2>
-
-      <div class="compare-layout" style="margin-top:44px">
-        <div style="flex:1 1 560px;min-width:0;border:1px solid #ddd8cc">
-          <div class="compare-row" style="font-family:'Geist Mono',ui-monospace,monospace;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#5c6157">
-            <div style="padding:14px 18px"></div>
-            <div style="padding:14px 18px;border-left:1px solid #ddd8cc">When the work is disconnected</div>
-            <div class="approach-cell" style="padding:14px 18px;border-left:1px solid #ddd8cc">Uplof's approach</div>
-          </div>
-          <sc-for list="{{ compare }}" as="row" hint-placeholder-count="6">
-            <div class="compare-row">
-              <div style="padding:18px;font-size:14px;font-weight:600">{{ row.label }}</div>
-              <div style="padding:18px;border-left:1px solid #ddd8cc;font-size:14px;color:#5c6157">{{ row.a }}</div>
-              <div class="approach-cell" style="padding:18px;border-left:1px solid #ddd8cc;font-size:14px">{{ row.b }}</div>
-            </div>
-          </sc-for>
+  <!-- ==================================================== 09 — THE FOUNDER -->
+  <section class="section" id="founder" aria-labelledby="founder-title">
+    <div class="container founder__grid">
+      <figure class="founder__media" data-reveal>
+        <div class="portrait"><img src="/assets/founder-portrait-green.webp" alt="Abhishek Manjhi, founder of Uplof" width="1080" height="1620" loading="lazy" decoding="async"></div>
+      </figure>
+      <div class="stack" data-reveal style="--reveal-delay:120ms">
+        <p class="eyebrow">A note from the founder</p>
+        <h2 class="heading heading--gradient" id="founder-title">Where does it break?</h2>
+        <div class="founder__prose">
+          <p>Almost every business I meet already has a website, some rankings, a form, maybe a CRM. The pieces were just built at different times by different people, and nobody joined them up.</p>
+          <p>So I walk the journey the way a real enquiry does: first search, first page, first message, first reply. Where it breaks is usually obvious within an hour.</p>
+          <p class="pull">Fix the route first. Then grow traffic into it.</p>
         </div>
-      </div>
-      <p style="margin-top:22px;color:#5c6157">Each piece has a job. The connections make them useful together.</p>
-      <div class="cta-bar"><div><strong>Find where your enquiries are getting lost.</strong><p style="color:#a5ada6;font-size:14px;margin-top:4px">Talk directly with Abhishek about your lead journey.</p></div><a class="call-button" href="tel:+917710894943">Call me now ↗</a></div>
-    </div>
-  </section>
-
-  <section style="border-bottom:1px solid #ddd8cc">
-    <div class="page-shell">
-      <div class="one-person-intro">
-        <div style="flex:1 1 420px;min-width:0">
-          <h2 style="font-family:Archivo,Geist,system-ui,sans-serif;font-stretch:87.5%;font-size:clamp(34px,3.9vw,58px);line-height:.94;letter-spacing:-0.025em;font-weight:800;max-width:20ch">One person. Every link.</h2>
-          <p style="margin-top:20px;max-width:62ch;color:#5c6157">You work directly with the founder, so nothing is handed between teams and nothing gets lost in a brief. Here is what you will have when the work is done.</p>
-        </div>
-      </div>
-
-      <div class="deliverables-grid" style="margin-top:40px;display:grid;gap:16px">
-        <div style="background:#fffdf8;border:1px solid #ddd8cc;border-radius:10px;padding:22px">
-          <div style="font-family:'Geist Mono',ui-monospace,monospace;font-size:12px;color:#7A1418">A page</div>
-          <p style="margin-top:10px;font-size:15px;color:#5c6157">A service page written for the search a customer actually makes, with the proof and answers they need.</p>
-        </div>
-        <div style="background:#fffdf8;border:1px solid #ddd8cc;border-radius:10px;padding:22px">
-          <div style="font-family:'Geist Mono',ui-monospace,monospace;font-size:12px;color:#7A1418">A contact journey</div>
-          <p style="margin-top:10px;font-size:15px;color:#5c6157">Form, call and message routes that all land somewhere your team checks.</p>
-        </div>
-        <div style="background:#fffdf8;border:1px solid #ddd8cc;border-radius:10px;padding:22px">
-          <div style="font-family:'Geist Mono',ui-monospace,monospace;font-size:12px;color:#7A1418">A pipeline</div>
-          <p style="margin-top:10px;font-size:15px;color:#5c6157">A CRM stage for each enquiry, with the follow-up step written down rather than remembered.</p>
-        </div>
-        <div style="background:#fffdf8;border:1px solid #ddd8cc;border-radius:10px;padding:22px">
-          <div style="font-family:'Geist Mono',ui-monospace,monospace;font-size:12px;color:#7A1418">A report</div>
-          <p style="margin-top:10px;font-size:15px;color:#5c6157">Recorded events you can open yourself, so the work is checkable and not described to you.</p>
-        </div>
-      </div>
-
-      <div style="margin-top:32px;border-top:1px solid #ddd8cc;padding-top:22px">
-        <div style="font-family:'Geist Mono',ui-monospace,monospace;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:#5c6157">Demonstration. No outcome claims.</div>
-        <div style="margin-top:18px;display:flex;flex-wrap:wrap;align-items:center;gap:8px">
-          <div style="background:#fffdf8;border:1px solid #ddd8cc;border-radius:6px;padding:9px 13px;font-family:'Geist Mono',ui-monospace,monospace;font-size:12.5px">Search or website</div>
-          <div style="display:inline-flex;align-items:center;gap:8px">
-            <svg viewBox="0 0 54 22" width="46" height="19" fill="none" stroke="#B3272B" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"><path d="M3 15 C 13 5, 29 18, 45 8"></path><path d="M36 3 C 40 5, 44 7, 48 8 C 44 10, 40 13, 37 16"></path></svg>
-            <div style="background:#fffdf8;border:1px solid #ddd8cc;border-radius:6px;padding:9px 13px;font-family:'Geist Mono',ui-monospace,monospace;font-size:12.5px">Service page</div>
-          </div>
-          <div style="display:inline-flex;align-items:center;gap:8px">
-            <svg viewBox="0 0 54 22" width="46" height="19" fill="none" stroke="#B3272B" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"><path d="M3 8 C 15 19, 29 5, 45 13"></path><path d="M36 7 C 40 9, 44 11, 48 12 C 44 14, 40 17, 37 20"></path></svg>
-            <div style="background:#fffdf8;border:1px solid #ddd8cc;border-radius:6px;padding:9px 13px;font-family:'Geist Mono',ui-monospace,monospace;font-size:12.5px">Call or form</div>
-          </div>
-          <div style="display:inline-flex;align-items:center;gap:8px">
-            <svg viewBox="0 0 54 22" width="46" height="19" fill="none" stroke="#B3272B" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"><path d="M3 15 C 13 5, 29 18, 45 8"></path><path d="M36 3 C 40 5, 44 7, 48 8 C 44 10, 40 13, 37 16"></path></svg>
-            <div style="background:#fffdf8;border:1px solid #ddd8cc;border-radius:6px;padding:9px 13px;font-family:'Geist Mono',ui-monospace,monospace;font-size:12.5px">CRM</div>
-          </div>
-          <div style="display:inline-flex;align-items:center;gap:8px">
-            <svg viewBox="0 0 54 22" width="46" height="19" fill="none" stroke="#B3272B" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"><path d="M3 8 C 15 19, 29 5, 45 13"></path><path d="M36 7 C 40 9, 44 11, 48 12 C 44 14, 40 17, 37 20"></path></svg>
-            <div style="background:#fffdf8;border:1px solid #ddd8cc;border-radius:6px;padding:9px 13px;font-family:'Geist Mono',ui-monospace,monospace;font-size:12.5px">Team notification</div>
-          </div>
+        <div class="founder__sign">
+          <p class="signature">Abhishek Manjhi</p>
+          <p class="eyebrow eyebrow--bare">Founder, Uplof</p>
         </div>
       </div>
     </div>
   </section>
 
-  <section id="work" style="border-bottom:1px solid #ddd8cc">
-    <div class="page-shell">
-      <div class="work-intro">
-        <h2 style="font-family:Archivo,Geist,system-ui,sans-serif;font-stretch:87.5%;font-size:clamp(34px,3.9vw,58px);line-height:.94;letter-spacing:-0.025em;font-weight:800;max-width:22ch">Leads start before the form.</h2>
+  <!-- ====================================================== 10 — SERVICES -->
+  <section class="section" id="services" aria-labelledby="services-title">
+    <div class="container stack stack--loose">
+      <div class="section-head stack" data-reveal>
+        <h2 class="heading heading--gradient" id="services-title">SEO and funnels, connected.</h2>
+        <p class="lead">Start with one. The proposal defines the rest.</p>
       </div>
-      <div class="work-cards" style="margin-top:40px;display:grid;gap:1px;background:#ddd8cc;border:1px solid #ddd8cc">
-        <div style="background:#faf8f3;padding:24px">
-          <div style="font-size:34px;font-weight:600;letter-spacing:-0.04em;color:#7A1418">9</div>
-          <div style="margin-top:8px;font-family:'Geist Mono',ui-monospace,monospace;font-size:12px;color:#5c6157">Recorded call actions</div>
-        </div>
-        <div style="background:#faf8f3;padding:24px">
-          <div style="font-size:34px;font-weight:600;letter-spacing:-0.04em;color:#7A1418">12</div>
-          <div style="margin-top:8px;font-family:'Geist Mono',ui-monospace,monospace;font-size:12px;color:#5c6157">Days in the window</div>
-        </div>
-        <div style="background:#faf8f3;padding:24px">
-          <div style="font-size:34px;font-weight:600;letter-spacing:-0.04em;color:#7A1418">31,625</div>
-          <div style="margin-top:8px;font-family:'Geist Mono',ui-monospace,monospace;font-size:12px;color:#5c6157">Recorded search impressions</div>
-        </div>
-        <div style="background:#faf8f3;padding:24px">
-          <div style="font-size:34px;font-weight:600;letter-spacing:-0.04em;color:#7A1418">1</div>
-          <div style="margin-top:8px;font-family:'Geist Mono',ui-monospace,monospace;font-size:12px;color:#5c6157">Connected route, page to CRM</div>
-        </div>
-      </div>
-      <div style="margin-top:16px;display:flex;gap:14px;align-items:flex-start;flex-wrap:wrap">
-        <p style="color:#5c6157;font-size:13px;max-width:70ch">These are recorded platform events. They are not confirmed sales, bookings, or qualified leads.</p>
-        <span style="font-family:Caveat,cursive;font-size:22px;color:#7A1418;transform:rotate(-2deg);white-space:nowrap">I keep this line everywhere.</span>
-      </div>
-
-      <div style="margin-top:44px;display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px">
-        <div style="border:1px solid #ddd8cc;border-radius:10px;padding:26px;display:flex;flex-direction:column;gap:14px;background:#fffdf8">
-          <div style="font-family:'Geist Mono',ui-monospace,monospace;font-size:12px;color:#7A1418">Roofing service business, 90-day snapshot</div>
-          <p style="font-size:15px">31,625 organic search appearances recorded across 84 landing-page-and-query combinations.</p>
-          <div style="display:flex;align-items:flex-end;gap:10px">
-            <img src="assets/search-discovery-green.webp" alt="Magnifier illustration" style="display:block;width:118px;height:auto">
-            <span style="font-family:Caveat,cursive;font-size:22px;line-height:1.15;color:#12140f;transform:rotate(-3deg)">shown for the<br>right searches</span>
-          </div>
-          <p style="font-size:14px;color:#5c6157;margin-top:auto">What this proves: the service pages were being shown for the searches they were built for. Recorded impressions, not confirmed sales, bookings, or qualified leads.</p>
-        </div>
-        <div style="border:1px solid #ddd8cc;border-radius:10px;padding:26px;display:flex;flex-direction:column;gap:14px;background:#fffdf8">
-          <div style="font-family:'Geist Mono',ui-monospace,monospace;font-size:12px;color:#7A1418">Home-improvement business, 12-day window</div>
-          <p style="font-size:15px">9 recorded phone-call conversion actions over 12 days, tracked against spend, clicks and impressions on the same landing page.</p>
-          <div style="display:flex;align-items:flex-end;gap:10px">
-            <img src="assets/lead-capture-green.webp" alt="Illustration of an enquiry form" style="display:block;width:118px;height:auto">
-            <span style="font-family:Caveat,cursive;font-size:22px;line-height:1.15;color:#12140f;transform:rotate(-3deg)">a form nobody<br>was checking</span>
-          </div>
-          <p style="font-size:14px;color:#5c6157;margin-top:auto">What this proves: the call route was working and being measured. Recorded call actions, not confirmed sales, bookings, or qualified leads.</p>
-        </div>
-        <div style="border:1px solid #ddd8cc;border-radius:10px;padding:26px;display:flex;flex-direction:column;gap:14px;background:#fffdf8">
-          <div style="font-family:'Geist Mono',ui-monospace,monospace;font-size:12px;color:#7A1418">The lead journey, connected</div>
-          <div class="journey-stack">
-            <div style="background:#faf8f3;border:1px solid #ddd8cc;border-radius:6px;padding:7px 11px;font-family:'Geist Mono',ui-monospace,monospace;font-size:12px">Search or website</div>
-            <div style="display:inline-flex;align-items:center;gap:8px">
-              <svg viewBox="0 0 54 22" width="42" height="17" fill="none" stroke="#B3272B" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"><path d="M3 15 C 13 5, 29 18, 45 8"></path><path d="M36 3 C 40 5, 44 7, 48 8 C 44 10, 40 13, 37 16"></path></svg>
-              <div style="background:#faf8f3;border:1px solid #ddd8cc;border-radius:6px;padding:7px 11px;font-family:'Geist Mono',ui-monospace,monospace;font-size:12px">Service page</div>
-            </div>
-            <div style="display:inline-flex;align-items:center;gap:8px">
-              <svg viewBox="0 0 54 22" width="42" height="17" fill="none" stroke="#B3272B" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"><path d="M3 8 C 15 19, 29 5, 45 13"></path><path d="M36 7 C 40 9, 44 11, 48 12 C 44 14, 40 17, 37 20"></path></svg>
-              <div style="background:#faf8f3;border:1px solid #ddd8cc;border-radius:6px;padding:7px 11px;font-family:'Geist Mono',ui-monospace,monospace;font-size:12px">Call or form</div>
-            </div>
-            <div style="display:inline-flex;align-items:center;gap:8px">
-              <svg viewBox="0 0 54 22" width="42" height="17" fill="none" stroke="#B3272B" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"><path d="M3 15 C 13 5, 29 18, 45 8"></path><path d="M36 3 C 40 5, 44 7, 48 8 C 44 10, 40 13, 37 16"></path></svg>
-              <div style="background:#faf8f3;border:1px solid #ddd8cc;border-radius:6px;padding:7px 11px;font-family:'Geist Mono',ui-monospace,monospace;font-size:12px">CRM</div>
-            </div>
-            <div style="display:inline-flex;align-items:center;gap:8px">
-              <svg viewBox="0 0 54 22" width="42" height="17" fill="none" stroke="#B3272B" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"><path d="M3 8 C 15 19, 29 5, 45 13"></path><path d="M36 7 C 40 9, 44 11, 48 12 C 44 14, 40 17, 37 20"></path></svg>
-              <div style="background:#faf8f3;border:1px solid #ddd8cc;border-radius:6px;padding:7px 11px;font-family:'Geist Mono',ui-monospace,monospace;font-size:12px">Team notification</div>
-            </div>
-          </div>
-          <p style="font-size:14px;color:#5c6157;margin-top:auto">What this proves: every step of the route exists and can be checked, so an enquiry has somewhere to go after it arrives.</p>
-        </div>
-      </div>
-      <div style="margin-top:28px">
-        <a href="{{ waProofLink }}" target="_blank" rel="noopener" style="border:1px solid #ddd8cc;color:#12140f;font-size:15px;font-weight:500;padding:13px 20px;border-radius:6px;display:inline-block;background:#fffdf8" style-hover="border-color:#B3272B">Ask for an anonymised proof walkthrough</a>
+      <div class="services" data-reveal data-stagger style="--reveal-delay:120ms">
+        <div class="service"><svg class="icon" aria-hidden="true"><use href="assets/icons/sprite.svg#i-magnifying-glass"/></svg><h3 class="service__title">SEO and local search</h3><p class="service__line">One programme, not three invoices.</p></div>
+        <div class="service"><svg class="icon" aria-hidden="true"><use href="assets/icons/sprite.svg#i-storefront"/></svg><h3 class="service__title">Google Business Profile</h3><p class="service__line">Kept accurate for local discovery.</p></div>
+        <div class="service"><svg class="icon" aria-hidden="true"><use href="assets/icons/sprite.svg#i-browsers"/></svg><h3 class="service__title">Websites and landing pages</h3><p class="service__line">Built to be found and to convert.</p></div>
+        <div class="service"><svg class="icon" aria-hidden="true"><use href="assets/icons/sprite.svg#i-funnel"/></svg><h3 class="service__title">Lead capture</h3><p class="service__line">Nothing arrives somewhere unchecked.</p></div>
+        <div class="service"><svg class="icon" aria-hidden="true"><use href="assets/icons/sprite.svg#i-tree-structure"/></svg><h3 class="service__title">CMS and content structure</h3><p class="service__line">Your team can edit without breaking it.</p></div>
+        <div class="service"><svg class="icon" aria-hidden="true"><use href="assets/icons/sprite.svg#i-kanban"/></svg><h3 class="service__title">CRM and follow-up</h3><p class="service__line">Stages, owners, reminders.</p></div>
+        <div class="service"><svg class="icon" aria-hidden="true"><use href="assets/icons/sprite.svg#i-chart-line-up"/></svg><h3 class="service__title">Tracking and analytics</h3><p class="service__line">Events that matter. No vanity charts.</p></div>
+        <div class="service"><svg class="icon" aria-hidden="true"><use href="assets/icons/sprite.svg#i-star"/></svg><h3 class="service__title">Reviews and reputation</h3><p class="service__line">Asked inside the follow-up.</p></div>
+        <div class="service"><svg class="icon" aria-hidden="true"><use href="assets/icons/sprite.svg#i-arrows-clockwise"/></svg><h3 class="service__title">Ongoing improvement</h3><p class="service__line">Evidence decides what changes.</p></div>
       </div>
     </div>
   </section>
 
-  <section style="border-bottom:1px solid #ddd8cc">
-    <div class="page-shell">
-      <h2 style="font-family:Archivo,Geist,system-ui,sans-serif;font-stretch:87.5%;font-size:clamp(34px,3.9vw,58px);line-height:.94;letter-spacing:-0.025em;font-weight:800">Why Uplof.</h2>
-      <div class="why-grid" style="margin-top:36px;display:grid">
-        <div><div style="font-family:'Geist Mono',ui-monospace,monospace;font-size:12px;color:#7A1418">01</div><h3 style="margin-top:10px;font-size:18px;font-weight:600;letter-spacing:-0.02em">Direct access to the founder</h3><p style="margin-top:8px;font-size:15px;color:#5c6157">You speak to the person doing the work, not an account layer in between.</p></div>
-        <div><div style="font-family:'Geist Mono',ui-monospace,monospace;font-size:12px;color:#7A1418">02</div><h3 style="margin-top:10px;font-size:18px;font-weight:600;letter-spacing:-0.02em">A plan based on your starting point</h3><p style="margin-top:8px;font-size:15px;color:#5c6157">The audit decides the plan, so you are not sold a package you do not need.</p></div>
-        <div><div style="font-family:'Geist Mono',ui-monospace,monospace;font-size:12px;color:#7A1418">03</div><h3 style="margin-top:10px;font-size:18px;font-weight:600;letter-spacing:-0.02em">Clear boundaries before the project begins</h3><p style="margin-top:8px;font-size:15px;color:#5c6157">Deliverables, platforms and ongoing work are written down before anything starts.</p></div>
-        <div><div style="font-family:'Geist Mono',ui-monospace,monospace;font-size:12px;color:#7A1418">04</div><h3 style="margin-top:10px;font-size:18px;font-weight:600;letter-spacing:-0.02em">Improvement beyond launch</h3><p style="margin-top:8px;font-size:15px;color:#5c6157">Launch is a checkpoint. The recorded evidence decides what changes next.</p></div>
+  <!-- ======================================================== 11 — THE FIT -->
+  <section class="section on-dark" id="fit" aria-labelledby="fit-title">
+    <div class="container fit__grid">
+      <div class="stack" data-reveal>
+        <h2 class="heading heading--gradient" id="fit-title">Getting attention. Losing the opportunity.</h2>
+        <p class="lead">Probably a fit if one of these sounds familiar.</p>
+      </div>
+      <ul class="checklist" data-reveal data-stagger style="--reveal-delay:120ms">
+        <li>Your site describes the business you were five years ago.</li>
+        <li>People reach a route nobody checks.</li>
+        <li>Follow-up lives in three inboxes and a notebook.</li>
+        <li>You pay for traffic with nowhere good for it to land.</li>
+        <li>You’re starting fresh and want it joined up from day one.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ======================================================= 12 — PROCESS -->
+  <section class="section" id="process" aria-labelledby="process-title">
+    <div class="container stack stack--loose">
+      <div class="section-head stack" data-reveal>
+        <h2 class="heading heading--gradient" id="process-title">How the work runs.</h2>
+      </div>
+      <div class="timeline" data-reveal data-stagger style="--reveal-delay:120ms">
+        <div class="tstep"><span class="tstep__n">1</span><svg class="icon" aria-hidden="true"><use href="assets/icons/sprite.svg#i-upload-simple"/></svg><h3 class="tstep__title">Share your starting point</h3><p class="tstep__line">Your site, your rankings, how enquiries reach you. Ten minutes.</p></div>
+        <div class="tstep"><span class="tstep__n">2</span><svg class="icon" aria-hidden="true"><use href="assets/icons/sprite.svg#i-magnifying-glass"/></svg><h3 class="tstep__title">Walk the journey</h3><p class="tstep__line">A straight read on where it breaks.</p></div>
+        <div class="tstep"><span class="tstep__n">3</span><svg class="icon" aria-hidden="true"><use href="assets/icons/sprite.svg#i-wrench"/></svg><h3 class="tstep__title">Build and connect</h3><p class="tstep__line">Scope first. Every connection tested.</p></div>
+        <div class="tstep"><span class="tstep__n">4</span><svg class="icon" aria-hidden="true"><use href="assets/icons/sprite.svg#i-chart-line-up"/></svg><h3 class="tstep__title">Improve with evidence</h3><p class="tstep__line">Recorded events decide what changes next.</p></div>
       </div>
     </div>
   </section>
 
-  <section style="border-bottom:1px solid #ddd8cc">
-    <div class="page-shell split-layout">
-      <div>
-        <div style="font-family:'Geist Mono',ui-monospace,monospace;font-size:12px;letter-spacing:.14em;color:#7A1418;text-transform:uppercase">How I think about the work.</div>
-        <h2 style="margin-top:18px;font-family:Archivo,Geist,system-ui,sans-serif;font-stretch:87.5%;font-size:clamp(32px,3.6vw,50px);line-height:.94;letter-spacing:-0.025em;font-weight:800">Traffic needs a next step.</h2>
-        <div class="section-art" style="margin-top:26px"><img src="assets/founder-desk-green.webp" alt="Illustration of the founder working at a laptop"></div>
+  <!-- =========================================================== 13 — FAQ -->
+  <section class="section" id="faq" aria-labelledby="faq-title">
+    <div class="container stack stack--loose">
+      <div class="section-head--center stack" data-reveal>
+        <h2 class="heading heading--gradient" id="faq-title">Questions worth asking.</h2>
       </div>
-      <div style="display:flex;flex-direction:column;gap:16px;max-width:56ch">
-        <p style="color:#5c6157">It is easy to treat visits as the goal. But a business feels the difference at the point where someone decides to get in touch, and again at the point where someone replies. Those two moments are where most of the value sits, and they are usually the least looked after.</p>
-        <p style="color:#5c6157">So I would rather fix the route first and grow the traffic into it. Smaller changes, checked against recorded events, tend to move the number of real enquiries more than a bigger campaign pointed at a page that cannot convert.</p>
-        <div style="margin-top:10px">
-          <div style="font-family:Caveat,cursive;font-size:38px;line-height:1;color:#12140f;transform:rotate(-3deg);display:inline-block">Abhishek Manjhi</div>
-          <div style="font-family:'Geist Mono',ui-monospace,monospace;font-size:12px;color:#5c6157;margin-top:10px">Uplof.</div>
+      <div class="faq faq--center" data-reveal data-stagger style="--reveal-delay:120ms">
+        <details class="faq__item"><summary class="faq__q">What does Uplof actually do?</summary><p class="faq__a">I connect the parts of your lead journey: search visibility, the page someone lands on, how they contact you, and what happens after. It starts with an audit of where that journey breaks.</p></details>
+        <details class="faq__item"><summary class="faq__q">Can I start with just one part?</summary><p class="faq__a">Yes, and most people do. Usually the page or the follow-up route. The audit tells you which part is costing you enquiries first.</p></details>
+        <details class="faq__item"><summary class="faq__q">What does full SEO management include?</summary><p class="faq__a">Technical fixes, on-page and service content, local search and Google Business Profile, and recorded reporting on the search terms your pages appear for. Your proposal lists exactly what is included.</p></details>
+        <details class="faq__item"><summary class="faq__q">Do I need a new website?</summary><p class="faq__a">Often not. If your current site can be adjusted to take an enquiry properly, that is the faster and cheaper route. A rebuild is recommended only when the structure is the blocker.</p></details>
+        <details class="faq__item"><summary class="faq__q">Can you connect my existing WhatsApp, forms and CRM?</summary><p class="faq__a">Yes, where the platforms allow it. The aim is to use what you already pay for and route it into one place your team checks.</p></details>
+        <details class="faq__item"><summary class="faq__q">What does it cost, and how long is the contract?</summary><p class="faq__a">Cost depends on scope. The proposal defines deliverables and ongoing work before anything begins. Contract length is agreed up front, with clear boundaries on both sides.</p></details>
+        <details class="faq__item"><summary class="faq__q">How long before I see results?</summary><p class="faq__a">It depends on your starting point and which part gets fixed first. Route and follow-up changes usually show in recorded events sooner than search visibility does.</p></details>
+        <details class="faq__item"><summary class="faq__q">Do you guarantee rankings, leads or revenue?</summary><p class="faq__a">No. What I share is recorded evidence of what changed: platform events, not confirmed sales, bookings or qualified leads.</p></details>
+        <details class="faq__item"><summary class="faq__q">Are paid ads or social media included?</summary><p class="faq__a">Not the focus of this work. To start, send me your website or Google Business Profile link, how enquiries reach you today, and where you think they fall away.</p></details>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================= 14 — THE CTA -->
+  <section class="section cta on-brand" id="contact" aria-labelledby="cta-title">
+    <img class="cta__lines" src="assets/img/hero-lines.svg" alt="" aria-hidden="true">
+    <div class="container cta__inner">
+      <p class="eyebrow">Start with the problem</p>
+      <h2 class="display" id="cta-title">Let’s find the leak.</h2>
+      <p class="lead cta__lead">Free first audit. Send your site, I’ll walk the journey and show you where it breaks.</p>
+
+      <div class="route route--center cta__route" aria-label="Search or website, to service page, to call or form, to CRM, to team notification">
+        <span class="route__node">Search</span><span class="route__arrow" aria-hidden="true">→</span>
+        <span class="route__node">Service page</span><span class="route__arrow" aria-hidden="true">→</span>
+        <span class="route__node">Call or form</span><span class="route__arrow" aria-hidden="true">→</span>
+        <span class="route__node">CRM</span><span class="route__arrow" aria-hidden="true">→</span>
+        <span class="route__node">Team notified</span>
+      </div>
+
+      <p class="micro">No obligation. I just look.</p>
+
+      <form class="enquiry cta__form" action="/api/lead" method="POST" novalidate data-enquiry aria-describedby="enquiry-summary">
+        <div class="enquiry__summary" id="enquiry-summary" role="alert" tabindex="-1" hidden data-enquiry-summary>
+          <p class="enquiry__summary-title">There is a problem</p>
+          <ul data-enquiry-summary-list></ul>
         </div>
-      </div>
-    </div>
-  </section>
-
-  <section id="services" style="border-bottom:1px solid #ddd8cc">
-    <div class="page-shell">
-      <h2 style="font-family:Archivo,Geist,system-ui,sans-serif;font-stretch:87.5%;font-size:clamp(34px,3.9vw,58px);line-height:.94;letter-spacing:-0.025em;font-weight:800;max-width:24ch">SEO and funnels, connected.</h2>
-      <ol class="journey-flow" aria-label="The connected lead journey">
-        <li><span>01 / DISCOVER</span><strong>Get found</strong><small>SEO and local search</small></li>
-        <li><span>02 / CONVINCE</span><strong>Build trust</strong><small>Service pages and proof</small></li>
-        <li><span>03 / CAPTURE</span><strong>Start a conversation</strong><small>Calls, forms and WhatsApp</small></li>
-        <li><span>04 / FOLLOW UP</span><strong>Keep it moving</strong><small>CRM, owners and reminders</small></li>
-        <li><span>05 / IMPROVE</span><strong>See what works</strong><small>Tracking and improvements</small></li>
-      </ol>
-      <div class="service-grid" style="margin-top:32px;display:grid;gap:1px;background:#ddd8cc;border:1px solid #ddd8cc">
-        <sc-for list="{{ services }}" as="s" hint-placeholder-count="9">
-          <div style="background:#faf8f3;padding:24px">
-            <img src="{{ s.icon }}" alt="" style="display:block;width:88px;height:auto;margin-bottom:14px">
-            <div style="font-family:'Geist Mono',ui-monospace,monospace;font-size:12px;color:#7A1418">{{ s.n }}</div>
-            <h3 style="margin-top:12px;font-size:17px;font-weight:600;letter-spacing:-0.02em">{{ s.title }}</h3>
-            <p style="margin-top:8px;font-size:14px;color:#5c6157">{{ s.body }}</p>
-          </div>
-        </sc-for>
-      </div>
-      <div style="margin-top:22px;display:flex;gap:16px;flex-wrap:wrap;align-items:flex-start">
-        <p style="max-width:60ch;color:#5c6157;font-size:15px">Your proposal defines the deliverables, platforms, integrations and ongoing work. You do not need every service to start.</p>
-        <span style="font-family:Caveat,cursive;font-size:24px;color:#7A1418;transform:rotate(-2deg)">start with one. really.</span>
-      </div>
-    </div>
-  </section>
-
-  <section style="border-bottom:1px solid #ddd8cc">
-    <div class="page-shell">
-      <div class="fit-content">
-      <h2 style="font-family:Archivo,Geist,system-ui,sans-serif;font-stretch:87.5%;font-size:clamp(34px,3.9vw,58px);line-height:.94;letter-spacing:-0.025em;font-weight:800">You may be ready if</h2>
-      <div style="margin-top:32px;border-top:1px solid #ddd8cc">
-        <sc-for list="{{ fit }}" as="f" hint-placeholder-count="5">
-          <div style="border-bottom:1px solid #ddd8cc;padding:18px 0;display:flex;gap:14px;align-items:center">
-            <svg viewBox="0 0 30 20" width="26" height="17" fill="none" stroke="#B3272B" strokeWidth="3.2" strokeLinecap="round" strokeLinejoin="round" style="flex:0 0 auto"><path d="M2 12 C 9 4, 17 16, 26 8"></path><path d="M19 3 C 22 5, 24 7, 27 8 C 24 10, 21 12, 19 15"></path></svg>
-            <p style="font-size:16px">{{ f }}</p>
-          </div>
-        </sc-for>
-      </div>
-      </div>
-    </div>
-  </section>
-
-  <section style="border-bottom:1px solid #ddd8cc">
-    <div class="page-shell">
-      <h2 style="font-family:Archivo,Geist,system-ui,sans-serif;font-stretch:87.5%;font-size:clamp(34px,3.9vw,58px);line-height:.94;letter-spacing:-0.025em;font-weight:800">How the work runs.</h2>
-      <div class="steps-grid" style="margin-top:40px;display:grid;gap:1px;background:#ddd8cc;border:1px solid #ddd8cc">
-        <sc-for list="{{ steps }}" as="st" hint-placeholder-count="4">
-          <div style="background:#faf8f3;padding:26px 22px">
-            <img src="{{ st.icon }}" alt="Step {{ st.n }}" style="display:block;width:62px;height:auto">
-            <h3 style="margin-top:14px;font-size:18px;font-weight:600;letter-spacing:-0.02em">{{ st.title }}</h3>
-            <p style="margin-top:10px;font-size:14px;color:#5c6157">{{ st.body }}</p>
-          </div>
-        </sc-for>
-      </div>
-    </div>
-  </section>
-
-  <section id="faqs" style="border-bottom:1px solid #ddd8cc">
-    <div class="page-shell faq-layout">
-      <div>
-      <h2 style="font-family:Archivo,Geist,system-ui,sans-serif;font-stretch:87.5%;font-size:clamp(34px,3.9vw,58px);line-height:.94;letter-spacing:-0.025em;font-weight:800">Questions before starting.</h2>
-      <div style="margin-top:36px;border-top:1px solid #ddd8cc">
-        <sc-for list="{{ faqs }}" as="q" hint-placeholder-count="9">
-          <details style="border-bottom:1px solid #ddd8cc">
-            <summary style="list-style:none;cursor:pointer;padding:20px 0;display:flex;gap:18px;align-items:baseline;font-size:17px;font-weight:500;letter-spacing:-0.015em">
-              <span style="color:#7A1418;font-family:Caveat,cursive;font-size:26px;line-height:1">+</span>
-              <span>{{ q.q }}</span>
-            </summary>
-            <p style="padding:0 0 22px 38px;color:#5c6157;font-size:15px;max-width:68ch">{{ q.a }}</p>
-          </details>
-        </sc-for>
-      </div>
-      </div>
-    </div>
-  </section>
-
-  <section id="contact" style="background:#0a0c0b;color:#f2f1ea">
-    <div class="page-shell contact-layout">
-      <div>
-        <h2 style="font-family:Archivo,Geist,system-ui,sans-serif;font-stretch:87.5%;font-size:clamp(34px,3.9vw,58px);line-height:.94;letter-spacing:-0.025em;font-weight:800;max-width:18ch">Let's find the leak.</h2>
-        <p style="margin-top:20px;max-width:52ch;color:#a5ada6">Your first lead audit is free. Share your website and where the enquiries are falling away, and you will get a clear read on where the journey breaks before anything is quoted.</p>
-        <div style="margin-top:28px;display:flex;flex-wrap:wrap;align-items:center;gap:8px">
-          <div style="background:#121713;border:1px solid #2a332d;border-radius:6px;padding:7px 11px;font-family:'Geist Mono',ui-monospace,monospace;font-size:12px">Search or website</div>
-          <div style="display:inline-flex;align-items:center;gap:8px">
-            <svg viewBox="0 0 54 22" width="42" height="17" fill="none" stroke="#B3272B" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"><path d="M3 15 C 13 5, 29 18, 45 8"></path><path d="M36 3 C 40 5, 44 7, 48 8 C 44 10, 40 13, 37 16"></path></svg>
-            <div style="background:#121713;border:1px solid #2a332d;border-radius:6px;padding:7px 11px;font-family:'Geist Mono',ui-monospace,monospace;font-size:12px">Service page</div>
-          </div>
-          <div style="display:inline-flex;align-items:center;gap:8px">
-            <svg viewBox="0 0 54 22" width="42" height="17" fill="none" stroke="#B3272B" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"><path d="M3 8 C 15 19, 29 5, 45 13"></path><path d="M36 7 C 40 9, 44 11, 48 12 C 44 14, 40 17, 37 20"></path></svg>
-            <div style="background:#121713;border:1px solid #2a332d;border-radius:6px;padding:7px 11px;font-family:'Geist Mono',ui-monospace,monospace;font-size:12px">Call or form</div>
-          </div>
-          <div style="display:inline-flex;align-items:center;gap:8px">
-            <svg viewBox="0 0 54 22" width="42" height="17" fill="none" stroke="#B3272B" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"><path d="M3 15 C 13 5, 29 18, 45 8"></path><path d="M36 3 C 40 5, 44 7, 48 8 C 44 10, 40 13, 37 16"></path></svg>
-            <div style="background:#121713;border:1px solid #2a332d;border-radius:6px;padding:7px 11px;font-family:'Geist Mono',ui-monospace,monospace;font-size:12px">CRM</div>
-          </div>
-          <div style="display:inline-flex;align-items:center;gap:8px">
-            <svg viewBox="0 0 54 22" width="42" height="17" fill="none" stroke="#B3272B" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"><path d="M3 8 C 15 19, 29 5, 45 13"></path><path d="M36 7 C 40 9, 44 11, 48 12 C 44 14, 40 17, 37 20"></path></svg>
-            <div style="background:#121713;border:1px solid #2a332d;border-radius:6px;padding:7px 11px;font-family:'Geist Mono',ui-monospace,monospace;font-size:12px">Team notification</div>
-          </div>
+        <div class="enquiry__field">
+          <label class="enquiry__label" for="f-name">Your name</label>
+          <input class="enquiry__input" id="f-name" name="name" type="text" autocomplete="name" aria-describedby="f-name-error" required>
+          <p class="enquiry__error" id="f-name-error" data-error-for="f-name" hidden></p>
         </div>
-        <div style="margin-top:30px;display:flex;align-items:center;gap:8px">
-          <span style="font-family:Caveat,cursive;font-size:26px;color:#B3272B;transform:rotate(-3deg)">no obligation, I just look.</span>
-          <svg viewBox="0 0 90 40" width="80" height="36" fill="none" stroke="#B3272B" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"><path d="M4 10 C 26 4, 56 10, 78 26"></path><path d="M66 28 C 72 27, 78 27, 82 28 C 81 23, 80 18, 80 14"></path></svg>
+        <div class="enquiry__field">
+          <label class="enquiry__label" for="f-business">Business name</label>
+          <input class="enquiry__input" id="f-business" name="business" type="text" autocomplete="organization" aria-describedby="f-business-error" required>
+          <p class="enquiry__error" id="f-business-error" data-error-for="f-business" hidden></p>
         </div>
-      </div>
-
-      <form action="/api/lead" method="POST" style="background:#121713;border:1px solid #2a332d;border-radius:10px;padding:28px">
-        <div style="font-family:'Geist Mono',ui-monospace,monospace;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#a5ada6">Draft your message</div>
-        <div style="margin-top:20px;display:grid;gap:14px">
-          <label style="display:grid;gap:6px;font-size:13px;color:#a5ada6">Your name
-            <input name="name" value="{{ name }}" onChange="{{ setName }}" placeholder="Name" required style="background:#0a0c0b;border:1px solid #2a332d;border-radius:6px;color:#f2f1ea;font-family:Geist,system-ui,sans-serif;font-size:15px;padding:11px 12px;outline:none" style-focus="border-color:#B3272B">
-          </label>
-          <label style="display:grid;gap:6px;font-size:13px;color:#a5ada6">Business name
-            <input name="business" value="{{ business }}" onChange="{{ setBusiness }}" placeholder="Business" required style="background:#0a0c0b;border:1px solid #2a332d;border-radius:6px;color:#f2f1ea;font-family:Geist,system-ui,sans-serif;font-size:15px;padding:11px 12px;outline:none" style-focus="border-color:#B3272B">
-          </label>
-          <label style="display:grid;gap:6px;font-size:13px;color:#a5ada6">Your email
-            <input type="email" name="email" value="{{ email }}" onChange="{{ setEmail }}" placeholder="you@company.com" required style="background:#0a0c0b;border:1px solid #2a332d;border-radius:6px;color:#f2f1ea;font-family:Geist,system-ui,sans-serif;font-size:15px;padding:11px 12px;outline:none" style-focus="border-color:#B3272B">
-          </label>
-          <label style="display:grid;gap:6px;font-size:13px;color:#a5ada6">Website or Google Business Profile link (optional)
-            <input name="website" value="{{ site }}" onChange="{{ setSite }}" placeholder="https://" style="background:#0a0c0b;border:1px solid #2a332d;border-radius:6px;color:#f2f1ea;font-family:Geist,system-ui,sans-serif;font-size:15px;padding:11px 12px;outline:none" style-focus="border-color:#B3272B">
-          </label>
-          <label style="display:grid;gap:6px;font-size:13px;color:#a5ada6">Phone
-            <input name="phone" value="{{ phone }}" onChange="{{ setPhone }}" placeholder="+91" style="background:#0a0c0b;border:1px solid #2a332d;border-radius:6px;color:#f2f1ea;font-family:Geist,system-ui,sans-serif;font-size:15px;padding:11px 12px;outline:none" style-focus="border-color:#B3272B">
-          </label>
-          <label style="display:grid;gap:6px;font-size:13px;color:#a5ada6">What would you like to improve
-            <textarea name="message" value="{{ note }}" onChange="{{ setNote }}" rows="3" placeholder="Where do the enquiries fall away?" style="background:#0a0c0b;border:1px solid #2a332d;border-radius:6px;color:#f2f1ea;font-family:Geist,system-ui,sans-serif;font-size:15px;padding:11px 12px;outline:none;resize:vertical" style-focus="border-color:#B3272B"></textarea>
-          </label>
-          <button type="submit" style="background:#B3272B;color:#fdf8f3;border:0;font-family:Geist,system-ui,sans-serif;font-size:15px;font-weight:600;padding:13px 18px;border-radius:6px;cursor:pointer" style-hover="filter:brightness(1.08)" style-active="filter:brightness(.88)">Send enquiry by email ↗</button>
-          <a href="{{ formLink }}" target="_blank" rel="noopener" style="border:1px solid #2a332d;color:#f2f1ea;font-size:15px;font-weight:500;padding:13px 18px;border-radius:6px;text-align:center" style-hover="border-color:#B3272B">Continue on WhatsApp</a>
-          <p style="font-size:13px;color:#a5ada6">Your enquiry is handled by Uplof. WhatsApp remains available if you prefer to start there.</p>
+        <div class="enquiry__field">
+          <label class="enquiry__label" for="f-email">Your email</label>
+          <input class="enquiry__input" id="f-email" name="email" type="email" autocomplete="email" aria-describedby="f-email-error" required>
+          <p class="enquiry__error" id="f-email-error" data-error-for="f-email" hidden></p>
+        </div>
+        <div class="enquiry__field">
+          <label class="enquiry__label" for="f-phone">Phone</label>
+          <input class="enquiry__input" id="f-phone" name="phone" type="tel" autocomplete="tel" aria-describedby="f-phone-error">
+          <p class="enquiry__error" id="f-phone-error" data-error-for="f-phone" hidden></p>
+        </div>
+        <div class="enquiry__field enquiry__field--wide">
+          <label class="enquiry__label" for="f-site">Website or Google Business Profile link <span style="text-transform:none;letter-spacing:0">(optional)</span></label>
+          <input class="enquiry__input" id="f-site" name="website" type="url" autocomplete="url" placeholder="https://" aria-describedby="f-site-error">
+          <p class="enquiry__error" id="f-site-error" data-error-for="f-site" hidden></p>
+        </div>
+        <div class="enquiry__field enquiry__field--wide">
+          <label class="enquiry__label" for="f-improve">What would you like to improve</label>
+          <textarea class="enquiry__textarea" id="f-improve" name="message" rows="4" placeholder="Where do enquiries seem to go quiet?" aria-describedby="f-improve-error"></textarea>
+          <p class="enquiry__error" id="f-improve-error" data-error-for="f-improve" hidden></p>
+        </div>
+        <div class="enquiry__actions">
+          <button class="btn btn--solid" type="submit">Send enquiry by email ↗</button>
+          <a class="btn btn--accent" href="https://wa.me/917710894943?text=Hi%20Uplof%2C%20I%27d%20like%20a%20free%20lead%20audit." rel="noopener">Continue on WhatsApp</a>
         </div>
       </form>
+
+      <p class="micro" style="max-inline-size:60ch">Handled by Uplof directly. WhatsApp is there if you’d rather start that way.</p>
     </div>
   </section>
 
-  <footer style="background:#faf8f3;border-top:1px solid #ddd8cc">
-    <div class="nav-shell"><div class="cta-bar" style="margin:20px 0"><div><strong>Ready to talk through your website?</strong><p style="color:#a5ada6;font-size:14px;margin-top:4px">Call Abhishek on +91 77108 94943.</p></div><a class="call-button" href="tel:+917710894943">Call me now ↗</a></div></div>
-    <div class="nav-shell" style="padding:40px 0 !important;display:flex;flex-wrap:wrap;gap:16px;align-items:baseline;justify-content:space-between">
-      <p style="font-size:14px;color:#5c6157">Uplof. Websites, search and follow-up, connected.</p>
-      <p style="font-family:'Geist Mono',ui-monospace,monospace;font-size:13px;color:#5c6157">+91 77108 94943</p>
-      <nav aria-label="Legal" style="display:flex;gap:14px;flex-wrap:wrap;font-size:13px"><a href="/privacy-policy/">Privacy</a><a href="/terms-of-service/">Terms</a><a href="/refund-cancellation-policy/">Refunds</a><a href="/cookie-tracking-notice/">Cookies</a></nav>
+  <!-- ====================================================== 15 — CALL BAND -->
+  <section class="section" aria-labelledby="call-title">
+    <div class="container">
+      <div class="callband" data-reveal>
+        <div class="stack stack--tight">
+          <h2 class="title" id="call-title">Rather talk it through?</h2>
+          <p class="body">Call Abhishek on +91 77108 94943.</p>
+        </div>
+        <a class="btn btn--accent" href="tel:+917710894943">Call me now ↗</a>
+      </div>
     </div>
-  </footer>
+  </section>
 
-</div>
+</main>
 
-</x-dc>
+<!-- ============================================================== FOOTER -->
+<footer class="footer on-dark">
+  <div class="container">
+    <div class="footer__top">
+      <div class="stack stack--tight">
+        <a class="navbar__logo" href="#" aria-label="Uplof.me, home"><img src="assets/img/logo-uplof.svg" alt="Uplof.me" width="102" height="65"></a>
+        <p class="micro">Websites, search and follow-up, connected.</p>
+        <p class="micro"><a href="tel:+917710894943">+91 77108 94943</a></p>
+      </div>
+      <nav class="footer__nav" aria-label="Footer">
+        <a href="#outcome">Outcome</a><a href="#leak">The leak</a><a href="#journey">Approach</a><a href="#proof">Proof</a><a href="#services">Services</a><a href="#process">Process</a><a href="#faq">FAQ</a>
+      </nav>
+    </div>
+    <div class="footer__bottom">
+      <p>© <span data-year>2026</span> Uplof · <a href="https://uplof.me/privacy-policy/">Privacy</a> · <a href="https://uplof.me/terms-of-service/">Terms</a> · <a href="https://uplof.me/refund-cancellation-policy/">Refunds</a> · <a href="https://uplof.me/cookie-tracking-notice/">Cookies</a></p>
+      <p>Get found. Get contacted. Get followed up.</p>
+    </div>
+  </div>
+</footer>
+
+<script src="js/site.js" defer></script>
 <script src="/cookie-consent.js" defer></script>
 <script src="/whatsapp-lead.js" defer></script>
-<script type="text/x-dc" data-dc-script data-props="{&quot;whatsappNumber&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;917710894943&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Contact&quot;}}">
-class Component extends DCLogic {
-  state = { name: "", business: "", email: "", site: "", phone: "", note: "" };
-
-  wa(text) {
-    const num = (this.props.whatsappNumber ?? "917710894943").replace(/\D/g, "");
-    return "https://wa.me/" + num + "?text=" + encodeURIComponent(text);
-  }
-
-  renderVals() {
-    const s = this.state;
-    const msg = [
-      "Hi Uplof, I'd like a free lead audit.",
-      s.name && ("Name: " + s.name),
-      s.business && ("Business: " + s.business),
-      s.email && ("Email: " + s.email),
-      s.site && ("Website or GBP: " + s.site),
-      s.phone && ("Phone: " + s.phone),
-      s.note && ("What I'd like to improve: " + s.note)
-    ].filter(Boolean).join("\n");
-
-    const set = k => e => this.setState({ [k]: e.target.value });
-
-    return {
-      name: s.name, business: s.business, email: s.email, site: s.site, phone: s.phone, note: s.note,
-      setName: set("name"), setBusiness: set("business"), setEmail: set("email"), setSite: set("site"),
-      setPhone: set("phone"), setNote: set("note"),
-      formLink: this.wa(msg),
-      waLink: this.wa("Hi Uplof, I'd like to talk about my lead journey."),
-      waProofLink: this.wa("Hi Uplof, could you walk me through an anonymised proof example? My website is: , my service is: , and I think leads are leaking at: "),
-
-      compare: [
-        { label: "Website planning", a: "Pages designed before anyone asks what search a customer makes.", b: "Pages planned around the searches and questions that come before an enquiry." },
-        { label: "SEO", a: "Rankings chased on their own, pointing at a page that cannot convert.", b: "Search work aimed at the pages built to take an enquiry." },
-        { label: "Forms and messages", a: "A form that emails one inbox, and a WhatsApp nobody owns.", b: "Every contact route lands in one place your team already checks." },
-        { label: "Follow-up", a: "Replies depend on someone remembering.", b: "A written next step and an owner for each enquiry stage." },
-        { label: "Reporting", a: "Separate dashboards that never agree on a number.", b: "Recorded events tied to the same journey, end to end." },
-        { label: "Reviews", a: "Requested occasionally, when someone has time.", b: "Requested as part of the follow-up, not as an extra task." }
-      ],
-
-      services: [
-        { n: "01", icon: "assets/search-discovery-green.webp", title: "Full SEO and local search management", body: "Technical, on-page and local search work managed as one ongoing programme." },
-        { n: "02", icon: "assets/google-business-green.webp", title: "Google Business Profile optimisation", body: "Categories, services, photos and posts kept accurate for local discovery." },
-        { n: "03", icon: "assets/website-green.webp", title: "Websites and landing pages", body: "Pages built to be found and to take an enquiry. See the website design service page." },
-        { n: "04", icon: "assets/lead-capture-green.webp", title: "Lead capture and enquiry flows", body: "Forms, calls and messages routed so nothing arrives somewhere unchecked." },
-        { n: "05", icon: "assets/cms-green.webp", title: "CMS and content structure", body: "A content structure your team can update without breaking the layout." },
-        { n: "06", icon: "assets/crm-green.webp", title: "CRM and follow-up automation", body: "Stages, owners and reminders so a warm enquiry does not go cold." },
-        { n: "07", icon: "assets/analytics-green.webp", title: "Conversion tracking and analytics", body: "Recorded events for the actions that matter, not vanity traffic charts." },
-        { n: "08", icon: "assets/reviews-green.webp", title: "Reviews and reputation", body: "Review requests built into the follow-up your team already runs." },
-        { n: "09", icon: "assets/content-green.webp", title: "Ongoing conversion and growth improvement", body: "Changes decided by recorded evidence after launch, not by opinion." }
-      ],
-
-      fit: [
-        "Your website is outdated and no longer reflects the service you sell.",
-        "People struggle to reach you, or contact routes land somewhere nobody checks.",
-        "Follow-up is scattered across inboxes, phones and notes.",
-        "You have SEO or traffic, but no funnel for it to land in.",
-        "You are starting fresh and want the journey connected from the beginning."
-      ],
-
-      steps: [
-        { n: "1", icon: "assets/step-1.png", title: "Share your starting point", body: "Your website, search presence and how enquiries reach you today." },
-        { n: "2", icon: "assets/step-2.png", title: "Review the priorities", body: "A walk through the journey and a clear read on where it breaks." },
-        { n: "3", icon: "assets/step-3.png", title: "Build and connect the agreed pieces", body: "Scope written down first, then the work, with the connections tested." },
-        { n: "4", icon: "assets/step-4.png", title: "Improve with evidence", body: "Recorded events decide what changes next, after launch." }
-      ],
-
-      faqs: [
-        { q: "What does Uplof actually do?", a: "Uplof connects the parts of your lead journey: search visibility, the page someone lands on, the way they contact you, and what happens after. The work starts with an audit of where that journey breaks." },
-        { q: "Can I start with just one part?", a: "Yes. Many projects start with a single piece, usually the page or the follow-up route. The audit will tell you which part is costing you enquiries first." },
-        { q: "What does full SEO management include?", a: "Technical fixes, on-page and service content, local search and Google Business Profile, and recorded reporting on what search terms the pages appear for. The proposal lists exactly what is included for your project." },
-        { q: "Do I need a new website?", a: "Not always. If the current site can be adjusted to take an enquiry properly, that is usually the faster route. A rebuild is recommended only when the existing structure is the blocker." },
-        { q: "Can you connect my existing WhatsApp, forms and CRM?", a: "Yes, where the platforms allow it. The aim is to use what you already pay for and route it into one place your team checks." },
-        { q: "What does it cost, and how long is the contract?", a: "Cost depends on scope, and the proposal defines the deliverables and ongoing work before anything begins. Contract length is agreed up front, with clear boundaries on both sides." },
-        { q: "How long before I see results?", a: "It depends on the starting point and which part of the journey is fixed first. Route and follow-up changes tend to show in recorded events sooner than search visibility does." },
-        { q: "Do you guarantee rankings, leads or revenue?", a: "No. No guarantees are made on rankings, enquiries or revenue. What is shared is the recorded evidence of what changed, which are platform events, not confirmed sales, bookings, or qualified leads." },
-        { q: "Are paid ads or social media included, and what do you need to start?", a: "Paid ads and social are not the focus of this work. To start, share your website or Google Business Profile link, how enquiries currently reach you, and where you think they are falling away." }
-      ]
-    };
-  }
-}
-</script>
 </body>
 </html>

@@ -1,0 +1,860 @@
+/* ============================================================================
+   UPLOF DESIGN SYSTEM — COMPONENTS
+   Every component reads semantic tokens only, so it re-themes automatically
+   inside .on-dark / .on-brand. No component hard-codes a brand hex.
+   ========================================================================== */
+
+/* -------------------------------------------------------------- 1. BUTTON */
+
+.btn {
+  --btn-block: 56px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  min-block-size: var(--btn-block);
+  min-inline-size: 209px;
+  padding-inline: var(--space-6);
+  border: var(--border-width) solid transparent;
+  border-radius: var(--radius-none);
+  font-family: var(--font-display);
+  font-weight: var(--weight-medium);
+  font-size: var(--text-ui);
+  line-height: var(--leading-flat);
+  letter-spacing: -0.01em;
+  text-align: center;
+  white-space: nowrap;
+  transition:
+    background-color var(--dur-fast) var(--ease-out),
+    color var(--dur-fast) var(--ease-out),
+    box-shadow var(--dur-fast) var(--ease-out),
+    transform var(--dur-fast) var(--ease-out);
+}
+
+.btn--solid {
+  background-color: var(--btn-solid-bg);
+  color: var(--btn-solid-fg);
+}
+.btn--solid:hover { box-shadow: var(--shadow-brand); transform: translate(-2px, -2px); }
+.btn--solid:active { box-shadow: none; transform: translate(0, 0); }
+
+.btn--ghost {
+  border-color: var(--btn-ghost-border);
+  color: var(--btn-ghost-fg);
+}
+.btn--ghost:hover { background-color: var(--btn-ghost-border); color: var(--bg-page); }
+
+.btn--accent {
+  background-color: var(--red-500);
+  color: var(--paper-000);
+}
+.btn--accent:hover { box-shadow: var(--shadow-deep); transform: translate(-2px, -2px); }
+.btn--accent:active { box-shadow: none; transform: translate(0, 0); }
+
+.btn--sm { --btn-block: 44px; min-inline-size: 0; font-size: var(--text-sm); }
+
+/* --------------------------------------------------- 2. INLINE PHONE FIELD
+   The hero / CTA capture control: one bordered bar, input left, button inset
+   right, hard red offset shadow. */
+
+.field {
+  position: relative;
+  display: flex;
+  align-items: center;
+  inline-size: min(617px, 100%);
+  block-size: 72px;
+  padding: 7px;
+  background-color: rgba(255, 255, 255, 0.9);
+  border: var(--border-width) solid var(--paper-000);
+  box-shadow: var(--shadow-deep);
+  transition: box-shadow var(--dur-base) var(--ease-out);
+}
+.field:focus-within { box-shadow: 6px 6px 0 0 var(--red-900); }
+
+.field__input {
+  flex: 1 1 auto;
+  min-inline-size: 0;
+  block-size: 100%;
+  padding-inline: var(--space-4);
+  border: 0;
+  background: transparent;
+  font-family: var(--font-display);
+  font-weight: var(--weight-light);
+  font-size: var(--text-ui);
+  letter-spacing: -0.01em;
+  color: var(--ink-900);
+}
+.field__input::placeholder { color: rgba(0, 0, 0, 0.4); }
+.field__input:focus { outline: none; }
+
+.field__submit { flex: 0 0 auto; }
+
+/* ------------------------------------------------------------- 3. TRUST ROW */
+
+.trust {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-11);
+}
+.trust__item {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-sm);
+  line-height: var(--leading-relaxed);
+  color: var(--fg-small);
+}
+.trust__item img { inline-size: 20px; block-size: 20px; flex: 0 0 auto; }
+
+/* --------------------------------------------------------- 4. CARD CLUSTER
+   Three cards inside one outer frame, divided by hairlines, with a single
+   red offset shadow on the frame — not on each card. */
+
+.cluster {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border: var(--border-width) solid var(--border-hairline);
+  box-shadow: var(--shadow-brand);
+  background-color: var(--bg-raised);
+}
+
+.cluster__card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  padding: var(--space-8);
+  border-inline-end: var(--border-width) solid var(--border-hairline);
+  transition: background-color var(--dur-base) var(--ease-out);
+}
+.cluster__card:last-child { border-inline-end: 0; }
+.cluster__card:hover { background-color: var(--paper-100); }
+
+.cluster__media {
+  block-size: 160px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-start;
+  overflow: hidden;
+}
+.cluster__media img {
+  block-size: 100%;
+  inline-size: auto;
+  max-inline-size: 100%;
+  object-fit: contain;
+  object-position: left bottom;
+  transition: transform var(--dur-base) var(--ease-out);
+}
+.cluster__card:hover .cluster__media img { transform: translateY(-4px); }
+
+.cluster__body { display: flex; flex-direction: column; gap: var(--space-4); }
+
+/* --------------------------------------------------------- 5. PROGRESS BAR */
+
+.progress { display: flex; flex-direction: column; gap: 9px; inline-size: 223px; }
+
+.progress__track { display: flex; align-items: center; gap: 6px; }
+
+.progress__seg {
+  block-size: 8px;
+  inline-size: 15px;
+  flex: 0 0 auto;
+  background-color: var(--slate-800);
+  transition: inline-size var(--dur-slow) var(--ease-out),
+              background-color var(--dur-base) var(--ease-out);
+}
+.progress__seg.is-active {
+  inline-size: 139px;
+  background-color: var(--indigo-500);
+}
+.progress__seg.is-done { background-color: #3b4658; } /* support ramp, not a neutral */
+
+.progress__label {
+  font-weight: var(--weight-bold);
+  font-size: var(--text-body);
+  line-height: 1.28;
+  color: var(--fg-default);
+}
+
+/* ------------------------------------------------------------ 6. STEP VIEW
+   Cross-fading illustration + caption driven by the progress bar. */
+
+.stepview { display: flex; flex-direction: column; gap: var(--space-5); align-items: center; inline-size: 100%; }
+
+.stepview__stage {
+  position: relative;
+  inline-size: 100%;
+  aspect-ratio: 541 / 403;
+}
+.stepview__frame {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  opacity: 0;
+  transform: scale(0.97);
+  transition: opacity var(--dur-base) var(--ease-out),
+              transform var(--dur-slow) var(--ease-out);
+}
+.stepview__frame.is-active { opacity: 1; transform: none; }
+.stepview__frame img {
+  inline-size: 100%;
+  block-size: 100%;
+  object-fit: contain;
+}
+
+.stepview__caption {
+  position: relative;
+  min-block-size: 3.2em;
+  inline-size: min(360px, 100%);
+  text-align: center;
+  font-size: var(--text-caption);
+  line-height: 1.28;
+  letter-spacing: -0.01em;
+  color: var(--fg-default);
+}
+.stepview__caption span {
+  position: absolute;
+  inset-inline: 0;
+  inset-block-start: 0;
+  opacity: 0;
+  transition: opacity var(--dur-base) var(--ease-out);
+}
+.stepview__caption span.is-active { opacity: 1; }
+
+/* ------------------------------------------------------- 7. JOURNEY CARDS
+   Dark cards on a light band, presented as a perspective carousel. */
+
+.carousel { position: relative; }
+
+.carousel__viewport { overflow: hidden; perspective: 1800px; }
+
+.carousel__track {
+  display: flex;
+  gap: var(--space-6);
+  transition: transform var(--dur-slow) var(--ease-out);
+  transform-style: preserve-3d;
+  padding-block: var(--space-6);
+}
+
+.jcard {
+  flex: 0 0 auto;
+  inline-size: 384px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  padding: var(--space-6);
+  background-color: var(--ink-900);
+  color: var(--cream-100);
+  border: var(--border-width) solid #221f1c;
+  transform: rotateY(9deg) scale(0.95);
+  transform-origin: center;
+  opacity: 0.9;
+  transition: transform var(--dur-slow) var(--ease-out),
+              opacity var(--dur-slow) var(--ease-out),
+              box-shadow var(--dur-base) var(--ease-out);
+}
+.jcard.is-current { transform: none; opacity: 1; box-shadow: var(--shadow-brand); }
+.jcard.is-before { transform: rotateY(-9deg) scale(0.95); }
+
+.jcard__media {
+  block-size: 190px;
+  display: grid;
+  place-items: center;
+  background-color: #0d0b09;
+  overflow: hidden;
+}
+.jcard__media img { block-size: 100%; inline-size: 100%; object-fit: contain; padding: var(--space-4); }
+
+.jcard__index { color: var(--red-500); }
+.jcard__title {
+  font-family: var(--font-text);
+  font-weight: var(--weight-bold);
+  font-size: var(--text-h4);
+  line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-title);
+  color: var(--cream-100);
+}
+.jcard__body {
+  font-weight: var(--weight-light);
+  font-size: var(--text-sm);
+  line-height: 1.35;
+  color: var(--ink-400);
+}
+.jcard__channel {
+  margin-block-start: auto;
+  padding-block-start: var(--space-4);
+  border-block-start: var(--border-width) solid var(--border-hairline);
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  font-size: var(--text-micro);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-400);
+}
+
+.carousel__controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  margin-block-start: var(--space-6);
+}
+.carousel__dots { display: flex; gap: var(--space-1); }
+/* The visible mark stays a 28x4 bar; the button around it is 28x24 so the
+   pointer target clears the WCAG 2.2 minimum without changing the design. */
+.carousel__dot {
+  inline-size: 28px;
+  min-block-size: 24px;
+  padding: 10px 0;
+  background: none;
+  display: flex;
+  align-items: center;
+}
+.carousel__dot::before {
+  content: "";
+  inline-size: 100%;
+  block-size: 4px;
+  background-color: var(--paper-200);
+  transition: background-color var(--dur-fast) var(--ease-out);
+}
+.carousel__dot.is-active::before { background-color: var(--red-500); }
+.carousel__dot:hover::before { background-color: var(--ink-400); }
+
+.carousel__arrows { display: flex; gap: var(--space-2); }
+.carousel__arrow {
+  inline-size: 48px;
+  block-size: 48px;
+  display: grid;
+  place-items: center;
+  border: var(--border-width) solid var(--ink-900);
+  color: var(--ink-900);
+  transition: background-color var(--dur-fast) var(--ease-out),
+              color var(--dur-fast) var(--ease-out),
+              opacity var(--dur-fast) var(--ease-out);
+}
+.carousel__arrow:hover:not(:disabled) { background-color: var(--ink-900); color: var(--paper-000); }
+.carousel__arrow:disabled { opacity: 0.3; cursor: not-allowed; }
+
+/* --------------------------------------------------------- 8. PROOF PANELS */
+
+.panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  padding: var(--space-8);
+  background-color: var(--bg-inset);
+  border: var(--border-width) solid var(--border-hairline);
+  transition: box-shadow var(--dur-base) var(--ease-out),
+              transform var(--dur-base) var(--ease-out);
+}
+.panel:hover { box-shadow: var(--shadow-brand); transform: translate(-2px, -2px); }
+
+.panel__foot {
+  margin-block-start: auto;
+  padding-block-start: var(--space-5);
+  border-block-start: var(--border-width) solid var(--border-hairline);
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  font-size: var(--text-micro);
+  letter-spacing: -0.01em;
+  color: var(--fg-default);
+}
+.panel__foot b { color: var(--fg-accent); font-weight: inherit; }
+
+/* ------------------------------------------------------------ 9. CHECKLIST */
+
+.checklist { border-block-start: var(--border-width) solid var(--border-hairline); }
+.checklist li {
+  display: flex;
+  gap: var(--space-4);
+  padding-block: var(--space-5);
+  border-block-end: var(--border-width) solid var(--border-hairline);
+  font-size: var(--text-lead);
+  line-height: var(--leading-snug);
+  color: var(--fg-default);
+}
+.checklist li::before {
+  content: "↗";
+  flex: 0 0 auto;
+  color: var(--red-500);
+  font-weight: var(--weight-bold);
+}
+
+/* ------------------------------------------------------------- 10. QUOTE */
+
+.portrait {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  background-color: var(--ink-900);
+  border: var(--border-width) solid var(--border-hairline);
+  box-shadow: var(--shadow-brand);
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+}
+/* Grain overlay — the Figma noise tile is white-on-white, so it only reads
+   as texture when screened back over the dark plate. */
+.portrait::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("../assets/img/texture-noise.png");
+  background-size: 160px;
+  mix-blend-mode: screen;
+  opacity: 0.07;
+  pointer-events: none;
+}
+.portrait img { inline-size: 100%; block-size: 100%; object-fit: cover; position: relative; z-index: 1; }
+.portrait__placeholder {
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  font-size: var(--text-micro);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(240, 231, 221, 0.5);
+  text-align: center;
+  padding: var(--space-6);
+}
+
+.signature {
+  font-family: var(--font-display);
+  font-weight: var(--weight-medium);
+  font-size: var(--text-h3);
+  letter-spacing: -0.02em;
+  color: var(--fg-default);
+  text-shadow: 2px 2px 0 var(--red-900);
+}
+
+/* ------------------------------------------------------------- 11. NAVBAR */
+
+.navbar {
+  position: sticky;
+  inset-block-start: 0;
+  z-index: var(--z-nav);
+  padding-block: var(--space-6);
+  transition: background-color var(--dur-base) var(--ease-out),
+              padding var(--dur-base) var(--ease-out),
+              border-color var(--dur-base) var(--ease-out);
+  border-block-end: var(--border-width) solid transparent;
+}
+.navbar__inner { display: flex; align-items: center; justify-content: space-between; gap: var(--space-4); }
+.navbar__logo { inline-size: 102px; flex: 0 0 auto; }
+.navbar__logo img { inline-size: 100%; block-size: auto; }
+
+.navbar.is-stuck {
+  background-color: rgba(209, 45, 52, 0.94);
+  backdrop-filter: blur(14px);
+  padding-block: var(--space-3);
+  border-block-end-color: rgba(255, 255, 255, 0.2);
+}
+
+/* ------------------------------------------------------------- 12. FOOTER */
+
+.footer { padding-block: var(--space-16) var(--space-10); }
+.footer__top {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-8);
+  justify-content: space-between;
+  align-items: flex-start;
+  padding-block-end: var(--space-10);
+  border-block-end: var(--border-width) solid var(--border-hairline);
+}
+.footer__nav { display: flex; flex-wrap: wrap; gap: var(--space-6); font-size: var(--text-sm); }
+.footer__nav a:hover { color: var(--red-500); }
+.footer__bottom {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+  justify-content: space-between;
+  padding-block-start: var(--space-6);
+  font-size: var(--text-sm);
+  color: var(--fg-muted);
+}
+
+/* -------------------------------------------------------- 13. RESPONSIVE */
+
+@media (max-width: 900px) {
+  .cluster { grid-template-columns: 1fr; }
+  .cluster__card { border-inline-end: 0; border-block-end: var(--border-width) solid var(--border-hairline); }
+  .cluster__card:last-child { border-block-end: 0; }
+  .field { block-size: auto; flex-direction: column; align-items: stretch; gap: var(--space-2); }
+  .field__input { block-size: 52px; }
+  .field__submit { inline-size: 100%; }
+  .jcard { inline-size: 300px; }
+  .carousel__viewport { perspective: none; }
+  .jcard, .jcard.is-before { transform: none; opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .jcard, .jcard.is-before { transform: none; }
+  .carousel__track { transition: none; }
+}
+
+/* ============================================================================
+   COMPONENTS — v2
+   Added for the expanded copy: stat strip, comparison table, route diagram,
+   deliverables, numbered lists, process, FAQ, contact form, call band.
+   All read semantic tokens only, same as everything above.
+   ========================================================================== */
+
+/* ------------------------------------------------------------ 14. STAT STRIP */
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border-block: var(--border-width) solid var(--border-hairline);
+}
+.stats__item {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-8) var(--space-6);
+  border-inline-end: var(--border-width) solid var(--border-hairline);
+}
+.stats__item:last-child { border-inline-end: 0; }
+.stats__figure {
+  font-family: var(--font-display);
+  font-weight: var(--weight-regular);
+  font-size: var(--text-stat);
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: var(--fg-default);
+}
+.stats__label {
+  font-size: var(--text-sm);
+  line-height: 1.35;
+  color: var(--fg-muted);
+}
+.stats__note {
+  margin-block-start: var(--space-5);
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  font-size: var(--text-micro);
+  line-height: 1.5;
+  letter-spacing: 0.02em;
+  color: var(--fg-muted);
+}
+
+/* --------------------------------------------------- 15. COMPARISON TABLE */
+
+.compare { border-block-start: var(--border-width) solid var(--border-hairline); }
+
+.compare__head,
+.compare__row {
+  display: grid;
+  grid-template-columns: minmax(150px, 1fr) minmax(0, 1.5fr) minmax(0, 1.5fr);
+  gap: var(--space-8);
+  padding-block: var(--space-6);
+  border-block-end: var(--border-width) solid var(--border-hairline);
+}
+.compare__head { padding-block: var(--space-4); }
+.compare__col {
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  font-size: var(--text-micro);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--fg-muted);
+}
+.compare__col--good { color: var(--fg-accent); }
+
+.compare__label {
+  font-weight: var(--weight-bold);
+  font-size: var(--text-body);
+  letter-spacing: -0.02em;
+  color: var(--fg-default);
+}
+.compare__bad,
+.compare__good {
+  display: flex;
+  gap: var(--space-3);
+  font-size: var(--text-body);
+  line-height: 1.35;
+}
+.compare__bad { color: var(--fg-muted); }
+.compare__good { color: var(--fg-default); }
+.compare__bad::before  { content: "✕"; flex: 0 0 auto; color: var(--ink-400); }
+.compare__good::before { content: "↗"; flex: 0 0 auto; color: var(--red-500); font-weight: var(--weight-bold); }
+
+/* ------------------------------------------------------- 16. ROUTE DIAGRAM */
+
+.route {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3);
+}
+.route__node {
+  padding: var(--space-3) var(--space-4);
+  border: var(--border-width) solid var(--border-hairline);
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  font-size: var(--text-micro);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--fg-default);
+  white-space: nowrap;
+}
+.route__arrow { color: var(--red-500); font-weight: var(--weight-bold); }
+.route--center { justify-content: center; }
+
+/* -------------------------------------------------------- 17. DELIVERABLES */
+
+.deliverables {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border-block-start: var(--border-width) solid var(--border-hairline);
+}
+.deliverables__item {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  padding: var(--space-8) var(--space-6);
+  border-inline-end: var(--border-width) solid var(--border-hairline);
+  border-block-end: var(--border-width) solid var(--border-hairline);
+}
+.deliverables__item:last-child { border-inline-end: 0; }
+.deliverables__name {
+  font-family: var(--font-display);
+  font-size: var(--text-h4);
+  letter-spacing: -0.02em;
+  color: var(--fg-default);
+}
+
+/* ------------------------------------------------------ 18. NUMBERED LIST */
+
+.numbered {
+  display: grid;
+  grid-template-columns: repeat(var(--numbered-cols, 3), minmax(0, 1fr));
+  gap: var(--border-width);
+  background-color: var(--border-hairline);
+  border: var(--border-width) solid var(--border-hairline);
+}
+.numbered__item {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: var(--space-6);
+  background-color: var(--bg-page);
+}
+.numbered__n {
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  font-size: var(--text-micro);
+  letter-spacing: 0.1em;
+  color: var(--red-500);
+}
+.numbered__title {
+  font-weight: var(--weight-bold);
+  font-size: var(--text-ui);
+  letter-spacing: -0.03em;
+  color: var(--fg-default);
+}
+.numbered__body { font-size: var(--text-sm); line-height: 1.4; color: var(--fg-muted); }
+
+/* The grid must be filled exactly — item count = a multiple of the column
+   count — or the container colour shows through as an empty cell. */
+.numbered--2 { --numbered-cols: 2; }
+.numbered--3 { --numbered-cols: 3; }
+
+/* ------------------------------------------------------------- 19. PROCESS */
+
+.steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-6); }
+.steps__item {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  padding-block-start: var(--space-5);
+  border-block-start: 2px solid var(--red-500);
+}
+.steps__n {
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  font-size: var(--text-micro);
+  letter-spacing: 0.1em;
+  color: var(--red-500);
+}
+.steps__title {
+  font-family: var(--font-display);
+  font-size: var(--text-h4);
+  letter-spacing: -0.02em;
+  color: var(--fg-default);
+}
+.steps__body { font-size: var(--text-sm); line-height: 1.45; color: var(--fg-muted); }
+
+/* ----------------------------------------------------------------- 20. FAQ */
+
+.faq { border-block-start: var(--border-width) solid var(--border-hairline); }
+.faq--center { inline-size: 100%; max-inline-size: 800px; margin-inline: auto; }
+
+.faq__item { border-block-end: var(--border-width) solid var(--border-hairline); }
+
+.faq__q {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-4);
+  padding-block: var(--space-5);
+  cursor: pointer;
+  list-style: none;
+  font-weight: var(--weight-bold);
+  font-size: var(--text-lead);
+  letter-spacing: -0.02em;
+  color: var(--fg-default);
+  transition: color var(--dur-fast) var(--ease-out);
+}
+.faq__q::-webkit-details-marker { display: none; }
+.faq__q:hover { color: var(--red-500); }
+.faq__q::before {
+  content: "+";
+  flex: 0 0 auto;
+  inline-size: 1ch;
+  color: var(--red-500);
+  font-weight: var(--weight-bold);
+}
+.faq__item[open] .faq__q::before { content: "−"; }
+
+.faq__a {
+  padding-inline-start: calc(1ch + var(--space-4));
+  padding-block-end: var(--space-6);
+  max-inline-size: 78ch;
+  font-size: var(--text-body);
+  line-height: 1.45;
+  color: var(--fg-body);
+}
+
+/* --------------------------------------------------------- 21. ENQUIRY FORM */
+
+.enquiry {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-5);
+  padding: var(--space-8);
+  background-color: rgba(255, 255, 255, 0.95);
+  border: var(--border-width) solid var(--paper-000);
+  box-shadow: var(--shadow-deep);
+  text-align: start;
+}
+.enquiry__field { display: flex; flex-direction: column; gap: var(--space-2); }
+.enquiry__field--wide { grid-column: 1 / -1; }
+.enquiry__label {
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  font-size: var(--text-micro);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-500);
+}
+.enquiry__input,
+.enquiry__textarea {
+  min-block-size: 48px;
+  padding: var(--space-3) var(--space-4);
+  background-color: var(--paper-000);
+  border: var(--border-width) solid var(--paper-200);
+  border-radius: var(--radius-none);
+  font-family: var(--font-text);
+  font-size: var(--text-body);
+  color: var(--ink-900);
+  transition: border-color var(--dur-fast) var(--ease-out);
+}
+.enquiry__textarea { min-block-size: 110px; resize: vertical; }
+.enquiry__input:focus,
+.enquiry__textarea:focus { outline: none; border-color: var(--red-500); }
+.enquiry__actions {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  align-items: center;
+}
+
+/* --------------------------------------------------------- 22. CALL BAND */
+
+.callband {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-6);
+  padding: var(--space-8);
+  border: var(--border-width) solid var(--border-hairline);
+  box-shadow: var(--shadow-brand);
+  background-color: var(--bg-inset);
+}
+
+/* ------------------------------------------------------- 23. NAV LINK SET */
+
+.navbar__links { display: flex; gap: var(--space-6); font-size: var(--text-sm); }
+.navbar__links a { color: var(--fg-body); opacity: 0.85; }
+.navbar__links a:hover { opacity: 1; }
+
+/* --------------------------------------------------- 24. RESPONSIVE (v2) */
+
+@media (max-width: 1100px) {
+  .numbered { --numbered-cols: 2; }
+  .stats, .deliverables { grid-template-columns: repeat(2, 1fr); }
+  .stats__item:nth-child(2n), .deliverables__item:nth-child(2n) { border-inline-end: 0; }
+  .stats__item:nth-child(-n+2) { border-block-end: var(--border-width) solid var(--border-hairline); }
+  .steps { grid-template-columns: repeat(2, 1fr); gap: var(--space-8); }
+  .navbar__links { display: none; }
+}
+
+@media (max-width: 900px) {
+  .numbered { --numbered-cols: 1; }
+  .stats, .deliverables, .steps { grid-template-columns: 1fr; }
+  .stats__item, .deliverables__item {
+    border-inline-end: 0;
+    border-block-end: var(--border-width) solid var(--border-hairline);
+  }
+  .stats__item:last-child { border-block-end: 0; }
+  .compare__head { display: none; }
+  .compare__row { grid-template-columns: 1fr; gap: var(--space-3); }
+  .compare__bad::before  { content: "✕ Disconnected — "; white-space: pre; }
+  .compare__good::before { content: "↗ Connected — "; white-space: pre; }
+  .enquiry { grid-template-columns: 1fr; padding: var(--space-5); }
+  .callband { flex-direction: column; align-items: flex-start; }
+}
+
+
+/* ---------------------------------------------------- 25. FORM VALIDATION */
+
+.enquiry__summary {
+  grid-column: 1 / -1;
+  padding: var(--space-5);
+  border: 2px solid var(--red-500);
+  background-color: var(--paper-000);
+}
+.enquiry__summary[hidden] { display: none; }
+.enquiry__summary:focus-visible { outline: 2px solid var(--red-500); outline-offset: 2px; }
+.enquiry__summary-title {
+  font-weight: var(--weight-bold);
+  font-size: var(--text-ui);
+  letter-spacing: -0.02em;
+  color: var(--ink-900);
+  margin-block-end: var(--space-3);
+}
+.enquiry__summary ul { display: flex; flex-direction: column; gap: var(--space-2); }
+.enquiry__summary a {
+  font-size: var(--text-sm);
+  color: var(--red-500);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.enquiry__error {
+  font-size: var(--text-sm);
+  line-height: 1.35;
+  color: #a3161c;   /* red-500 darkened to clear 4.5:1 on white at 14px */
+}
+.enquiry__error[hidden] { display: none; }
+
+.enquiry__input[aria-invalid="true"],
+.enquiry__textarea[aria-invalid="true"] {
+  border-color: var(--red-500);
+  border-width: 2px;
+}
+
+/* ------------------------------------------------ 26. POINTER TARGET SIZE
+   WCAG 2.2 AA asks for 24x24 CSS px. Footer and nav links were 18px tall
+   as bare inline text; the padding here lifts them over the line without
+   changing the visual rhythm. */
+
+.footer a,
+.navbar__links a,
+.enquiry__summary a {
+  display: inline-flex;
+  align-items: center;
+  min-block-size: 24px;
+}
+.footer__nav { gap: var(--space-2) var(--space-6); }

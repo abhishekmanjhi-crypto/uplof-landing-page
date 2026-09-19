@@ -1,0 +1,343 @@
+/* ============================================================================
+   UPLOF — LAYOUT BLOCKS (redesign)
+   Governing concept: an audit sheet, not a brochure. Every block reads like
+   recorded evidence: mono labels, big numerals, ticks and crosses, routes.
+   Copy is caption-length. Primitives live in components.css; these are the
+   section-level compositions built from them.
+   ========================================================================== */
+
+/* ------------------------------------------------------------------ ICONS
+   Phosphor regular, inlined as a sprite. One family, one stroke. */
+.icon {
+  inline-size: 1em;
+  block-size: 1em;
+  fill: currentColor;
+  flex: 0 0 auto;
+  display: inline-block;
+  vertical-align: -0.125em;
+}
+.icon--lg { font-size: 2rem; }      /* 32px */
+.icon--xl { font-size: 2.5rem; }    /* 40px */
+.icon--accent { color: var(--red-500); }
+
+/* ------------------------------------------------------------------- HERO */
+.hero__copy { align-items: center; }
+.hero__copy .eyebrow { justify-content: center; }
+.hero__lead { max-inline-size: 52ch; }
+
+/* ----------------------------------------------------------------- LEDGER
+   The comparison table as an audit sheet: icon, row label, a cross column
+   and a tick column. Cells are phrases, not sentences. */
+.ledger {
+  border: var(--border-width) solid var(--border-hairline);
+  box-shadow: var(--shadow-brand);
+  background-color: var(--bg-inset);
+}
+.ledger__head,
+.ledger__row {
+  display: grid;
+  grid-template-columns: 40px minmax(120px, 0.8fr) minmax(0, 1.2fr) minmax(0, 1.2fr);
+  gap: var(--space-5);
+  align-items: center;
+  padding: var(--space-4) var(--space-6);
+  border-block-end: var(--border-width) solid var(--border-hairline);
+}
+.ledger__row:last-child { border-block-end: 0; }
+.ledger__head {
+  background-color: var(--bg-page);
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  font-size: var(--text-micro);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--fg-muted);
+}
+.ledger__head .is-good { color: var(--red-500); }
+.ledger__icon { color: var(--red-500); font-size: 1.375rem; }
+.ledger__label { font-weight: var(--weight-bold); letter-spacing: -0.02em; color: var(--fg-default); }
+.ledger__bad,
+.ledger__good {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  font-size: var(--text-sm);
+  line-height: 1.3;
+}
+.ledger__bad { color: var(--fg-muted); }
+.ledger__good { color: var(--fg-default); }
+.ledger__mark {
+  inline-size: 20px;
+  block-size: 20px;
+  display: grid;
+  place-items: center;
+  font-size: 0.75rem;
+  flex: 0 0 auto;
+}
+.ledger__bad .ledger__mark { color: var(--ink-400); border: var(--border-width) solid var(--border-hairline); }
+.ledger__good .ledger__mark { color: var(--paper-000); background-color: var(--red-500); }
+
+/* ------------------------------------------------------------------ BENTO
+   The five-stage approach. One frame, hairline gaps, dark tiles; the first
+   stage takes a 2x2 tile so the illustration can breathe. */
+.bento {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-auto-rows: 300px;
+  gap: var(--border-width);
+  background-color: #2a2622;
+  border: var(--border-width) solid #2a2622;
+  box-shadow: var(--shadow-brand);
+}
+.tile {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: var(--space-2);
+  padding: var(--space-6);
+  background-color: var(--ink-900);
+  color: var(--cream-100);
+  overflow: hidden;
+  isolation: isolate;
+}
+.tile--span2 { grid-column: span 2; grid-row: span 2; }
+.tile__art {
+  position: absolute;
+  inset-inline-end: var(--space-4);
+  inset-block-start: var(--space-4);
+  inline-size: 60%;
+  max-inline-size: 300px;
+  block-size: auto;      /* the height attribute would otherwise win over aspect-ratio */
+  aspect-ratio: 1;
+  object-fit: contain;
+  object-position: right top;
+  z-index: -1;
+  transition: transform var(--dur-slow) var(--ease-out);
+}
+.tile--span2 .tile__art { inline-size: 64%; max-inline-size: 440px; inset-block-start: var(--space-6); }
+.tile:hover .tile__art { transform: translateY(-6px); }
+.tile__index { color: var(--red-500); }
+.tile__title {
+  font-family: var(--font-text);
+  font-weight: var(--weight-bold);
+  font-size: var(--text-h4);
+  line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-title);
+}
+.tile--span2 .tile__title { font-size: var(--text-h3); }
+.tile__line { font-size: var(--text-sm); color: var(--ink-400); max-inline-size: 30ch; }
+.tile__numeral {
+  position: absolute;
+  inset-inline-end: var(--space-5);
+  inset-block-start: var(--space-3);
+  font-family: var(--font-display);
+  font-size: 7.5rem;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  color: #1a1714;
+  z-index: -1;
+  user-select: none;
+}
+
+/* -------------------------------------------------------------------- KIT
+   Deliverables: icon, name, one line. Hairline-divided, no cards. */
+.kit {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border-block: var(--border-width) solid var(--border-hairline);
+}
+.kit__item {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  padding: var(--space-8) var(--space-6);
+  border-inline-end: var(--border-width) solid var(--border-hairline);
+}
+.kit__item:last-child { border-inline-end: 0; }
+.kit__name {
+  font-family: var(--font-display);
+  font-size: var(--text-h4);
+  letter-spacing: -0.02em;
+  color: var(--fg-default);
+}
+.kit__line { font-size: var(--text-sm); line-height: 1.4; color: var(--fg-muted); }
+
+/* --------------------------------------------------------------- EVIDENCE
+   Proof as a readout: source line in mono, one huge numeral, its unit, a
+   secondary figure, and a single tick line saying what it proves. */
+.evidence { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-5); }
+.readout {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  padding: var(--space-6);
+  background-color: var(--bg-inset);
+  border: var(--border-width) solid var(--border-hairline);
+  box-shadow: var(--shadow-brand);
+}
+.readout__source {
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  font-size: var(--text-micro);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--fg-muted);
+  padding-block-end: var(--space-3);
+  border-block-end: var(--border-width) solid var(--border-hairline);
+}
+.readout__figure {
+  font-family: var(--font-display);
+  font-size: clamp(3rem, 2rem + 3vw, 4.5rem);
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: var(--fg-default);
+}
+.readout__unit { font-size: var(--text-body); color: var(--fg-body); margin-block-start: calc(-1 * var(--space-2)); }
+.readout__sub {
+  display: flex;
+  gap: var(--space-3);
+  align-items: baseline;
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  font-size: var(--text-sm);
+  color: var(--fg-default);
+}
+.readout__sub b { font-family: var(--font-display); font-size: var(--text-h4); font-weight: var(--weight-regular); }
+.readout__proves {
+  margin-block-start: auto;
+  padding-block-start: var(--space-4);
+  border-block-start: var(--border-width) solid var(--border-hairline);
+  display: flex;
+  gap: var(--space-3);
+  align-items: flex-start;
+  font-size: var(--text-sm);
+  line-height: 1.35;
+  color: var(--fg-default);
+}
+.readout__proves .icon { color: var(--red-500); font-size: 1.125rem; margin-block-start: 1px; }
+
+/* vertical route inside the third readout */
+.route-v { display: flex; flex-direction: column; gap: 0; margin-block: var(--space-2); }
+.route-v__node {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding-block: var(--space-2);
+  font-size: var(--text-sm);
+  color: var(--fg-default);
+}
+.route-v__node .icon { color: var(--red-500); font-size: 1.125rem; }
+.route-v__node + .route-v__node { border-block-start: var(--border-width) dashed var(--border-hairline); }
+.route-v__check { margin-inline-start: auto; color: var(--red-500); font-size: 0.875rem; }
+
+.evidence__note {
+  margin-block-start: var(--space-6);
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  font-size: var(--text-micro);
+  letter-spacing: 0.04em;
+  color: var(--fg-muted);
+}
+
+/* ---------------------------------------------------------------- REASONS
+   Four reasons: the numeral is the graphic. */
+.reasons { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-8); }
+.reason { display: flex; flex-direction: column; gap: var(--space-3); padding-block-start: var(--space-5); border-block-start: 2px solid var(--red-500); }
+.reason__n {
+  font-family: var(--font-display);
+  font-size: clamp(3.5rem, 2.5rem + 3vw, 6rem);
+  line-height: 0.9;
+  letter-spacing: -0.04em;
+  background-image: var(--gradient-heading);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.reason .icon { color: var(--red-500); font-size: 1.5rem; }
+.reason__title { font-weight: var(--weight-bold); font-size: var(--text-ui); letter-spacing: -0.03em; color: var(--fg-default); }
+.reason__line { font-size: var(--text-sm); line-height: 1.4; color: var(--fg-muted); }
+
+/* ----------------------------------------------------------------- QUOTE */
+.pull {
+  font-family: var(--font-display);
+  font-size: var(--text-h3);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: var(--fg-default);
+  padding-inline-start: var(--space-5);
+  border-inline-start: 3px solid var(--red-500);
+}
+
+/* --------------------------------------------------------------- SERVICES
+   Nine services, icon-led. */
+.services {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--border-width);
+  background-color: var(--border-hairline);
+  border: var(--border-width) solid var(--border-hairline);
+}
+.service {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: var(--space-2) var(--space-4);
+  align-items: start;
+  padding: var(--space-6);
+  background-color: var(--bg-page);
+  transition: background-color var(--dur-fast) var(--ease-out);
+}
+.service:hover { background-color: var(--bg-inset); }
+.service .icon { grid-row: span 2; color: var(--red-500); font-size: 1.75rem; margin-block-start: 2px; }
+.service__title { font-weight: var(--weight-bold); font-size: var(--text-body); letter-spacing: -0.02em; color: var(--fg-default); }
+.service__line { font-size: var(--text-sm); line-height: 1.35; color: var(--fg-muted); }
+
+/* --------------------------------------------------------------- TIMELINE */
+.timeline { display: grid; grid-template-columns: repeat(4, 1fr); position: relative; }
+.timeline::before {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  inset-block-start: 20px;
+  block-size: var(--border-width);
+  background-color: var(--border-hairline);
+}
+.tstep { position: relative; display: flex; flex-direction: column; gap: var(--space-3); padding-inline-end: var(--space-6); }
+.tstep__n {
+  inline-size: 40px;
+  block-size: 40px;
+  display: grid;
+  place-items: center;
+  background-color: var(--red-500);
+  color: var(--paper-000);
+  font-family: var(--font-display);
+  font-size: var(--text-ui);
+  position: relative;
+  z-index: 1;
+}
+.tstep .icon { color: var(--red-500); font-size: 1.375rem; margin-block-start: var(--space-2); }
+.tstep__title { font-family: var(--font-display); font-size: var(--text-h4); letter-spacing: -0.02em; color: var(--fg-default); }
+.tstep__line { font-size: var(--text-sm); line-height: 1.4; color: var(--fg-muted); max-inline-size: 26ch; }
+
+/* --------------------------------------------------------- RESPONSIVE */
+@media (max-width: 1100px) {
+  .bento { grid-template-columns: repeat(2, 1fr); grid-auto-rows: 240px; }
+  .tile--span2 { grid-column: span 2; grid-row: span 1; }
+  .tile--span2 .tile__art { inline-size: 40%; }
+  .kit, .reasons, .timeline { grid-template-columns: repeat(2, 1fr); }
+  .kit__item:nth-child(2n) { border-inline-end: 0; }
+  .kit__item:nth-child(-n+2) { border-block-end: var(--border-width) solid var(--border-hairline); }
+  .timeline::before { display: none; }
+  .evidence, .services { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 720px) {
+  .bento, .kit, .reasons, .timeline, .evidence, .services { grid-template-columns: 1fr; }
+  .bento { grid-auto-rows: 220px; }
+  .tile--span2 { grid-column: span 1; }
+  .kit__item { border-inline-end: 0; border-block-end: var(--border-width) solid var(--border-hairline); }
+  .kit__item:last-child { border-block-end: 0; }
+  .ledger__head { display: none; }
+  .ledger__row { grid-template-columns: 32px 1fr; grid-template-areas: "i l" "i b" "i g"; gap: var(--space-2) var(--space-4); }
+  .ledger__icon { grid-area: i; }
+  .ledger__label { grid-area: l; }
+  .ledger__bad { grid-area: b; }
+  .ledger__good { grid-area: g; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .tile:hover .tile__art { transform: none; }
+}
