@@ -21,12 +21,12 @@
 <meta name="twitter:description" content="Your website, search and follow-up were never joined up. That gap is where enquiries go missing.">
 <meta name="twitter:image" content="https://uplof.me/assets/img/og-card.png">
 <link rel="icon" href="/assets/logo.svg" type="image/svg+xml">
-<link rel="stylesheet" href="css/tokens.css?v=11">
-<link rel="stylesheet" href="css/base.css?v=11">
-<link rel="stylesheet" href="css/components.css?v=11">
-<link rel="stylesheet" href="css/sections.css?v=11">
-<link rel="stylesheet" href="css/blocks.css?v=11">
-<link rel="stylesheet" href="css/motion.css?v=11">
+<link rel="stylesheet" href="css/tokens.css?v=12">
+<link rel="stylesheet" href="css/base.css?v=12">
+<link rel="stylesheet" href="css/components.css?v=12">
+<link rel="stylesheet" href="css/sections.css?v=12">
+<link rel="stylesheet" href="css/blocks.css?v=12">
+<link rel="stylesheet" href="css/motion.css?v=12">
 </head>
 <body>
 
@@ -521,6 +521,24 @@
         </div>
       </form>
 
+      <!-- Shown in place of the form once /api/lead accepts the enquiry. Kept in
+           the markup rather than built in JS so it is styled, translatable and
+           readable by assistive tech the moment it is unhidden. -->
+      <div class="enquiry__done" data-enquiry-success hidden role="status" tabindex="-1">
+        <p class="enquiry__done-mark" aria-hidden="true">✓</p>
+        <h3 class="enquiry__done-title">Enquiry received.</h3>
+        <p class="enquiry__done-line" data-enquiry-success-line>
+          Thanks. It has landed in my inbox and a confirmation is on its way to
+          your email. I reply within one working day.
+        </p>
+        <p class="enquiry__done-alt">
+          Need it sooner? Call
+          <a href="tel:+917710894943">+91 77108 94943</a>
+          or
+          <a href="https://wa.me/917710894943?text=Hi%20Uplof%2C%20I%20just%20sent%20an%20enquiry." rel="noopener">message on WhatsApp</a>.
+        </p>
+      </div>
+
       <p class="micro" style="max-inline-size:60ch">Handled by Uplof directly. WhatsApp is there if you’d rather start that way.</p>
     </div>
   </section>
@@ -561,8 +579,8 @@
   </div>
 </footer>
 
-<script src="js/site.js?v=11" defer></script>
-<script src="/cookie-consent.js?v=11" defer></script>
-<script src="/whatsapp-lead.js?v=11" defer></script>
+<script src="js/site.js?v=12" defer></script>
+<script src="/cookie-consent.js?v=12" defer></script>
+<script src="/whatsapp-lead.js?v=12" defer></script>
 </body>
 </html>

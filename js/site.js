@@ -318,6 +318,88 @@
       el.addEventListener("focus", function () { el.dataset.touched = "1"; });
     });
 
+    /* ------------------------------------------------------ SUBMIT STATES
+       Before this, a valid enquiry posted natively, took a 303 back to
+       /?submitted=1 and landed on a blank form — nothing on the page read that
+       parameter, so a sent enquiry and a lost one looked exactly the same.
+       Now: pending while it sends, a confirmation panel when it lands, and a
+       route to the phone when it does not. */
+
+    var done = document.querySelector("[data-enquiry-success]");
+    var doneLine = document.querySelector("[data-enquiry-success-line]");
+    var submitBtn = form.querySelector('button[type="submit"]');
+    var REACH = ' You can <a href="https://wa.me/917710894943" rel="noopener">message on WhatsApp</a>'
+      + ' or call <a href="tel:+917710894943">+91 77108 94943</a>.';
+    var failNode = null;
+
+    function showFailure(html) {
+      if (!failNode) {
+        failNode = document.createElement("p");
+        failNode.className = "enquiry__failed";
+        failNode.setAttribute("role", "alert");
+        var actions = form.querySelector(".enquiry__actions");
+        (actions || form).appendChild(failNode);
+      }
+      failNode.innerHTML = html;
+      failNode.hidden = false;
+    }
+
+    function setBusy(on) {
+      if (!submitBtn) return;
+      if (on) {
+        submitBtn.dataset.idleLabel = submitBtn.textContent;
+        submitBtn.textContent = "Sending";
+        submitBtn.setAttribute("aria-busy", "true");
+        submitBtn.disabled = true;
+      } else {
+        if (submitBtn.dataset.idleLabel) submitBtn.textContent = submitBtn.dataset.idleLabel;
+        submitBtn.removeAttribute("aria-busy");
+        submitBtn.disabled = false;
+      }
+    }
+
+    function succeed(name) {
+      if (!done) return;
+      if (doneLine && name) {
+        doneLine.textContent = "Thanks, " + name + ". It has landed in my inbox and a "
+          + "confirmation is on its way to your email. I reply within one working day.";
+      }
+      form.hidden = true;
+      done.hidden = false;
+      done.focus();
+    }
+
+    function send(e) {
+      // Without fetch/FormData, do nothing: the browser posts natively and the
+      // 303 lands on ?submitted=1, which is handled at the bottom of this block.
+      if (!window.fetch || !window.FormData || !done) return;
+      e.preventDefault();
+      if (failNode) failNode.hidden = true;
+      setBusy(true);
+      fetch(form.action, {
+        method: "POST",
+        body: new FormData(form),
+        headers: { Accept: "application/json" }
+      }).then(function (res) {
+        return res.json()
+          .catch(function () { return {}; })
+          .then(function (data) { return { ok: res.ok, data: data }; });
+      }).then(function (r) {
+        setBusy(false);
+        if (r.ok) { succeed(r.data && r.data.name); return; }
+        showFailure((r.data && r.data.message ? r.data.message : "That did not send.") + REACH);
+      }).catch(function () {
+        setBusy(false);
+        showFailure("That did not send — you may be offline." + REACH);
+      });
+    }
+
+    // Landing back from the native (no-JS) post, which redirects to ?submitted=1.
+    if (done && /[?&]submitted=1/.test(window.location.search)) {
+      form.hidden = true;
+      done.hidden = false;
+    }
+
     form.addEventListener("submit", function (e) {
       var failed = [];
       controls.forEach(function (el) {
@@ -329,7 +411,8 @@
 
       if (!failed.length) {
         if (summary) summary.hidden = true;
-        return;                                    // let the form post normally
+        send(e);                                   // falls back to a normal post
+        return;
       }
 
       e.preventDefault();

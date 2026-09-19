@@ -66,6 +66,16 @@ h1, h2, h3, h4, p, figure, blockquote { margin: 0; }
 ul, ol { margin: 0; padding: 0; list-style: none; }
 img, svg { display: block; max-width: 100%; }
 button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
+
+/* Kills the double-tap-to-zoom gesture on things people tap, which is what
+   makes a mobile page lurch when a button is tapped twice quickly. It also
+   drops the legacy 300ms tap delay. Pinch-zoom is deliberately left alone:
+   removing it fails WCAG 2.2 SC 1.4.4, and iOS Safari has ignored
+   user-scalable=no since iOS 10 anyway, so it would only ever have worked on
+   Android while hurting anyone who needs to magnify. */
+a, button, summary, label, input, select, textarea, [role="button"] {
+  touch-action: manipulation;
+}
 input { font: inherit; }
 
 a {

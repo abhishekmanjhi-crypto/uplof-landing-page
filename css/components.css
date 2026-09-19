@@ -1043,3 +1043,107 @@
   .cookie-actions { margin-block-start: var(--space-5); }
   .cookie-actions .btn { flex: 1 1 0; }
 }
+
+/* This codebase has no global [hidden] rule — each component declares its own,
+   and a component with an explicit `display` would otherwise ignore the
+   attribute entirely. .enquiry is display:grid, so it needs this to hide. */
+.enquiry[hidden],
+.enquiry__done[hidden],
+.enquiry__failed[hidden] { display: none; }
+
+/* --------------------------------------------------- 30. ENQUIRY: SENDING
+   The form used to post, reload the whole page and land back on a blank form
+   with ?submitted=1 in the URL that nothing read — so a successful enquiry and
+   a lost one looked identical. These are the two missing states. */
+
+/* Pending. The button keeps its own width so the panel does not jump. */
+.btn[aria-busy="true"] {
+  opacity: 0.75;
+  cursor: progress;
+  pointer-events: none;
+}
+.btn[aria-busy="true"]::after {
+  content: "";
+  inline-size: 0.85em;
+  block-size: 0.85em;
+  margin-inline-start: var(--space-3);
+  border: 2px solid currentColor;
+  border-block-start-color: transparent;
+  border-radius: 50%;
+  animation: btn-spin 700ms linear infinite;
+}
+@keyframes btn-spin { to { transform: rotate(360deg); } }
+
+/* Done. Replaces the form in place: same surface language as the site's
+   inset cards, so it reads as part of the page and not a browser alert. */
+.enquiry__done {
+  margin-block-start: var(--space-8);
+  padding: var(--space-10) var(--space-8);
+  background-color: var(--bg-inset);
+  border: var(--border-width) solid var(--border-hairline);
+  box-shadow: var(--shadow-offset);
+  text-align: center;
+}
+.enquiry__done:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 3px; }
+
+.enquiry__done-mark {
+  inline-size: 52px;
+  block-size: 52px;
+  margin-inline: auto;
+  margin-block-end: var(--space-5);
+  display: grid;
+  place-items: center;
+  font-size: 1.5rem;
+  line-height: 1;
+  color: var(--paper-000);
+  background-color: var(--red-500);
+  border-radius: 50%;
+}
+
+.enquiry__done-title {
+  font-family: var(--font-display);
+  font-weight: var(--weight-regular);
+  font-size: var(--text-h3);
+  line-height: var(--leading-snug);
+  letter-spacing: var(--tracking-title);
+  color: var(--cream-100);
+}
+
+.enquiry__done-line {
+  margin-block-start: var(--space-4);
+  margin-inline: auto;
+  max-inline-size: 48ch;
+  font-size: var(--text-body);
+  line-height: var(--leading-relaxed);
+  color: var(--ink-400);
+}
+
+.enquiry__done-alt {
+  margin-block-start: var(--space-6);
+  padding-block-start: var(--space-5);
+  border-block-start: var(--border-width) solid var(--border-hairline);
+  font-size: var(--text-sm);
+  color: var(--ink-400);
+}
+.enquiry__done-alt a {
+  color: var(--red-400);
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
+}
+.enquiry__done-alt a:hover { color: var(--paper-000); }
+
+/* A send that failed needs to say so where the button is, not silently. */
+.enquiry__failed {
+  margin-block-start: var(--space-5);
+  padding: var(--space-4) var(--space-5);
+  background-color: var(--bg-inset);
+  border-inline-start: 3px solid var(--red-400);
+  font-size: var(--text-sm);
+  line-height: var(--leading-relaxed);
+  color: var(--cream-100);
+}
+.enquiry__failed a { color: var(--red-400); text-decoration: underline; }
+
+@media (prefers-reduced-motion: reduce) {
+  .btn[aria-busy="true"]::after { animation: none; }
+}
