@@ -68,7 +68,7 @@
 /* A tall scroll track with a pinned viewport: scroll progress drives the
    step index, per the Figma annotation on the progress-bar component. */
 .leak { padding-block: 0; }
-.leak__track { position: relative; min-block-size: 320vh; }
+.leak__track { position: relative; min-block-size: 200vh; }
 
 .leak__pin {
   position: sticky;
@@ -172,7 +172,7 @@
 
 @media (max-width: 1100px) {
   .leak__grid { grid-template-columns: 1fr; gap: var(--space-10); justify-items: start; }
-  .leak__track { min-block-size: 260vh; }
+  .leak__track { min-block-size: 170vh; }
   .fit__grid, .founder__grid { grid-template-columns: 1fr; gap: var(--space-10); }
   .founder__media { max-inline-size: 360px; }
 }

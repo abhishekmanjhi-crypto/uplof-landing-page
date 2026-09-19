@@ -954,3 +954,26 @@
   .footer__nav a:last-child { grid-column: 1 / -1; }
   .footer__strap { font-size: var(--text-body); max-inline-size: 22ch; }
 }
+
+/* ------------------------------------ 28. STEPPER WITHOUT MOTION
+   With prefers-reduced-motion the sequence does not play, so the five captions
+   are laid out as a static list instead of stacked at opacity 0. Nothing the
+   animation carried is lost. */
+.leak__track.is-static .stepview__stage { display: none; }
+.leak__track.is-static .stepview__caption {
+  position: static;
+  min-block-size: 0;
+  inline-size: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  text-align: start;
+}
+.leak__track.is-static .stepview__caption span {
+  position: static;
+  opacity: 1;
+  transform: none;
+  padding-inline-start: var(--space-4);
+  border-inline-start: 2px solid var(--fg-accent);
+}
+.leak__track.is-static .progress { display: none; }

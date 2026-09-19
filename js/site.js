@@ -97,10 +97,12 @@
   }
 
   /* -------------------------------------------------------------- stepper
-     Scroll position inside the tall .leak__track drives the active step —
-     the behaviour annotated on the progress-bar component in Figma.
-     When the track is not pinned (small screens / reduced motion) the steps
-     advance on a timer while the section is on screen instead. */
+     The section pins, and then the sequence plays itself. Scroll position no
+     longer scrubs the steps: holding the reader still and letting the strip
+     advance on its own reads as a deliberate pause rather than something they
+     have to operate. Autoplay stops on hover or keyboard focus, and under
+     prefers-reduced-motion it does not run at all (every caption is shown
+     instead, so no content depends on the animation). */
   function initStepper() {
     var track = document.querySelector("[data-stepper]");
     if (!track) return;
@@ -116,9 +118,11 @@
     var count = Math.max(segs.length, frames.length, captions.length);
     if (!count) return;
 
+    var STEP_MS = 2200;
     var current = -1;
+
     function show(index) {
-      index = Math.max(0, Math.min(count - 1, index));
+      index = ((index % count) + count) % count;
       if (index === current) return;
       current = index;
 
@@ -126,9 +130,8 @@
         seg.classList.toggle("is-active", i === index);
         seg.classList.toggle("is-done", i < index);
       });
-      // park every frame (index - current) stage-widths away so the strip slides
-      // clamp to +/-1: distant frames park just off-stage instead of translating
-      // metres away, which would extend the document's scrollable width
+      // frames are parked one stage-width apart and the strip slides; the offset
+      // is clamped to +/-1 so distant frames cannot extend the scrollable width
       frames.forEach(function (f, i) {
         var d = i - index;
         f.style.setProperty("--offset", String(Math.max(-1, Math.min(1, d))));
@@ -142,46 +145,39 @@
       });
       if (label && labels[index]) label.textContent = labels[index];
     }
+
+    // Reduced motion: no autoplay and nothing hidden behind it.
+    if (reduceMotion.matches) {
+      track.classList.add("is-static");
+      if (label && labels[0]) label.textContent = labels[0];
+      return;
+    }
+
     show(0);
 
-    // Is the track actually taller than the viewport (i.e. pinned)?
-    function isPinned() {
-      return !reduceMotion.matches &&
-             track.offsetHeight > window.innerHeight * 1.4;
+    var timer = null, held = false, visible = false;
+    function sync() {
+      var run = visible && !held;
+      if (run && !timer) {
+        timer = window.setInterval(function () { show(current + 1); }, STEP_MS);
+      } else if (!run && timer) {
+        window.clearInterval(timer);
+        timer = null;
+      }
     }
 
-    var ticking = false;
-    function onScroll() {
-      if (ticking) return;
-      ticking = true;
-      window.requestAnimationFrame(function () {
-        ticking = false;
-        if (!isPinned()) return;
-        var rect = track.getBoundingClientRect();
-        var scrollable = rect.height - window.innerHeight;
-        if (scrollable <= 0) return;
-        var progress = Math.min(1, Math.max(0, -rect.top / scrollable));
-        show(Math.min(count - 1, Math.floor(progress * count)));
-      });
-    }
-    window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onScroll, { passive: true });
-    onScroll();
+    // Pause on keyboard focus only. NOT on hover: the section fills the viewport
+    // while pinned, so the pointer sits over it for essentially every visitor and
+    // a hover pause would mean the sequence never plays.
+    track.addEventListener("focusin", function () { held = true; sync(); });
+    track.addEventListener("focusout", function () { held = false; sync(); });
 
-    // Timer fallback for the un-pinned layout.
-    var timer = null;
     if ("IntersectionObserver" in window) {
       new IntersectionObserver(function (entries) {
-        entries.forEach(function (entry) {
-          var shouldRun = entry.isIntersecting && !isPinned() && !reduceMotion.matches;
-          if (shouldRun && !timer) {
-            timer = window.setInterval(function () { show((current + 1) % count); }, 3200);
-          } else if (!shouldRun && timer) {
-            window.clearInterval(timer);
-            timer = null;
-          }
-        });
-      }, { threshold: 0.35 }).observe(track);
+        entries.forEach(function (entry) { visible = entry.isIntersecting; sync(); });
+      }, { threshold: 0.25 }).observe(track.querySelector(".leak__pin") || track);
+    } else {
+      visible = true; sync();
     }
   }
 
