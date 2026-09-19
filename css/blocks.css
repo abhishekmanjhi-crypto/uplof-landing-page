@@ -341,3 +341,111 @@
 @media (prefers-reduced-motion: reduce) {
   .tile:hover .tile__art { transform: none; }
 }
+
+/* ============================================================================
+   v4 — CTA BALANCE, TIMELINE, MOBILE CENTRING
+   ========================================================================== */
+
+/* ---------------------------------------------------------- HERO ACTIONS
+   Both calls to action carry equal weight, so they get equal width rather
+   than sizing to their own label length. */
+.hero__actions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-3);
+  inline-size: min(560px, 100%);
+  margin-inline: auto;
+}
+.hero__actions .btn { inline-size: 100%; min-inline-size: 0; }
+
+/* Same rule for the form's submit / WhatsApp pair. */
+.enquiry__actions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: stretch;
+}
+.enquiry__actions .btn { inline-size: 100%; min-inline-size: 0; }
+
+/* ------------------------------------------------------- HOW THE WORK RUNS
+   The track now runs through the centre of the numbered badges instead of
+   floating above them, and every step sits on the same baseline grid. */
+.timeline { gap: var(--space-6); align-items: start; }
+.timeline::before { inset-block-start: 24px; inset-inline: 24px 24px; }
+.tstep { padding-inline-end: var(--space-5); gap: var(--space-4); }
+.tstep__n {
+  inline-size: 48px;
+  block-size: 48px;
+  font-size: var(--text-h4);
+  box-shadow: 0 0 0 6px var(--bg-page);   /* punches the track line out behind the badge */
+}
+.tstep .icon { margin-block-start: 0; }
+.tstep__title { min-block-size: 2.4em; }   /* keeps the four bodies on one baseline */
+
+@media (max-width: 1100px) {
+  .tstep__title { min-block-size: 0; }
+}
+
+/* ------------------------------------------------------------ MOBILE
+   Single column reads best centred: the eye has one axis to follow. */
+@media (max-width: 720px) {
+  .hero__actions,
+  .enquiry__actions { grid-template-columns: 1fr; }
+
+  .section-head,
+  .section-head--center { text-align: center; margin-inline: auto; }
+  .section-head .eyebrow,
+  .section-head--center .eyebrow { justify-content: center; }
+  .section-head .lead { margin-inline: auto; }
+
+  /* card-like blocks centre their contents */
+  .cluster__card,
+  .kit__item,
+  .service,
+  .reason,
+  .readout,
+  .panel {
+    text-align: center;
+    align-items: center;
+  }
+  .cluster__media { justify-content: center; }
+  .cluster__media img { object-position: center bottom; }
+  .service { grid-template-columns: 1fr; justify-items: center; gap: var(--space-2); }
+  .service .icon { grid-row: auto; }
+  .readout__proves,
+  .panel__foot { text-align: center; justify-content: center; }
+  .route-v__node { justify-content: center; }
+  .route-v__check { margin-inline-start: var(--space-2); }
+
+  /* the leak + founder columns centre too */
+  .leak__copy { align-items: center; text-align: center; }
+  .leak__copy .lead { margin-inline: auto; }
+  .progress { margin-inline: auto; }
+  .founder__grid { justify-items: center; text-align: center; }
+  .founder__prose p { margin-inline: auto; }
+  .pull { border-inline-start: 0; padding-inline-start: 0; border-block-start: 3px solid var(--red-500); padding-block-start: var(--space-4); }
+  .founder__sign { align-items: center; }
+  .callband { text-align: center; align-items: center; }
+  .callband .btn { inline-size: 100%; }
+
+  /* Steps become a centred stack, separated by a rule so each one reads as
+     its own beat instead of running into the next. */
+  .timeline { gap: 0; }
+  .timeline::before { display: none; }
+  .tstep {
+    align-items: center;
+    text-align: center;
+    padding-inline-end: 0;
+    padding-block: var(--space-8) 0;
+    border-block-start: var(--border-width) solid var(--border-hairline);
+    gap: var(--space-3);
+  }
+  .tstep:first-child { border-block-start: 0; padding-block-start: 0; }
+  .tstep__n { box-shadow: none; }
+  .tstep__line { max-inline-size: 32ch; margin-inline: auto; }
+
+  /* headings and leads stop hugging the left edge */
+  .journey__head,
+  .evidence,
+  .reasons,
+  .kit { text-align: center; }
+}
