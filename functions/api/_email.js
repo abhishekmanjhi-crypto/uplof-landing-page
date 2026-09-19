@@ -73,7 +73,12 @@ function signature() {
     </td></tr>
     <tr>
       <td style="vertical-align:top;padding-right:18px;width:108px;">
-        <img src="${ASSET}/logo.png" width="108" height="69" alt="Uplof.me" style="display:block;border:0;">
+        <!-- Animated: a light glare sweeps the mark, borrowed from the site's
+             logo animation. Frame one is the finished logo on purpose, because
+             Outlook on Windows renders only the first frame of a GIF. It loops
+             three times rather than forever so a signature does not shimmer at
+             the reader. Hosted, not attached, so the message itself stays ~4KB. -->
+        <img src="${ASSET}/logo-animated.gif" width="108" height="69" alt="Uplof.me" style="display:block;border:0;">
       </td>
       <td style="vertical-align:top;${FONT}">
         <div style="font-size:15px;font-weight:700;color:${INK};">${esc(c.name)}</div>
