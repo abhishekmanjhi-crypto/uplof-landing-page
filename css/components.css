@@ -977,3 +977,63 @@
   border-inline-start: 2px solid var(--fg-accent);
 }
 .leak__track.is-static .progress { display: none; }
+
+/* ------------------------------------------------------- 29. COOKIE CONSENT
+   The banner used to inject its own stylesheet from cookie-consent.js in the
+   old palette: Geist, #121713 / #B3272B, 10px radii, and an Accept button at
+   #07120b on #B3272B — 2.95:1, under AA. It now carries .on-dark and reuses
+   the real .btn components, so it reads as part of the site and inherits the
+   dark context's accessible button colours. */
+
+.cookie-consent {
+  position: fixed;
+  z-index: var(--z-nav);
+  inset-inline: var(--space-5);
+  inset-block-end: var(--space-5);
+  max-inline-size: 760px;
+  margin-inline: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-6);
+  padding: var(--space-5) var(--space-6);
+  border: var(--border-width) solid var(--border-hairline);
+  border-radius: var(--radius-none);
+  box-shadow: var(--shadow-deep);
+  font-family: var(--font-text);
+  font-size: var(--text-sm);
+  line-height: var(--leading-normal);
+}
+
+.cookie-consent strong {
+  font-weight: var(--weight-bold);
+  color: var(--fg-default);
+}
+
+.cookie-consent p {
+  margin-block: var(--space-2);
+  color: var(--fg-body);
+}
+
+.cookie-consent a {
+  color: var(--fg-accent);
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
+}
+.cookie-consent a:hover { color: var(--fg-default); }
+
+.cookie-actions {
+  display: flex;
+  gap: var(--space-3);
+  flex-shrink: 0;
+}
+
+@media (max-width: 620px) {
+  .cookie-consent {
+    display: block;
+    inset-inline: var(--space-3);
+    inset-block-end: var(--space-3);
+  }
+  .cookie-actions { margin-block-start: var(--space-5); }
+  .cookie-actions .btn { flex: 1 1 0; }
+}

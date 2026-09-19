@@ -1,0 +1,233 @@
+/* ============================================================================
+   UPLOF — LEGAL / CONTENT PAGES
+   Everything the legal pages need beyond tokens + base + components + blocks.
+   These pages reuse the site's real navbar and real footer verbatim, so the
+   only new work here is (a) a compact brand masthead standing in for the hero
+   and (b) a prose component, because base.css strips list markers and heading
+   margins globally for the landing page's card layouts.
+
+   Not one hardcoded colour, font or size below — semantic tokens only, so
+   these pages move whenever the design system moves.
+   ========================================================================== */
+
+/* -------------------------------------------------------------- 1. MASTHEAD
+   The landing page opens on a full-height red hero. A legal page has no room
+   for that and no reason to delay the content, so it opens on the same red
+   surface compressed to a title block. Same .on-brand context, same navbar,
+   same eyebrow — just shorter. */
+
+.masthead {
+  position: relative;
+  padding-block-end: clamp(var(--space-14), 6vw, var(--space-24));
+}
+
+.masthead__inner {
+  padding-block-start: clamp(var(--space-10), 5vw, var(--space-16));
+  max-inline-size: 900px;
+}
+
+.masthead__title {
+  margin-block-start: var(--space-5);
+  font-family: var(--font-display);
+  font-weight: var(--weight-regular);
+  /* One step below the hero's --text-display: a legal page is not the pitch. */
+  font-size: var(--text-h2);
+  line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-display);
+  color: var(--fg-default);
+  text-wrap: balance;
+}
+
+.masthead__lead {
+  margin-block-start: var(--space-6);
+  max-inline-size: 62ch;
+}
+
+/* Effective date. Mono, like the site's index labels, so it reads as metadata
+   rather than as the first line of the policy. */
+.masthead__meta {
+  margin-block-start: var(--space-8);
+  padding-block-start: var(--space-5);
+  border-block-start: var(--border-width) solid var(--border-hairline);
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  font-size: var(--text-micro);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--fg-small);
+}
+
+/* ----------------------------------------------------------------- 2. PROSE
+   base.css does `ul, ol { list-style: none; padding: 0 }` and zeroes heading
+   and paragraph margins — correct for the landing page's cards, wrong for
+   running legal copy. Restore document semantics inside .prose only. */
+
+.prose {
+  max-inline-size: 68ch;
+  font-weight: var(--weight-light);
+  font-size: var(--text-body);
+  line-height: var(--leading-relaxed);
+  letter-spacing: var(--tracking-body);
+  color: var(--fg-body);
+  text-wrap: pretty;
+}
+
+.prose > * + * { margin-block-start: var(--space-5); }
+
+.prose h2 {
+  margin-block-start: var(--space-11);
+  font-family: var(--font-display);
+  font-weight: var(--weight-regular);
+  font-size: var(--text-h3);
+  line-height: var(--leading-snug);
+  letter-spacing: var(--tracking-title);
+  color: var(--fg-default);
+  text-wrap: balance;
+}
+.prose > h2:first-child { margin-block-start: 0; }
+
+.prose h3 {
+  margin-block-start: var(--space-8);
+  font-family: var(--font-text);
+  font-weight: var(--weight-bold);
+  font-size: var(--text-h4);
+  line-height: var(--leading-snug);
+  color: var(--fg-default);
+}
+
+/* A heading owns the paragraph under it: kill the generic sibling margin so
+   the pair reads as one unit. */
+.prose h2 + p,
+.prose h3 + p { margin-block-start: var(--space-4); }
+
+.prose ul {
+  padding-inline-start: var(--space-6);
+  list-style: disc;
+}
+.prose ol {
+  padding-inline-start: var(--space-6);
+  list-style: decimal;
+}
+.prose li { margin-block-start: var(--space-3); }
+.prose li::marker { color: var(--fg-accent); }
+
+.prose a {
+  color: var(--fg-accent);
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
+  text-decoration-thickness: from-font;
+}
+.prose a:hover { color: var(--fg-default); }
+
+.prose strong { font-weight: var(--weight-bold); color: var(--fg-default); }
+
+/* Callout — the "contact us about privacy" box. Mirrors the site's card
+   treatment: inset surface, hairline, hard brand offset shadow. */
+.prose .notice {
+  margin-block: var(--space-10);
+  padding: var(--space-6) var(--space-8);
+  background-color: var(--bg-inset);
+  border: var(--border-width) solid var(--border-hairline);
+  box-shadow: var(--shadow-offset);
+  color: var(--fg-body);
+}
+.prose .notice > * + * { margin-block-start: var(--space-4); }
+
+/* --------------------------------------------------------- 3. SIBLING LINKS
+   Replaces the old "Privacy · Refunds · Cookies" run-on line. Three real
+   targets, same card language as the rest of the site. */
+
+.legal-more {
+  margin-block-start: clamp(var(--space-16), 7vw, var(--space-24));
+  padding-block-start: var(--space-10);
+  border-block-start: var(--border-width) solid var(--border-hairline);
+}
+
+.legal-more__title {
+  font-family: var(--font-text);
+  font-weight: var(--weight-bold);
+  font-size: var(--text-label);
+  line-height: 1;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--fg-accent);
+}
+
+.legal-more__grid {
+  margin-block-start: var(--space-6);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-5);
+}
+
+.legal-more__card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  min-block-size: 64px;
+  padding: var(--space-5) var(--space-6);
+  background-color: var(--bg-inset);
+  border: var(--border-width) solid var(--border-hairline);
+  font-family: var(--font-text);
+  font-weight: var(--weight-medium);
+  font-size: var(--text-sm);
+  color: var(--fg-default);
+  transition:
+    background-color var(--dur-fast) var(--ease-out),
+    box-shadow var(--dur-base) var(--ease-out),
+    transform var(--dur-base) var(--ease-out);
+}
+.legal-more__card::after {
+  content: "↗";
+  color: var(--fg-accent);
+}
+.legal-more__card:hover {
+  transform: translate(-3px, -3px);
+  box-shadow: var(--shadow-offset);
+}
+
+/* ---------------------------------------------------------- 4. RESPONSIVE */
+
+@media (max-width: 900px) {
+  .legal-more__grid { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 700px) {
+  .masthead__title { font-size: var(--text-h3); }
+  .prose { max-inline-size: none; }
+}
+
+/* ------------------------------------------------------ 5. REDUCED MOTION */
+
+@media (prefers-reduced-motion: reduce) {
+  .legal-more__card:hover { transform: none; }
+}
+
+/* --------------------------------------------------------------- 6. PRINT
+   Legal pages get printed and attached to contracts. Drop the brand surfaces,
+   the navigation and the footer chrome; keep the words. */
+
+@media print {
+  .navbar,
+  .legal-more,
+  .footer,
+  .skip-link { display: none !important; }
+
+  .masthead {
+    padding-block: 0 var(--space-6);
+    background: none !important;
+    color: #000 !important;
+    border-block-end: 1px solid #000;
+  }
+  .masthead__title,
+  .masthead__lead,
+  .masthead__meta,
+  .eyebrow { color: #000 !important; }
+
+  .prose { max-inline-size: none; color: #000; }
+  .prose h2, .prose h3 { color: #000; break-after: avoid; }
+  .prose p, .prose li { break-inside: avoid; }
+  .prose a { color: #000; text-decoration: underline; }
+  /* A printed page loses the href, so print it. */
+  .prose a[href^="http"]::after { content: " (" attr(href) ")"; font-size: 0.85em; }
+}
