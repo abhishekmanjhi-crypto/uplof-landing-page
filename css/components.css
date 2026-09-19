@@ -477,7 +477,7 @@
    SVG (CSS keyframes travel inside the file, so they still run through <img>).
    It is the same white-plate-and-red-block mark as the static logo, so it drops
    straight into the footer slot. Static mark is the reduced-motion fallback. */
-.footer__logo-anim { inline-size: 150px; block-size: auto; display: block; }
+.footer__logo-anim { inline-size: 150px; block-size: auto; display: block; }  /* 1.5665 plate ratio, same as the static mark */
 .footer__logo-static { inline-size: 102px; block-size: auto; display: none; }
 @media (prefers-reduced-motion: reduce) {
   .footer__logo-anim { display: none; }
