@@ -138,7 +138,7 @@ body { font-size: var(--m-body); padding-block-end: calc(72px + var(--safe-b)); 
   align-items: center;
   padding-block: var(--space-10) var(--space-8);
 }
-.m-hero .m-display, .m-hero .m-lead { color: var(--cream-100); }
+.m-hero .m-display { color: var(--fg-default); }
 .m-hero .m-lead { max-inline-size: 30ch; }
 .m-hero .micro { color: var(--paper-000); }
 .m-trust { display: flex; flex-direction: column; gap: var(--space-2); align-items: center; font-size: 0.8125rem; color: var(--paper-000); }
@@ -172,8 +172,8 @@ body { font-size: var(--m-body); padding-block-end: calc(72px + var(--safe-b)); 
 .m-stepper__caption span.is-active { opacity: 1; }
 .m-dots { display: flex; gap: var(--space-1); }
 .m-dot { inline-size: var(--tap); block-size: var(--tap); display: grid; place-items: center; background: none; }
-.m-dot::before { content: ""; inline-size: 22px; block-size: 4px; background-color: var(--slate-800); transition: background-color var(--dur-fast) var(--ease-out); }
-.m-dot.is-active::before { background-color: var(--indigo-500); }
+.m-dot::before { content: ""; inline-size: 22px; block-size: 4px; background-color: var(--border-hairline); transition: background-color var(--dur-fast) var(--ease-out), opacity var(--dur-fast) var(--ease-out); }
+.m-dot.is-active::before { background-color: var(--fg-accent); }  /* single accent, was indigo */
 .m-stepper__nav { display: flex; gap: var(--space-2); }
 .m-stepper__arrow { inline-size: var(--tap); block-size: var(--tap); display: grid; place-items: center; border: var(--border-width) solid var(--cream-100); color: var(--cream-100); }
 .m-stepper__arrow:disabled { opacity: 0.3; }
@@ -188,7 +188,7 @@ body { font-size: var(--m-body); padding-block-end: calc(72px + var(--safe-b)); 
 .m-ledger__bad { color: var(--fg-muted); }
 .m-ledger__good { color: var(--fg-default); }
 .m-mark { inline-size: 18px; block-size: 18px; display: grid; place-items: center; font-size: 0.7rem; flex: 0 0 auto; }
-.m-ledger__bad .m-mark { color: var(--ink-400); border: var(--border-width) solid var(--border-hairline); }
+.m-ledger__bad .m-mark { color: var(--fg-muted); border: var(--border-width) solid var(--border-hairline); }
 .m-ledger__good .m-mark { color: var(--paper-000); background-color: var(--red-500); }
 
 /* --------------------------------------------------------------- TILES */
@@ -278,7 +278,7 @@ body { font-size: var(--m-body); padding-block-end: calc(72px + var(--safe-b)); 
 .m-summary[hidden] { display: none; }
 .m-summary p { font-weight: var(--weight-bold); color: var(--ink-900); margin-block-end: var(--space-2); }
 .m-summary a { display: block; min-block-size: 32px; font-size: 0.875rem; color: var(--red-500); text-decoration: underline; text-underline-offset: 3px; }
-.m-cta .m-display, .m-cta .m-lead { color: var(--cream-100); }
+.m-cta .m-display { color: var(--fg-default); }
 .m-cta .micro { color: var(--paper-000); }
 
 /* ------------------------------------------------------ STICKY CTA BAR */

@@ -13,6 +13,7 @@
 
   /* Brand red — the single accent. There is no second accent colour. */
   --red-500: #d12d34;  /* brand surface: hero, CTA, rules, shadows */
+  --red-400: #e04a50;  /* same hue, a tint not a second accent: accent TEXT on dark (5.08:1 on --ink-900) */
   --red-600: #cf1a21;  /* logo block, pressed states */
   --red-900: #650208;  /* offset shadow only — never as a fill behind text */
 
@@ -32,7 +33,8 @@
   --paper-200: #d8d2c9; /* hairline borders on light */
   --cream-100: #f0e7dd; /* warm off-white used on red + dark surfaces */
 
-  /* Support — used only inside gradients and the progress indicator */
+  /* Support — gradients only. The progress bar used to carry indigo/slate as
+     a second accent; it now uses --fg-accent, so these two are unused. */
   --blue-900: #002a78;
   --blue-200: #bbd3ff;
   --rose-200: #ffa4a4;
@@ -174,6 +176,7 @@
   --fg-body: var(--ink-400);
   --fg-muted: var(--ink-400);
   --border-hairline: #262a2e;
+  --fg-accent: var(--red-400);   /* --red-500 is only 3.99:1 on this surface */
   --gradient-heading: var(--gradient-heading-dark);
   --btn-solid-bg: var(--paper-000);
   --btn-solid-fg: var(--ink-900);
@@ -190,7 +193,7 @@
   --bg-inset: var(--ink-800);
   --fg-default: var(--cream-100);
   --fg-small: var(--paper-000);  /* cream is 4.15:1 on red — under AA below 18px */
-  --fg-body: var(--cream-100);
+  --fg-body: var(--paper-000);   /* 5.08:1. cream fails AA at the 18px lead size */
   --fg-muted: rgba(240, 231, 221, 0.78);
   --fg-accent: var(--paper-000);
   --border-hairline: rgba(255, 255, 255, 0.35);

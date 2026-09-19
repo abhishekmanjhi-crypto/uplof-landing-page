@@ -72,7 +72,7 @@
   font-size: 0.75rem;
   flex: 0 0 auto;
 }
-.ledger__bad .ledger__mark { color: var(--ink-400); border: var(--border-width) solid var(--border-hairline); }
+.ledger__bad .ledger__mark { color: var(--fg-muted); border: var(--border-width) solid var(--border-hairline); }
 .ledger__good .ledger__mark { color: var(--paper-000); background-color: var(--red-500); }
 
 /* ------------------------------------------------------------------ BENTO
@@ -88,6 +88,10 @@
   box-shadow: var(--shadow-brand);
 }
 .tile {
+  /* the bento paints its own dark surface, so re-point the semantic tokens here
+     or accent text falls back to --red-500 and sits at 3.99:1 on near-black */
+  --fg-accent: var(--red-400);
+  --fg-muted: var(--ink-400);
   position: relative;
   display: flex;
   flex-direction: column;
@@ -115,7 +119,7 @@
 }
 .tile--span2 .tile__art { inline-size: 64%; max-inline-size: 440px; inset-block-start: var(--space-6); }
 .tile:hover .tile__art { transform: translateY(-6px); }
-.tile__index { color: var(--red-500); }
+.tile__index { color: var(--fg-accent); }
 .tile__title {
   font-family: var(--font-text);
   font-weight: var(--weight-bold);
@@ -130,9 +134,9 @@
   inset-inline-end: var(--space-5);
   inset-block-start: var(--space-3);
   font-family: var(--font-display);
-  font-size: 7.5rem;
+  font-size: var(--text-display);
   line-height: 1;
-  letter-spacing: -0.04em;
+  letter-spacing: -0.02em;
   color: #1a1714;
   z-index: -1;
   user-select: none;
@@ -185,9 +189,9 @@
 }
 .readout__figure {
   font-family: var(--font-display);
-  font-size: clamp(3rem, 2rem + 3vw, 4.5rem);
+  font-size: var(--text-stat);
   line-height: 1;
-  letter-spacing: -0.03em;
+  letter-spacing: -0.02em;
   color: var(--fg-default);
 }
 .readout__unit { font-size: var(--text-body); color: var(--fg-body); margin-block-start: calc(-1 * var(--space-2)); }
@@ -241,9 +245,9 @@
 .reason { display: flex; flex-direction: column; gap: var(--space-3); padding-block-start: var(--space-5); border-block-start: 2px solid var(--red-500); }
 .reason__n {
   font-family: var(--font-display);
-  font-size: clamp(3.5rem, 2.5rem + 3vw, 6rem);
-  line-height: 0.9;
-  letter-spacing: -0.04em;
+  font-size: var(--text-stat);   /* was 83.2px at 1440: bigger than the 54px heading above it */
+  line-height: 1;
+  letter-spacing: -0.02em;
   background-image: var(--gradient-heading);
   -webkit-background-clip: text;
   background-clip: text;
@@ -396,6 +400,10 @@
   .section-head .eyebrow,
   .section-head--center .eyebrow { justify-content: center; }
   .section-head .lead { margin-inline: auto; }
+
+  /* the stat strip and the proof footnote centre with everything else */
+  .stats__item { align-items: center; text-align: center; }
+  .stats__note, .evidence__note { text-align: center; }
 
   /* card-like blocks centre their contents */
   .cluster__card,

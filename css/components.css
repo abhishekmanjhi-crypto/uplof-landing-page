@@ -150,23 +150,24 @@
 
 /* --------------------------------------------------------- 5. PROGRESS BAR */
 
-.progress { display: flex; flex-direction: column; gap: 9px; inline-size: 223px; }
+.progress { display: flex; flex-direction: column; gap: var(--space-2); inline-size: 223px; }
 
-.progress__track { display: flex; align-items: center; gap: 6px; }
+.progress__track { display: flex; align-items: center; gap: var(--space-1); }
 
+/* Five equal segments. State is carried by colour and opacity, never by width,
+   so nothing animates layout and the bar stays inside the single-accent rule.
+   (Was indigo #5762ff on slate #232f3b, a second accent, transitioning
+   inline-size from 15px to 139px on every step.) */
 .progress__seg {
   block-size: 8px;
-  inline-size: 15px;
-  flex: 0 0 auto;
-  background-color: var(--slate-800);
-  transition: inline-size var(--dur-slow) var(--ease-out),
-              background-color var(--dur-base) var(--ease-out);
+  flex: 1 1 0;
+  min-inline-size: 0;
+  background-color: var(--border-hairline);
+  transition: background-color var(--dur-base) var(--ease-out),
+              opacity var(--dur-base) var(--ease-out);
 }
-.progress__seg.is-active {
-  inline-size: 139px;
-  background-color: var(--indigo-500);
-}
-.progress__seg.is-done { background-color: #3b4658; } /* support ramp, not a neutral */
+.progress__seg.is-done   { background-color: var(--fg-accent); opacity: 0.4; }
+.progress__seg.is-active { background-color: var(--fg-accent); opacity: 1; }
 
 .progress__label {
   font-weight: var(--weight-bold);
@@ -237,6 +238,7 @@
 }
 
 .jcard {
+  --fg-accent: var(--red-400);   /* dark card: --red-500 is 3.99:1 here */
   flex: 0 0 auto;
   inline-size: 384px;
   display: flex;
@@ -265,7 +267,7 @@
 }
 .jcard__media img { block-size: 100%; inline-size: 100%; object-fit: contain; padding: var(--space-4); }
 
-.jcard__index { color: var(--red-500); }
+.jcard__index { color: var(--fg-accent); }
 .jcard__title {
   font-family: var(--font-text);
   font-weight: var(--weight-bold);
@@ -447,27 +449,92 @@
 
 /* ------------------------------------------------------------- 12. FOOTER */
 
-.footer { padding-block: var(--space-16) var(--space-10); }
+/* Centred sign-off: identity, then an index, then the legal line. The nav is a
+   hairline grid (cell backgrounds over a 1px gap) so seven links read as an
+   index instead of a ragged wrap, and every cell is a real 48px target. */
+.footer { padding-block: var(--space-16) var(--space-10); text-align: center; }
+
 .footer__top {
   display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-8);
-  justify-content: space-between;
-  align-items: flex-start;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-4);
   padding-block-end: var(--space-10);
-  border-block-end: var(--border-width) solid var(--border-hairline);
 }
-.footer__nav { display: flex; flex-wrap: wrap; gap: var(--space-6); font-size: var(--text-sm); }
-.footer__nav a:hover { color: var(--red-500); }
+.footer__logo { display: inline-block; }
+.footer__logo img { inline-size: 102px; block-size: auto; }
+.footer__tagline { font-size: var(--text-sm); line-height: var(--leading-relaxed); color: var(--fg-small); }
+.footer__tel a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-block-size: 44px;
+  padding-inline: var(--space-5);
+  border: var(--border-width) solid var(--border-hairline);
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  font-size: var(--text-sm);
+  color: var(--fg-default);
+  transition: border-color var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out);
+}
+.footer__tel a:hover { border-color: var(--fg-accent); color: var(--fg-accent); }
+.footer__tel a:focus-visible { outline-offset: -3px; }
+
+.footer__nav {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: var(--border-width);
+  background-color: var(--border-hairline);
+  border-block: var(--border-width) solid var(--border-hairline);
+}
+.footer__nav a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-block-size: 48px;
+  padding-inline: var(--space-2);
+  background-color: var(--bg-page);
+  font-size: var(--text-sm);
+  color: var(--fg-body);
+  transition: background-color var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out);
+}
+.footer__nav a:hover { color: var(--fg-accent); background-color: var(--bg-inset); }
+.footer__nav a:focus-visible { outline-offset: -3px; }
+
 .footer__bottom {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
+  align-items: center;
   gap: var(--space-4);
-  justify-content: space-between;
-  padding-block-start: var(--space-6);
+  padding-block-start: var(--space-10);
+}
+.footer__strap {
+  font-family: var(--font-display);
+  font-size: var(--text-ui);
+  letter-spacing: -0.01em;
+  color: var(--fg-default);
+}
+.footer__legal {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: var(--space-2) var(--space-5);
   font-size: var(--text-sm);
   color: var(--fg-muted);
 }
+/* underlined so a legal link is distinguishable from the text beside it */
+.footer__legal a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-block-size: 44px;
+  min-inline-size: 44px;   /* short words like "Terms" were only 36px wide */
+  color: var(--fg-small);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.footer__legal a:hover { color: var(--fg-accent); }
+.footer__legal a:focus-visible { outline-offset: -3px; }
 
 /* -------------------------------------------------------- 13. RESPONSIVE */
 
@@ -569,7 +636,7 @@
 }
 .compare__bad { color: var(--fg-muted); }
 .compare__good { color: var(--fg-default); }
-.compare__bad::before  { content: "✕"; flex: 0 0 auto; color: var(--ink-400); }
+.compare__bad::before  { content: "✕"; flex: 0 0 auto; color: var(--fg-muted); }
 .compare__good::before { content: "↗"; flex: 0 0 auto; color: var(--red-500); font-weight: var(--weight-bold); }
 
 /* ------------------------------------------------------- 16. ROUTE DIAGRAM */
@@ -587,10 +654,13 @@
   font-size: var(--text-micro);
   letter-spacing: 0.04em;
   text-transform: uppercase;
-  color: var(--fg-default);
+  /* white on brand red is 5.08:1; cream was 4.15:1, under AA at 11px */
+  color: var(--fg-small);
   white-space: nowrap;
 }
-.route__arrow { color: var(--red-500); font-weight: var(--weight-bold); }
+/* was --red-500: on the .on-brand CTA that is red on red, a 1:1 ratio, so the
+   arrows joining the route were invisible. --fg-accent is white there. */
+.route__arrow { color: var(--fg-accent); font-weight: var(--weight-bold); }
 .route--center { justify-content: center; }
 
 /* -------------------------------------------------------- 17. DELIVERABLES */
@@ -776,8 +846,8 @@
 /* ------------------------------------------------------- 23. NAV LINK SET */
 
 .navbar__links { display: flex; gap: var(--space-6); font-size: var(--text-sm); }
-.navbar__links a { color: var(--fg-body); opacity: 0.85; }
-.navbar__links a:hover { opacity: 1; }
+.navbar__links a { color: var(--fg-small); }  /* was opacity .85 -> 3.35:1 on the hero red */
+.navbar__links a:hover { color: var(--paper-000); }
 
 /* --------------------------------------------------- 24. RESPONSIVE (v2) */
 
@@ -850,11 +920,17 @@
    as bare inline text; the padding here lifts them over the line without
    changing the visual rhythm. */
 
-.footer a,
 .navbar__links a,
 .enquiry__summary a {
   display: inline-flex;
   align-items: center;
-  min-block-size: 24px;
+  min-block-size: 44px;
 }
-.footer__nav { gap: var(--space-2) var(--space-6); }
+
+/* --------------------------------------------------- 27. FOOTER ON MOBILE */
+@media (max-width: 720px) {
+  .footer__nav { grid-template-columns: repeat(2, 1fr); }
+  /* the 7th link spans both columns so the last row is never a lone orphan */
+  .footer__nav a:last-child { grid-column: 1 / -1; }
+  .footer__strap { font-size: var(--text-body); max-inline-size: 22ch; }
+}

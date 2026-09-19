@@ -134,8 +134,8 @@ a {
 .body {
   font-weight: var(--weight-light);
   font-size: var(--text-body);
-  line-height: var(--leading-snug);
-  letter-spacing: var(--tracking-title);
+  line-height: var(--leading-relaxed);
+  letter-spacing: var(--tracking-body);  /* was --tracking-title (-0.05em): crushed 16px Light */
   color: var(--fg-body);
   text-wrap: pretty;
 }

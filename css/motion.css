@@ -46,7 +46,9 @@ html { scroll-padding-top: 88px; }
   transition-delay: calc(var(--i, 0) * var(--stagger-step) + var(--reveal-delay, 0ms));
   will-change: opacity, transform;
 }
-[data-stagger].is-revealed > * { opacity: 1; transform: none; }
+/* Once revealed, drop the stagger delay so hover responds immediately instead of
+   waiting out this child's entrance offset (up to 680ms on the last card). */
+[data-stagger].is-revealed > * { opacity: 1; transform: none; transition-delay: 0ms; }
 
 /* Hairline-divided grids paint their dividers through the gap, so a child
    sliding in reveals a flash of background. Fade those without the slide. */
@@ -59,8 +61,8 @@ html { scroll-padding-top: 88px; }
 .section-head--center[data-reveal] { --reveal-dur: 900ms; --reveal-distance: 16px; }
 
 /* --------------------------------------------------------- 2. HERO ENTRANCE
-   Runs once on load, no scroll needed: eyebrow, headline, lead, actions,
-   micro, trust, in that order. */
+   Runs once on load, no scroll needed: headline, lead, actions, trust,
+   in that order. */
 @keyframes rise {
   from { opacity: 0; transform: translateY(18px); }
   to   { opacity: 1; transform: none; }
@@ -76,11 +78,9 @@ html { scroll-padding-top: 88px; }
   animation: rise 900ms var(--ease-reveal) forwards;
 }
 .hero__copy > :nth-child(1) { animation-delay: 80ms; }
-.hero__copy > :nth-child(2) { animation-delay: 160ms; }
-.hero__copy > :nth-child(3) { animation-delay: 280ms; }
-.hero__form > :nth-child(2) { animation-delay: 420ms; }
-.hero__form > :nth-child(3) { animation-delay: 520ms; }
-.hero .trust               { animation-delay: 640ms; }
+.hero__copy > :nth-child(2) { animation-delay: 180ms; }
+.hero__form > :nth-child(2) { animation-delay: 320ms; }
+.hero .trust               { animation-delay: 440ms; }
 .navbar { opacity: 0; animation: drift 700ms var(--ease-reveal) 40ms forwards; }
 .hero__lines, .hero__glow { opacity: 0; animation: rise 1400ms var(--ease-reveal) 200ms forwards; }
 
