@@ -16,47 +16,117 @@
 
 <script>
 /**
- * Make the preview pane look like the real article page.
+ * Make the preview pane render the actual article page, not a generic markdown
+ * dump in the CMS's own dark theme.
  *
- * The CMS ships a generic preview that renders markdown in its own styles,
- * which is worse than useless for judging whether something reads well — you
- * end up publishing to find out. Loading the site's own stylesheets into the
- * preview frame means what you see while typing is what the page will be.
+ * Two things are needed for that, and the first attempt got both wrong:
  *
- * The version query is read from this page's own asset links so the preview
- * cannot drift onto a stale cached stylesheet, which is the recurring trap on
- * this site.
+ *   registerPreviewStyle(css, raw) takes a BOOLEAN second argument. Passing
+ *   `{ raw: true }` throws a TypeError, which aborted this whole script, which
+ *   is why none of the styles applied at all the first time.
+ *
+ *   registerPreviewTemplate(name, fn) needs a FUNCTION returning elements built
+ *   with window.createElement — the bundle exposes it for exactly this. It does
+ *   work, despite older docs saying it is unimplemented.
+ *
+ * Everything below is wrapped so that a mistake degrades to the default preview
+ * rather than breaking the editor. A CMS that will not load is much worse than
+ * a preview that looks plain.
  */
 (() => {
-  const V = '26';
   const SHEETS = ['tokens', 'base', 'components', 'blocks', 'legal', 'insight'];
 
-  const register = () => {
-    if (!window.CMS?.registerPreviewStyle) return false;
-    for (const name of SHEETS) {
-      window.CMS.registerPreviewStyle(`/css/${name}.css?v=${V}`);
+  // Mirrors the real article template closely enough to judge the page by:
+  // brand masthead, the short-answer block, then the body in .prose.
+  const SHELL = `
+    html, body { background: var(--bg-page); margin: 0; }
+    .pv-masthead {
+      background: var(--red-500); color: var(--cream-100);
+      padding: 40px 32px 34px; margin-block-end: 36px;
     }
-    // A little extra so the preview frame reads as a page rather than as a
-    // form field: page background, sane measure, and the short-answer block
-    // styled the way the real article styles it.
-    window.CMS.registerPreviewStyle(`
-      body {
-        background: var(--bg-page, #f7f5f2);
-        color: var(--ink-900, #070605);
-        padding: 32px 28px 64px;
-        max-inline-size: 46rem;
-        margin-inline: auto;
-      }
-      img { max-inline-size: 100%; block-size: auto; }
-    `, { raw: true });
+    .pv-eyebrow {
+      font-family: ui-monospace, "SF Mono", Menlo, monospace;
+      font-size: 0.6875rem; letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--cream-100); opacity: 0.85; margin: 0 0 14px;
+    }
+    .pv-title {
+      font-family: var(--font-display); font-weight: 500;
+      font-size: clamp(1.75rem, 1.1rem + 2vw, 2.75rem); line-height: 1.05;
+      letter-spacing: -0.02em; color: var(--cream-100);
+      margin: 0 0 18px; padding-block-end: 0.28em;
+    }
+    .pv-meta {
+      font-family: ui-monospace, "SF Mono", Menlo, monospace;
+      font-size: 0.6875rem; letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--cream-100); opacity: 0.75; margin: 0;
+    }
+    .pv-body { padding: 0 32px 64px; max-inline-size: 44rem; margin-inline: auto; }
+    .pv-body img { max-inline-size: 100%; block-size: auto; }
+    .pv-empty { color: var(--ink-500); font-style: italic; }
+  `;
+
+  const register = () => {
+    const CMS = window.CMS;
+    if (!CMS?.registerPreviewStyle) return false;
+
+    try {
+      for (const name of SHEETS) CMS.registerPreviewStyle(`/css/${name}.css`);
+      CMS.registerPreviewStyle(SHELL, true);   // boolean, not an object
+    } catch (err) {
+      console.warn('preview styles failed:', err);
+    }
+
+    try {
+      const h = window.createElement;
+      if (!h || !CMS.registerPreviewTemplate) return true;
+
+      CMS.registerPreviewTemplate('insights', (props) => {
+        try {
+          const data = props.entry?.get ? props.entry.get('data') : props.entry?.data;
+          const get = (k) => (data?.get ? data.get(k) : data?.[k]) ?? '';
+
+          const date = get('publishDate');
+          const pretty = date
+            ? new Date(date).toLocaleDateString('en-GB',
+                { day: 'numeric', month: 'long', year: 'numeric' })
+            : '';
+          const cluster = String(get('cluster') || '').replace(/-/g, ' ');
+          const answer = get('quickAnswer');
+
+          return h('div', null,
+            h('header', { className: 'pv-masthead on-brand' },
+              cluster ? h('p', { className: 'pv-eyebrow' }, cluster) : null,
+              h('h1', { className: 'pv-title' }, get('title') || 'Untitled'),
+              h('p', { className: 'pv-meta' },
+                [get('author'), pretty].filter(Boolean).join(' · ')),
+            ),
+            h('div', { className: 'pv-body prose' },
+              answer
+                ? h('div', { className: 'insight__answer' },
+                    h('p', { className: 'insight__answer-label' }, 'Short answer'),
+                    h('p', null, answer))
+                : h('p', { className: 'pv-empty' }, 'No short answer yet.'),
+              props.widgetFor ? props.widgetFor('body') : null,
+            ),
+          );
+        } catch (err) {
+          // Never let a render error take the editor down with it.
+          console.warn('preview template failed, falling back:', err);
+          return h('div', { style: 'padding:24px' },
+            props.widgetFor ? props.widgetFor('body') : 'Preview unavailable');
+        }
+      });
+    } catch (err) {
+      console.warn('preview template could not be registered:', err);
+    }
     return true;
   };
 
-  // The bundle is a module, so it may not have defined window.CMS yet.
+  // The bundle is a module, so window.CMS may not exist yet when this runs.
   if (!register()) {
     let tries = 0;
     const timer = setInterval(() => {
-      if (register() || ++tries > 100) clearInterval(timer);
+      if (register() || ++tries > 150) clearInterval(timer);
     }, 100);
   }
 })();
