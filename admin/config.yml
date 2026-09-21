@@ -168,7 +168,7 @@ collections:
       - label: Body
         name: body
         widget: markdown
-        modes: [rich-text, raw]
+        modes: [rich_text, raw]
         hint: >-
           Follow the nine-part structure in CONTENT-GUIDE.md. At least two links
           to other Uplof pages, in the prose, or the build will refuse it.
