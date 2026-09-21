@@ -12,7 +12,7 @@ backend:
   branch: main
   # Points at the Cloudflare Worker that handles the GitHub OAuth handshake.
   # Replace with the Worker URL once it is deployed — see CMS-SETUP.md.
-  base_url: https://uplof-cms-auth.REPLACE-ME.workers.dev
+  base_url: https://sveltia-cms-auth.it24-santosh-satyam.workers.dev
 
 # Where Sveltia puts uploaded images, and what it writes into the markdown.
 # The build reads originals from here and emits optimised WebP into
