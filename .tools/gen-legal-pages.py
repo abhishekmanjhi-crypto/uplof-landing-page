@@ -7,11 +7,54 @@ import os
 import re
 
 ROOT = "/Users/abhishek/Downloads/uplof-landing-page"
-V = "20"  # cache-bust version, bumped together with index.html
+V = "21"  # cache-bust version, bumped together with index.html
 
-SHARED_GRAPH_JSON = r"""[{"@type": "Organization", "@id": "https://uplof.me/#organization", "name": "Uplof", "alternateName": ["Uplof.me", "Uplof Digital"], "url": "https://uplof.me/", "logo": {"@type": "ImageObject", "url": "https://uplof.me/assets/email/logo.png", "width": 216, "height": 138}, "image": "https://uplof.me/assets/img/og-card.png", "description": "Uplof connects search, websites, lead capture, CRM and follow-up so fewer enquiries disappear between the steps.", "email": "hello@uplof.me", "telephone": "+91-77108-94943", "founder": {"@id": "https://uplof.me/#abhishek"}, "areaServed": {"@type": "City", "name": "Mumbai"}, "knowsAbout": ["Lead management", "Search engine optimisation", "Local SEO", "Conversion rate optimisation", "CRM implementation", "Marketing attribution"]}, {"@type": "WebSite", "@id": "https://uplof.me/#website", "url": "https://uplof.me/", "name": "Uplof", "publisher": {"@id": "https://uplof.me/#organization"}, "inLanguage": "en-IN"}, {"@type": "Person", "@id": "https://uplof.me/#abhishek", "name": "Abhishek Manjhi", "jobTitle": "Founder", "worksFor": {"@id": "https://uplof.me/#organization"}, "url": "https://uplof.me/#founder"}]"""
+SHARED_GRAPH_JSON = r"""[{"@type": "Organization", "@id": "https://uplof.me/#organization", "name": "Uplof", "alternateName": ["Uplof.me", "Uplof Digital"], "url": "https://uplof.me/", "logo": {"@type": "ImageObject", "url": "https://uplof.me/assets/email/logo.png", "width": 216, "height": 138}, "image": "https://uplof.me/assets/img/og-card.png", "description": "Uplof connects search, websites, lead capture, CRM and follow-up so fewer enquiries disappear between the steps.", "email": "hello@uplof.me", "telephone": "+91-77108-94943", "founder": {"@id": "https://uplof.me/#abhishek"}, "areaServed": {"@type": "City", "name": "Mumbai"}, "knowsAbout": ["Lead management", "Search engine optimisation", "Local SEO", "Conversion rate optimisation", "CRM implementation", "Marketing attribution"]}, {"@type": "WebSite", "@id": "https://uplof.me/#website", "url": "https://uplof.me/", "name": "Uplof", "publisher": {"@id": "https://uplof.me/#organization"}, "inLanguage": "en-IN"}, {"@type": "Person", "@id": "https://uplof.me/#abhishek", "name": "Abhishek Manjhi", "jobTitle": "Founder", "worksFor": {"@id": "https://uplof.me/#organization"}, "url": "https://uplof.me/#founder"}, {"@type": "ProfessionalService", "@id": "https://uplof.me/#business", "name": "Uplof", "parentOrganization": {"@id": "https://uplof.me/#organization"}, "url": "https://uplof.me/", "image": "https://uplof.me/assets/img/og-card.png", "telephone": "+91-77108-94943", "email": "hello@uplof.me", "priceRange": "₹₹", "address": {"@type": "PostalAddress", "addressLocality": "Thane", "addressRegion": "Maharashtra", "postalCode": "400605", "addressCountry": "IN"}, "areaServed": [{"@type": "City", "name": "Mumbai"}, {"@type": "City", "name": "Navi Mumbai"}, {"@type": "City", "name": "Thane"}], "founder": {"@id": "https://uplof.me/#abhishek"}, "openingHoursSpecification": [{"@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"], "opens": "10:00", "closes": "19:00"}], "hasOfferCatalog": {"@type": "OfferCatalog", "name": "Services", "itemListElement": [{"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Lead journey audit"}}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Lead management and CRM setup"}}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "WhatsApp and follow-up systems"}}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Lead generation websites and landing pages"}}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Local SEO and Google Business Profile"}}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Tracking and marketing attribution"}}]}}]"""
 
 PAGES = [
+    {
+        "slug": "contact",
+        "legal": False,
+        "notice": "",
+        "title": "Contact",
+        "nav": "Contact",
+        "eyebrow": "Contact",
+        "desc": "Talk to Abhishek Manjhi at Uplof about lead management, SEO, websites and CRM follow-up. Serving Thane, Mumbai and Navi Mumbai. The first lead audit is free.",
+        "lead": "One person answers, and it is me. Call, message on WhatsApp, or send the form on the homepage \u2014 whichever is easiest.",
+        # The canonical NAP. Every value here is copied from the source-of-truth
+        # workbook; nothing is retyped. The street address is deliberately absent:
+        # the business runs as a service-area business, so the city, region and
+        # service areas are public and the street is not.
+        "body": """<h2>How to reach us</h2>
+<dl class="contact-list">
+  <dt>Phone</dt>
+  <dd><a href="tel:+917710894943">+91 77108 94943</a></dd>
+
+  <dt>WhatsApp</dt>
+  <dd><a href="https://wa.me/917710894943?text=Hi%20Uplof%2C%20I%27d%20like%20a%20free%20lead%20audit." rel="noopener">Message on WhatsApp</a></dd>
+
+  <dt>Email</dt>
+  <dd><a href="mailto:hello@uplof.me">hello@uplof.me</a></dd>
+
+  <dt>Hours</dt>
+  <dd>Monday to Saturday, 10:00 to 19:00. Closed Sunday.</dd>
+
+  <dt>Based in</dt>
+  <dd>Thane, Mumbai, Maharashtra</dd>
+
+  <dt>Serving</dt>
+  <dd>Mumbai, Navi Mumbai, Thane, Kalwa and Mumbra</dd>
+</dl>
+
+<h2>What happens when you get in touch</h2>
+<p>You get a reply from me, not a form response. Within one working day, usually sooner. If the enquiry is about a lead audit I will ask for your website and where enquiries currently arrive, then trace the journey the way a real customer does before we speak again.</p>
+
+<h2>The first lead audit is free</h2>
+<p>No obligation and no pitch attached. You get a straight read on where enquiries are being lost between your search, your website and your follow-up. If nothing is broken, I will tell you that too.</p>
+
+<h2>Prefer to start on the website?</h2>
+<p>The <a href="/#contact">enquiry form on the homepage</a> takes about a minute. It reaches the same inbox.</p>""",
+    },
     {
         "slug": "privacy-policy",
         "notice": "Uplof is a service business operated by Abhishek Manjhi. For privacy questions or a request about your information, contact <a href=\"mailto:hello@uplof.me\">hello@uplof.me</a>.",
@@ -171,6 +214,7 @@ NAVBAR = """  <nav class="navbar" aria-label="Primary">
         <a href="/#proof">Proof</a>
         <a href="/#services">Services</a>
         <a href="/#faq">FAQ</a>
+        <a href="/contact/">Contact</a>
       </div>
       <a class="btn btn--ghost btn--sm" href="/#contact">Let’s talk</a>
     </div>
@@ -189,18 +233,26 @@ FOOTER = """<footer class="footer on-dark">
     </div>
     <nav class="footer__nav" aria-label="Footer">
       <a href="/#outcome">Outcome</a><a href="/#leak">The leak</a><a href="/#journey">Approach</a><a href="/#proof">Proof</a><a href="/#services">Services</a><a href="/#process">Process</a><a href="/#faq">FAQ</a>
+        <a href="/contact/">Contact</a>
     </nav>
     <div class="footer__bottom">
       <p class="footer__strap">Get found. Get contacted. Get followed up.</p>
-      <p class="footer__legal">© <span data-year>2026</span> Uplof<a href="/privacy-policy/">Privacy</a><a href="/terms-of-service/">Terms</a><a href="/refund-cancellation-policy/">Refunds</a><a href="/cookie-tracking-notice/">Cookies</a></p>
+      <p class="footer__legal">© <span data-year>2026</span> Uplof<a href="/contact/">Contact</a><a href="/privacy-policy/">Privacy</a><a href="/terms-of-service/">Terms</a><a href="/refund-cancellation-policy/">Refunds</a><a href="/cookie-tracking-notice/">Cookies</a></p>
     </div>
   </div>
 </footer>"""
 
 
 def siblings(slug):
-    """The other three legal pages, in a fixed order so every page agrees."""
-    others = [p for p in PAGES if p["slug"] != slug]
+    """The other three legal pages, in a fixed order so every page agrees.
+
+    Pages marked `"legal": False` are excluded both ways: they do not appear in
+    anyone's cross-links, and they get no cross-links of their own.
+    """
+    me = next(p for p in PAGES if p["slug"] == slug)
+    if not me.get("legal", True):
+        return ""            # a contact page cross-linking four policies is odd
+    others = [p for p in PAGES if p["slug"] != slug and p.get("legal", True)]
     cards = "\n".join(
         '        <a class="legal-more__card" href="/{s}/">{n}</a>'.format(s=p["slug"], n=sentence_case(p["title"]))
         for p in others
@@ -262,10 +314,7 @@ TEMPLATE = """<!doctype html>
 <main class="section" id="main">
   <div class="container">
     <div class="prose">
-      <div class="notice">
-        <p>{notice}</p>
-      </div>
-
+{notice}
 {body}
     </div>
 
@@ -294,7 +343,7 @@ for p in PAGES:
         jsonld=jsonld_for(p["slug"], sentence_case(p["title"])),
         title=p["title"],
         heading=punctuate(sentence_case(p["title"])),
-        notice=p["notice"],
+        notice=('      <div class="notice">\n        <p>%s</p>\n      </div>\n' % p["notice"]) if p["notice"] else "",
         nav=p["nav"],
         slug=p["slug"],
         desc=p["desc"],
