@@ -33,9 +33,19 @@ if (existsSync(KEY_FILE)) {
   console.log("  generated a new IndexNow key");
 }
 
-// The public proof-of-ownership file. Written into the site root so it deploys
+// The public proof-of-ownership file, written into the site root so it deploys
 // with everything else.
+//
+// This has to happen during BUILD, not during the ping. The ping runs after the
+// deploy, so a key file written here would sit on disk and never be uploaded —
+// IndexNow would then reject the submission because it cannot verify ownership.
+// That is exactly what happened the first time: the file 404'd on the live site.
 await writeFile(path.join(ROOT, `${key}.txt`), key + "\n");
+
+if (process.argv.includes("--key-only")) {
+  console.log(`indexnow: key file ready (${key.slice(0, 8)}…)`);
+  process.exit(0);
+}
 
 // Submit whatever is in the sitemap. That is already the authoritative list of
 // what should be indexed, so there is no second place to keep in sync.

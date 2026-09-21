@@ -6,7 +6,7 @@
     "nodemailer": "^7.0.6"
   },
   "scripts": {
-    "build": "python3 .tools/gen-legal-pages.py && node .tools/build-content.mjs && python3 .tools/gen-sitemap.py",
+    "build": "python3 .tools/gen-legal-pages.py && node .tools/build-content.mjs && node .tools/ping-indexnow.mjs --key-only && python3 .tools/gen-sitemap.py",
     "deploy": "npm run build && npx wrangler pages deploy . --branch main --commit-dirty=true && npm run ping",
     "sitemap": "python3 .tools/gen-sitemap.py",
     "content": "node .tools/build-content.mjs",
