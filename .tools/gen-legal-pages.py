@@ -204,44 +204,16 @@ def apply_heading_voice(body):
 EFFECTIVE = "Effective 12 September 2026"
 
 # --- the one navbar -------------------------------------------------------
-NAVBAR = """  <nav class="navbar" aria-label="Primary">
-    <div class="container navbar__inner">
-      <a class="navbar__logo" href="/" aria-label="Uplof.me, home">
-        <img src="/assets/img/logo-uplof.svg" alt="Uplof.me" width="102" height="65">
-      </a>
-      <div class="navbar__links">
-        <a href="/#journey">Approach</a>
-        <a href="/#proof">Proof</a>
-        <a href="/#services">Services</a>
-        <a href="/#faq">FAQ</a>
-        <a href="/contact/">Contact</a>
-      </div>
-      <a class="btn btn--ghost btn--sm" href="/#contact">Let’s talk</a>
-    </div>
-  </nav>"""
 
 # --- the one footer (identical to index.html's, absolute links) -----------
-FOOTER = """<footer class="footer on-dark">
-  <div class="container">
-    <div class="footer__top">
-      <a class="footer__logo" href="/" aria-label="Uplof.me, home">
-        <img class="footer__logo-anim" src="/assets/img/logo-animated.svg" alt="" aria-hidden="true" width="150" height="96" loading="lazy">
-        <img class="footer__logo-static" src="/assets/img/logo-uplof.svg" alt="Uplof.me" width="102" height="65">
-      </a>
-      <p class="footer__tagline">Websites, search and follow-up, connected.</p>
-      <p class="footer__tel"><a href="tel:+917710894943">+91 77108 94943</a></p>
-    </div>
-    <nav class="footer__nav" aria-label="Footer">
-      <a href="/#outcome">Outcome</a><a href="/#leak">The leak</a><a href="/#journey">Approach</a><a href="/#proof">Proof</a><a href="/#services">Services</a><a href="/#process">Process</a><a href="/#faq">FAQ</a>
-        <a href="/contact/">Contact</a>
-    </nav>
-    <div class="footer__bottom">
-      <p class="footer__strap">Get found. Get contacted. Get followed up.</p>
-      <p class="footer__legal">© <span data-year>2026</span> Uplof<a href="/contact/">Contact</a><a href="/privacy-policy/">Privacy</a><a href="/terms-of-service/">Terms</a><a href="/refund-cancellation-policy/">Refunds</a><a href="/cookie-tracking-notice/">Cookies</a></p>
-    </div>
-  </div>
-</footer>"""
 
+
+# The navbar and footer live in .tools/partials/ because the content builder
+# (.tools/build-content.mjs) renders them too. One copy, read by both, so the
+# chrome on an article can never disagree with the chrome on a policy page.
+_P = os.path.join(os.path.dirname(os.path.abspath(__file__)), "partials")
+NAVBAR = open(os.path.join(_P, "navbar.html"), encoding="utf-8").read()
+FOOTER = open(os.path.join(_P, "footer.html"), encoding="utf-8").read()
 
 def siblings(slug):
     """The other three legal pages, in a fixed order so every page agrees.

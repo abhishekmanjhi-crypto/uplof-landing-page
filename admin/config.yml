@@ -1,0 +1,163 @@
+# Sveltia CMS configuration.
+#
+# Content is markdown committed straight into this repo, so there is no database
+# and nothing to export if the CMS is ever replaced. The fields below mirror the
+# schema in CONTENT-GUIDE.md, and .tools/build-content.mjs enforces the same
+# rules at build time — the CMS makes them easy to get right, the build makes
+# them impossible to get wrong.
+
+backend:
+  name: github
+  repo: abhishekmanjhi-crypto/uplof-landing-page
+  branch: main
+  # Points at the Cloudflare Worker that handles the GitHub OAuth handshake.
+  # Replace with the Worker URL once it is deployed — see CMS-SETUP.md.
+  base_url: https://uplof-cms-auth.REPLACE-ME.workers.dev
+
+# Where Sveltia puts uploaded images, and what it writes into the markdown.
+# The build reads originals from here and emits optimised WebP into
+# assets/insights/, so these originals are never served to a visitor.
+media_folder: content/uploads
+public_folder: ""
+
+# Nothing is published until the build passes, so an accidental save is safe.
+publish_mode: simple
+
+collections:
+  - name: insights
+    label: Insights
+    label_singular: Insight
+    folder: content/insights
+    create: true
+    slug: "{{fields.slug}}"
+    extension: md
+    format: yaml-frontmatter
+    preview_path: insights/{{fields.slug}}
+    summary: "{{title}}"
+    sortable_fields: [publishDate, title]
+    fields:
+      - label: Title
+        name: title
+        widget: string
+        hint: >-
+          The question in the reader's own words. "Why is my website getting
+          traffic but no leads?" — not "Conversion Rate Optimisation Services".
+
+      - label: URL slug
+        name: slug
+        widget: string
+        pattern: ["^[a-z0-9]+(-[a-z0-9]+)*$", "lowercase words separated by hyphens, nothing else"]
+        hint: Short, lowercase, hyphenated. No dates, no stop words.
+
+      - label: Meta description
+        name: description
+        widget: string
+        pattern: ["^.{140,160}$", "must be between 140 and 160 characters"]
+        hint: >-
+          140–160 characters. This is what shows in Google results, so write it
+          for a person deciding whether to click.
+
+      - label: Short answer
+        name: quickAnswer
+        widget: text
+        hint: >-
+          50–80 words, no preamble. If the reader stops here they should still
+          have been helped. This is also the block most likely to be quoted by
+          an AI answer. The build will reject anything outside 50–80 words.
+
+      - label: Published
+        name: publishDate
+        widget: datetime
+        date_format: YYYY-MM-DD
+        time_format: false
+        picker_utc: true
+
+      - label: Last updated
+        name: updatedDate
+        widget: datetime
+        date_format: YYYY-MM-DD
+        time_format: false
+        picker_utc: true
+        required: false
+        hint: Set this when you meaningfully revise an article. Leave blank otherwise.
+
+      - label: Author
+        name: author
+        widget: select
+        options: ["Abhishek Manjhi"]
+        default: "Abhishek Manjhi"
+
+      - label: Topic
+        name: cluster
+        widget: select
+        options:
+          - lead-management
+          - websites
+          - local-seo
+          - tracking
+        hint: Which cluster this belongs to. Shown as the eyebrow above the title.
+
+      - label: Hero image
+        name: heroImage
+        widget: image
+        media_library:
+          config:
+            max_file_size: 15000000
+        hint: >-
+          Upload anything — the build resizes it to 480, 900 and 1400px WebP.
+          A 3MB phone photo becomes about 60KB on mobile. Do not pre-compress it.
+
+      - label: Hero image description
+        name: heroAlt
+        widget: string
+        hint: >-
+          Describe what the image SHOWS, for screen readers and for search.
+          Never a list of keywords.
+
+      - label: Evidence in this article
+        name: evidence
+        widget: select
+        options: [screenshot, data, client-example, none]
+        default: none
+        hint: >-
+          What makes this piece impossible to copy. "none" is allowed but it is
+          worth asking whether the article is worth publishing without it.
+
+      - label: Evidence note
+        name: evidenceNote
+        widget: string
+        required: false
+        hint: Where the data or example came from. Internal note.
+
+      - label: Related pages
+        name: related
+        widget: list
+        min: 2
+        hint: At least two. The build rejects fewer — orphan articles do not rank.
+        fields:
+          - { label: Label, name: label, widget: string }
+          - { label: URL, name: url, widget: string, hint: "e.g. /contact/" }
+
+      - label: Questions and answers
+        name: faqs
+        widget: list
+        required: false
+        hint: >-
+          Optional. Written for humans and for AI understanding — Google stopped
+          showing FAQ rich results in May 2026, so these are not for the dropdown.
+        fields:
+          - { label: Question, name: question, widget: string }
+          - { label: Answer, name: answer, widget: text }
+
+      - label: Draft
+        name: draft
+        widget: boolean
+        default: true
+        hint: Drafts are skipped by the build. Untick when it is ready to go live.
+
+      - label: Body
+        name: body
+        widget: markdown
+        hint: >-
+          Follow the nine-part structure in CONTENT-GUIDE.md. At least two links
+          to other Uplof pages, in the prose, or the build will refuse it.
