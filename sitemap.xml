@@ -2,32 +2,22 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://uplof.me/</loc>
-    <lastmod>2026-09-19</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>1.0</priority>
-  </url>
-  <url>
-    <loc>https://uplof.me/privacy-policy/</loc>
-    <lastmod>2026-09-19</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.3</priority>
-  </url>
-  <url>
-    <loc>https://uplof.me/terms-of-service/</loc>
-    <lastmod>2026-09-19</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.3</priority>
-  </url>
-  <url>
-    <loc>https://uplof.me/refund-cancellation-policy/</loc>
-    <lastmod>2026-09-19</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.3</priority>
+    <lastmod>2026-09-22</lastmod>
   </url>
   <url>
     <loc>https://uplof.me/cookie-tracking-notice/</loc>
-    <lastmod>2026-09-19</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.3</priority>
+    <lastmod>2026-09-22</lastmod>
+  </url>
+  <url>
+    <loc>https://uplof.me/privacy-policy/</loc>
+    <lastmod>2026-09-22</lastmod>
+  </url>
+  <url>
+    <loc>https://uplof.me/refund-cancellation-policy/</loc>
+    <lastmod>2026-09-22</lastmod>
+  </url>
+  <url>
+    <loc>https://uplof.me/terms-of-service/</loc>
+    <lastmod>2026-09-22</lastmod>
   </url>
 </urlset>

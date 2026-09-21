@@ -4,5 +4,10 @@
   "type": "module",
   "dependencies": {
     "nodemailer": "^7.0.6"
+  },
+  "scripts": {
+    "build": "python3 .tools/gen-legal-pages.py && python3 .tools/gen-sitemap.py",
+    "deploy": "npm run build && npx wrangler pages deploy . --branch main --commit-dirty=true",
+    "sitemap": "python3 .tools/gen-sitemap.py"
   }
 }
