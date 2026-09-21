@@ -22,15 +22,27 @@ function reply(request, status, message, extra) {
   return new Response(message, { status });
 }
 
+// Mirrors the maxlength on each control. The browser caps are a courtesy to
+// the visitor; these are the ones that matter, because a POST does not have to
+// come from the form. Anything longer is truncated rather than rejected — a
+// paste that runs a few characters over is not worth losing a lead over.
+const LIMITS = { name: 80, email: 120, business: 80, website: 200, phone: 10, message: 600 };
+
+function field(data, key) {
+  return String(data.get(key) || '').trim().slice(0, LIMITS[key]);
+}
+
 export async function onRequestPost({ request, env }) {
   const data = await request.formData();
   const lead = {
-    name: String(data.get('name') || '').trim(),
-    email: String(data.get('email') || '').trim(),
-    business: String(data.get('business') || '').trim(),
-    website: String(data.get('website') || '').trim(),
-    phone: String(data.get('phone') || '').trim(),
-    message: String(data.get('message') || '').trim(),
+    name: field(data, 'name'),
+    email: field(data, 'email'),
+    business: field(data, 'business'),
+    website: field(data, 'website'),
+    // Digits only, and never more than ten: the form enforces this, so a longer
+    // value here is either a paste that kept its +91 or a hand-built request.
+    phone: String(data.get('phone') || '').replace(/\D/g, '').replace(/^91(?=\d{10}$)/, '').slice(0, 10),
+    message: field(data, 'message'),
   };
   const viaWhatsapp = String(data.get('source') || '').trim() === 'whatsapp';
   const attributionKeys = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term', 'gclid', 'landing_page'];

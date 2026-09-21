@@ -420,15 +420,26 @@
 
 /* ---------------------------------------------------------- HERO ACTIONS
    Both calls to action carry equal weight, so they get equal width rather
-   than sizing to their own label length. */
+   than sizing to their own label length.
+
+   The pair used to be pinned to `min(560px, 100%)`, which gave each button a
+   274px column. "Find where you're losing leads" needs 279px of text plus
+   48px of padding — so with `white-space: nowrap` inherited from .btn, the
+   label overran its own black plate at EVERY width above the single-column
+   breakpoint, 1440px included. It read as a misaligned button.
+
+   `inline-grid` sizes the pair to its content instead: under max-content
+   sizing the two 1fr tracks both resolve to the widest label, so the buttons
+   stay equal AND fit. `white-space: normal` is the fallback for viewports too
+   narrow for that — the label wraps rather than spilling. */
 .hero__actions {
-  display: grid;
+  display: inline-grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: var(--space-3);
-  inline-size: min(560px, 100%);
+  max-inline-size: 100%;
   margin-inline: auto;
 }
-.hero__actions .btn { inline-size: 100%; min-inline-size: 0; }
+.hero__actions .btn { inline-size: 100%; min-inline-size: 0; white-space: normal; }
 
 /* Same rule for the form's submit / WhatsApp pair. */
 .enquiry__actions {
@@ -454,6 +465,7 @@
 @media (max-width: 720px) {
   .hero__actions,
   .enquiry__actions { grid-template-columns: 1fr; }
+  .hero__actions { display: grid; inline-size: 100%; }
 
   .section-head,
   .section-head--center { text-align: center; margin-inline: auto; }

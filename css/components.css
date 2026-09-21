@@ -1147,3 +1147,55 @@
 @media (prefers-reduced-motion: reduce) {
   .btn[aria-busy="true"]::after { animation: none; }
 }
+
+/* ----------------------------------------- 31. ENQUIRY: REQUIRED AND LIMITS
+   QA found the form gave the visitor nothing to go on: no marker saying which
+   fields were mandatory, no placeholders, and no length limit anywhere — the
+   phone field happily took twenty digits. The label row now carries the
+   required marker on the left and a live character count on the right, so the
+   limit is visible before it is reached rather than only when typing stops. */
+
+.enquiry__legend {
+  grid-column: 1 / -1;
+  margin: 0;
+  font-size: var(--text-sm);
+  color: var(--ink-500);
+}
+
+/* The marker is decorative: `required` on the control is what assistive tech
+   announces, so the asterisk is aria-hidden and purely visual. */
+.enquiry__req {
+  color: #a3161c;       /* same darkened red as .enquiry__error, for 4.5:1 */
+  font-weight: var(--weight-medium);
+}
+
+.enquiry__optional {
+  text-transform: none;
+  letter-spacing: 0;
+  color: var(--ink-500);
+}
+
+.enquiry__labelrow {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+.enquiry__labelrow .enquiry__label { flex: 1 1 auto; }
+
+.enquiry__count {
+  flex: 0 0 auto;
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  font-size: var(--text-micro);
+  font-variant-numeric: tabular-nums;
+  color: var(--ink-500);
+  transition: color var(--dur-fast) var(--ease-out);
+}
+/* Set by the script once the field is within 20% of its limit. */
+.enquiry__count[data-near="1"] { color: #a3161c; }
+
+.enquiry__input::placeholder,
+.enquiry__textarea::placeholder {
+  color: var(--ink-500);
+  opacity: 1;           /* Firefox dims placeholders by default */
+}

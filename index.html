@@ -21,12 +21,12 @@
 <meta name="twitter:description" content="Your website, search and follow-up were never joined up. That gap is where enquiries go missing.">
 <meta name="twitter:image" content="https://uplof.me/assets/img/og-card.png">
 <link rel="icon" href="/assets/logo.svg" type="image/svg+xml">
-<link rel="stylesheet" href="css/tokens.css?v=13">
-<link rel="stylesheet" href="css/base.css?v=13">
-<link rel="stylesheet" href="css/components.css?v=13">
-<link rel="stylesheet" href="css/sections.css?v=13">
-<link rel="stylesheet" href="css/blocks.css?v=13">
-<link rel="stylesheet" href="css/motion.css?v=13">
+<link rel="stylesheet" href="css/tokens.css?v=14">
+<link rel="stylesheet" href="css/base.css?v=14">
+<link rel="stylesheet" href="css/components.css?v=14">
+<link rel="stylesheet" href="css/sections.css?v=14">
+<link rel="stylesheet" href="css/blocks.css?v=14">
+<link rel="stylesheet" href="css/motion.css?v=14">
 </head>
 <body>
 
@@ -336,7 +336,7 @@
 
       <div>
         <p class="evidence__note">Recorded platform events. Not confirmed sales, bookings or qualified leads. No guarantee on rankings, enquiries or revenue.</p>
-        <p class="evidence__cta"><a class="btn btn--accent" href="https://wa.me/917710894943?text=Hi%20Uplof%2C%20could%20you%20walk%20me%20through%20an%20anonymised%20proof%20example%3F%20My%20website%20is%3A%20%2C%20my%20service%20is%3A%20%2C%20and%20I%20think%20leads%20are%20leaking%20at%3A%20" rel="noopener">Ask for a walkthrough ↗</a></p>
+        <p class="evidence__cta"><a class="btn btn--accent" href="https://wa.me/917710894943?text=Hi%20Uplof%2C%20could%20you%20walk%20me%20through%20an%20anonymised%20proof%20example%3F%0A%0AWebsite%3A%20%0AService%3A%20%0AWhere%20I%20think%20leads%20are%20leaking%3A%20" rel="noopener">Ask for a walkthrough ↗</a></p>
       </div>
     </div>
   </section>
@@ -485,34 +485,53 @@
           <p class="enquiry__summary-title">There is a problem</p>
           <ul data-enquiry-summary-list></ul>
         </div>
+        <p class="enquiry__legend">Fields marked <span class="enquiry__req" aria-hidden="true">*</span> are required.</p>
         <div class="enquiry__field">
-          <label class="enquiry__label" for="f-name">Your name</label>
-          <input class="enquiry__input" id="f-name" name="name" type="text" autocomplete="name" aria-describedby="f-name-error" required>
+          <div class="enquiry__labelrow">
+            <label class="enquiry__label" for="f-name">Your name <span class="enquiry__req" aria-hidden="true">*</span></label>
+            <span class="enquiry__count" data-count-for="f-name" data-limit="80" aria-hidden="true"></span>
+          </div>
+          <input class="enquiry__input" id="f-name" name="name" type="text" maxlength="80" placeholder="Priya Sharma" autocomplete="name" aria-describedby="f-name-error" required>
           <p class="enquiry__error" id="f-name-error" data-error-for="f-name" hidden></p>
         </div>
         <div class="enquiry__field">
-          <label class="enquiry__label" for="f-business">Business name</label>
-          <input class="enquiry__input" id="f-business" name="business" type="text" autocomplete="organization" aria-describedby="f-business-error" required>
+          <div class="enquiry__labelrow">
+            <label class="enquiry__label" for="f-business">Business name <span class="enquiry__req" aria-hidden="true">*</span></label>
+            <span class="enquiry__count" data-count-for="f-business" data-limit="80" aria-hidden="true"></span>
+          </div>
+          <input class="enquiry__input" id="f-business" name="business" type="text" maxlength="80" placeholder="Sharma Interiors" autocomplete="organization" aria-describedby="f-business-error" required>
           <p class="enquiry__error" id="f-business-error" data-error-for="f-business" hidden></p>
         </div>
         <div class="enquiry__field">
-          <label class="enquiry__label" for="f-email">Your email</label>
-          <input class="enquiry__input" id="f-email" name="email" type="email" autocomplete="email" aria-describedby="f-email-error" required>
+          <div class="enquiry__labelrow">
+            <label class="enquiry__label" for="f-email">Your email <span class="enquiry__req" aria-hidden="true">*</span></label>
+            <span class="enquiry__count" data-count-for="f-email" data-limit="120" aria-hidden="true"></span>
+          </div>
+          <input class="enquiry__input" id="f-email" name="email" type="email" maxlength="120" placeholder="priya@sharmainteriors.in" autocomplete="email" aria-describedby="f-email-error" required>
           <p class="enquiry__error" id="f-email-error" data-error-for="f-email" hidden></p>
         </div>
         <div class="enquiry__field">
-          <label class="enquiry__label" for="f-phone">Phone</label>
-          <input class="enquiry__input" id="f-phone" name="phone" type="tel" autocomplete="tel" aria-describedby="f-phone-error">
+          <div class="enquiry__labelrow">
+            <label class="enquiry__label" for="f-phone">Phone <span class="enquiry__optional">(optional)</span></label>
+            <span class="enquiry__count" data-count-for="f-phone" data-limit="10" aria-hidden="true"></span>
+          </div>
+          <input class="enquiry__input" id="f-phone" name="phone" type="tel" maxlength="10" placeholder="9876543210" autocomplete="tel" aria-describedby="f-phone-error" inputmode="numeric" pattern="[0-9]{10}">
           <p class="enquiry__error" id="f-phone-error" data-error-for="f-phone" hidden></p>
         </div>
         <div class="enquiry__field enquiry__field--wide">
-          <label class="enquiry__label" for="f-site">Website or Google Business Profile link <span style="text-transform:none;letter-spacing:0">(optional)</span></label>
-          <input class="enquiry__input" id="f-site" name="website" type="url" autocomplete="url" placeholder="https://" aria-describedby="f-site-error">
+          <div class="enquiry__labelrow">
+            <label class="enquiry__label" for="f-site">Website or Google Business Profile link <span class="enquiry__optional">(optional)</span></label>
+            <span class="enquiry__count" data-count-for="f-site" data-limit="200" aria-hidden="true"></span>
+          </div>
+          <input class="enquiry__input" id="f-site" name="website" type="url" maxlength="200" placeholder="https://" autocomplete="url" aria-describedby="f-site-error">
           <p class="enquiry__error" id="f-site-error" data-error-for="f-site" hidden></p>
         </div>
         <div class="enquiry__field enquiry__field--wide">
-          <label class="enquiry__label" for="f-improve">What would you like to improve</label>
-          <textarea class="enquiry__textarea" id="f-improve" name="message" rows="4" placeholder="Where do enquiries seem to go quiet?" aria-describedby="f-improve-error"></textarea>
+          <div class="enquiry__labelrow">
+            <label class="enquiry__label" for="f-improve">What would you like to improve <span class="enquiry__optional">(optional)</span></label>
+            <span class="enquiry__count" data-count-for="f-improve" data-limit="600" aria-hidden="true"></span>
+          </div>
+          <textarea class="enquiry__textarea" id="f-improve" name="message" rows="4" maxlength="600" placeholder="Where do enquiries seem to go quiet?" aria-describedby="f-improve-error"></textarea>
           <p class="enquiry__error" id="f-improve-error" data-error-for="f-improve" hidden></p>
         </div>
         <div class="enquiry__actions">
@@ -579,8 +598,8 @@
   </div>
 </footer>
 
-<script src="js/site.js?v=13" defer></script>
-<script src="/cookie-consent.js?v=13" defer></script>
-<script src="/whatsapp-lead.js?v=13" defer></script>
+<script src="js/site.js?v=14" defer></script>
+<script src="/cookie-consent.js?v=14" defer></script>
+<script src="/whatsapp-lead.js?v=14" defer></script>
 </body>
 </html>

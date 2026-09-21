@@ -291,6 +291,9 @@
       if (el.type === "email" && !EMAIL.test(el.value.trim())) {
         return "Enter an email address in the format name@example.com";
       }
+      if (el.type === "tel" && el.value.replace(/\D/g, "").length !== 10) {
+        return "Enter a 10-digit phone number, or leave it blank";
+      }
       return null;
     }
 
@@ -308,14 +311,62 @@
       }
     }
 
+    /* ------------------------------------------ LENGTH LIMITS AND COUNTERS
+       Every control carries a maxlength, which stops typing at the cap but
+       says nothing about it — and silently truncates a paste. The counter
+       beside each label makes the limit visible from the start and turns red
+       near the cap, so running out of room is never a surprise. */
+
+    function counterFor(el) {
+      return form.querySelector('[data-count-for="' + el.id + '"]');
+    }
+
+    function updateCount(el) {
+      var node = counterFor(el);
+      if (!node) return;
+      var limit = Number(node.getAttribute("data-limit")) || el.maxLength;
+      if (!limit || limit < 0) return;
+      var used = el.value.length;
+      node.textContent = used + "/" + limit;
+      if (used >= limit * 0.8) {
+        node.setAttribute("data-near", "1");
+      } else {
+        node.removeAttribute("data-near");
+      }
+    }
+
+    /* Phone was accepting any number of digits. Indian mobile numbers are ten,
+       so anything longer is a typo — except a pasted +91 number, which is
+       correct and merely prefixed, so the country code is dropped rather than
+       the last two digits being eaten. */
+    function normalisePhone(value) {
+      var digits = value.replace(/\D/g, "");
+      if (digits.length > 10 && digits.slice(0, 2) === "91") digits = digits.slice(2);
+      return digits.slice(0, 10);
+    }
+
+    var phone = form.querySelector("#f-phone");
+    if (phone) {
+      phone.addEventListener("input", function () {
+        var clean = normalisePhone(phone.value);
+        if (clean !== phone.value) {
+          var atEnd = phone.selectionStart === phone.value.length;
+          phone.value = clean;
+          if (atEnd) phone.setSelectionRange(clean.length, clean.length);
+        }
+      });
+    }
+
     controls.forEach(function (el) {
       el.addEventListener("blur", function () {
         if (el.dataset.touched) showError(el, errorFor(el));
       });
       el.addEventListener("input", function () {
+        updateCount(el);
         if (el.getAttribute("aria-invalid")) showError(el, errorFor(el));
       });
       el.addEventListener("focus", function () { el.dataset.touched = "1"; });
+      updateCount(el);                 // render the limit before anything is typed
     });
 
     /* ------------------------------------------------------ SUBMIT STATES
