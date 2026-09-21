@@ -1,0 +1,43 @@
+=== 2026-09-22 03:54:01 IST ===
+
+> build
+> python3 .tools/gen-legal-pages.py && node .tools/build-content.mjs && python3 .tools/gen-sitemap.py
+
+wrote contact/index.html                10702 bytes
+wrote privacy-policy/index.html         11402 bytes
+wrote terms-of-service/index.html       11684 bytes
+wrote refund-cancellation-policy/index.html  11268 bytes
+wrote cookie-tracking-notice/index.html  10964 bytes
+wrote 404.html
+  insights/website-traffic-no-leads/
+  insights/  (1 article)
+  insights/lead-management/  (1)
+  insights/feed.xml
+insights: 1 built, 0 scheduled (today is 2026-09-22 IST), 0 problems
+sitemap.xml: 9 pages  (unchanged)
+  /                                          2026-09-22
+  /contact/                                  2026-09-22
+  /cookie-tracking-notice/                   2026-09-22
+  /insights/                                 2026-09-22
+  /insights/lead-management/                 2026-09-22
+  /insights/website-traffic-no-leads/        2026-09-22
+  /privacy-policy/                           2026-09-22
+  /refund-cancellation-policy/               2026-09-22
+  /terms-of-service/                         2026-09-22
+skipped:
+  404.html                                   on the exclude list
+  admin/index.html                           noindex
+  m.html                                     on the exclude list
+  changes found, deploying
+
+ ⛅️ wrangler 4.136.1
+────────────────────
+✨ Compiled Worker successfully
+Uploading... (112/114)
+Uploading... (113/114)
+Uploading... (114/114)
+✨ Success! Uploaded 2 files (112 already uploaded) (0.70 sec)
+
+✨ Uploading Functions bundle
+🌎 Deploying...
+✨ Deployment complete! Take a peek over at https://fa68c5de.uplof-landing-page.pages.dev
