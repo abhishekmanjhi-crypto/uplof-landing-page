@@ -2,3 +2,5 @@ node_modules/
 .wrangler/
 .DS_Store
 .tmp-*/
+.tools/scheduled-publish.log
+.tools/scheduled-publish.err

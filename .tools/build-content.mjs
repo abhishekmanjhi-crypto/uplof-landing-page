@@ -106,8 +106,11 @@ function renderer(imageMap) {
 
 /* ------------------------------------------------------------- validation */
 function validate(file, fm, body, html) {
-  const need = ["title", "description", "quickAnswer", "publishDate", "author", "cluster", "heroImage", "heroAlt"];
+  const need = ["title", "description", "quickAnswer", "publishDate", "author", "cluster"];
   for (const k of need) if (!fm[k]) fail(file, `missing required field "${k}"`);
+  // A hero image is optional, but a hero image without a description is not:
+  // an undescribed image is invisible to a screen reader and to search.
+  if (fm.heroImage && !fm.heroAlt) fail(file, "heroImage is set but heroAlt is missing");
 
   if (fm.description) {
     const n = fm.description.length;

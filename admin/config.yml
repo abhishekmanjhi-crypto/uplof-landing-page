@@ -104,19 +104,22 @@ collections:
       - label: Hero image
         name: heroImage
         widget: image
+        required: false
         media_library:
           config:
             max_file_size: 15000000
         hint: >-
-          Upload anything — the build resizes it to 480, 900 and 1400px WebP.
-          A 3MB phone photo becomes about 60KB on mobile. Do not pre-compress it.
+          Optional. Upload anything — the build resizes it to 480, 900 and
+          1400px WebP, so a 3MB phone photo becomes about 60KB on mobile. Do not
+          pre-compress it. An article with no image still publishes.
 
       - label: Hero image description
         name: heroAlt
         widget: string
+        required: false
         hint: >-
-          Describe what the image SHOWS, for screen readers and for search.
-          Never a list of keywords.
+          Required only if there IS a hero image. Describe what it SHOWS, for
+          screen readers and for search. Never a list of keywords.
 
       - label: Evidence in this article
         name: evidence
@@ -165,6 +168,9 @@ collections:
       - label: Body
         name: body
         widget: markdown
+        modes: [rich-text, raw]
         hint: >-
           Follow the nine-part structure in CONTENT-GUIDE.md. At least two links
           to other Uplof pages, in the prose, or the build will refuse it.
+          Toggle to raw markdown with the button above the editor if the rich
+          text mode gets in your way.

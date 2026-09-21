@@ -7,9 +7,10 @@
   },
   "scripts": {
     "build": "python3 .tools/gen-legal-pages.py && node .tools/build-content.mjs && python3 .tools/gen-sitemap.py",
-    "deploy": "npm run build && npx wrangler pages deploy . --branch main --commit-dirty=true",
+    "deploy": "npm run build && npx wrangler pages deploy . --branch main --commit-dirty=true && npm run ping",
     "sitemap": "python3 .tools/gen-sitemap.py",
-    "content": "node .tools/build-content.mjs"
+    "content": "node .tools/build-content.mjs",
+    "ping": "node .tools/ping-indexnow.mjs"
   },
   "devDependencies": {
     "gray-matter": "^4.0.3",

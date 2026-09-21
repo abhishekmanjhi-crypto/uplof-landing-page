@@ -41,6 +41,8 @@ fi
 echo "  changes found, deploying" >> "$LOG"
 npx wrangler pages deploy . --branch main --commit-dirty=true >> "$LOG" 2>&1
 
+node .tools/ping-indexnow.mjs >> "$LOG" 2>&1 || true
+
 git add -A
 git commit -q -m "Publish scheduled content ($(date '+%Y-%m-%d'))" >> "$LOG" 2>&1
 git push --quiet origin main >> "$LOG" 2>&1 || echo "  push failed" >> "$LOG"
