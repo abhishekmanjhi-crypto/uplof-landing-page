@@ -1,5 +1,5 @@
 /**
- * Build /insights/ from markdown, with no framework.
+ * Build /blog/ from markdown, with no framework.
  *
  * Why not Astro: the site is six pages of hand-written HTML on top of a design
  * system that already works, and a Python generator that already produces
@@ -9,7 +9,7 @@
  * sharp does that directly.
  *
  * What it does:
- *   content/insights/*.md  ->  insights/<slug>/index.html  +  insights/index.html
+ *   content/blog/*.md  ->  blog/<slug>/index.html  +  blog/index.html
  *   any image referenced   ->  WebP at three widths, with <picture> and srcset
  *
  * The front matter is validated against the rules in CONTENT-GUIDE.md and the
@@ -26,10 +26,10 @@ import sharp from "sharp";
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.dirname(HERE);
-const SRC = path.join(ROOT, "content", "insights");
+const SRC = path.join(ROOT, "content", "blog");
 const UPLOADS = path.join(ROOT, "content", "uploads");
-const OUT_DIR = path.join(ROOT, "insights");
-const IMG_OUT = path.join(ROOT, "assets", "insights");
+const OUT_DIR = path.join(ROOT, "blog");
+const IMG_OUT = path.join(ROOT, "assets", "blog");
 const BASE = "https://uplof.me";
 
 // Bumped together with the HTML files. Read from index.html so there is one
@@ -74,7 +74,7 @@ async function processImage(rel, fromDir) {
       await sharp(src).resize({ width: w, withoutEnlargement: true })
         .webp({ quality: 82 }).toFile(dest);
     }
-    made.push({ w, url: `/assets/insights/${name}` });
+    made.push({ w, url: `/assets/blog/${name}` });
   }
   const widest = made[made.length - 1];
   const ratio = meta.width && meta.height ? meta.height / meta.width : 0.625;
@@ -155,7 +155,7 @@ ${fm.faqs.map((q) => `  <details class="faq__item">
   </details>`).join("\n")}
 </section>`
     : "";
-  const url = `${BASE}/insights/${slug}/`;
+  const url = `${BASE}/blog/${slug}/`;
   const heroImg = hero
     ? `<figure class="insight__hero">
   <img src="${hero.src}" srcset="${hero.srcset}" sizes="(max-width: 860px) 100vw, 860px"
@@ -184,7 +184,7 @@ ${fm.faqs.map((q) => `  <details class="faq__item">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="${esc(fm.title)}">
 <meta name="twitter:description" content="${esc(fm.description)}">
-<link rel="alternate" type="application/rss+xml" title="Uplof insights" href="/insights/feed.xml">
+<link rel="alternate" type="application/rss+xml" title="Uplof blog" href="/blog/feed.xml">
 <link rel="icon" href="/assets/logo.svg" type="image/svg+xml">
 ${jsonld}
 <link rel="stylesheet" href="/css/tokens.css?v=${V}">
@@ -236,7 +236,7 @@ ${FOOTER}
 
 /* -------------------------------------------------------------------- main */
 if (!existsSync(SRC)) {
-  console.log("insights: no content/insights/ directory yet, nothing to build");
+  console.log("blog: no content/blog/ directory yet, nothing to build");
   process.exit(0);
 }
 
@@ -297,15 +297,15 @@ for (const file of files) {
 
   const article = {
     "@type": "Article",
-    "@id": `${BASE}/insights/${slug}/#article`,
+    "@id": `${BASE}/blog/${slug}/#article`,
     headline: fm.title,
     description: fm.description,
     datePublished: fm.publishDate,
     ...(fm.updatedDate ? { dateModified: fm.updatedDate } : {}),
     author: { "@id": `${BASE}/#abhishek` },
     publisher: { "@id": `${BASE}/#organization` },
-    isPartOf: { "@id": `${BASE}/insights/#blog` },
-    mainEntityOfPage: `${BASE}/insights/${slug}/`,
+    isPartOf: { "@id": `${BASE}/blog/#blog` },
+    mainEntityOfPage: `${BASE}/blog/${slug}/`,
     ...(hero ? { image: `${BASE}${hero.src}` } : {}),
     ...(fm.faqs?.length ? {
       mentions: fm.faqs.map((q) => ({
@@ -317,11 +317,11 @@ for (const file of files) {
 
   const breadcrumb = {
     "@type": "BreadcrumbList",
-    "@id": `${BASE}/insights/${slug}/#breadcrumb`,
+    "@id": `${BASE}/blog/${slug}/#breadcrumb`,
     itemListElement: [
       { "@type": "ListItem", position: 1, name: "Home", item: `${BASE}/` },
-      { "@type": "ListItem", position: 2, name: "Insights", item: `${BASE}/insights/` },
-      { "@type": "ListItem", position: 3, name: fm.title, item: `${BASE}/insights/${slug}/` },
+      { "@type": "ListItem", position: 2, name: "Blog", item: `${BASE}/blog/` },
+      { "@type": "ListItem", position: 3, name: fm.title, item: `${BASE}/blog/${slug}/` },
     ],
   };
 
@@ -346,12 +346,12 @@ for (const { fm, slug, html } of pending) {
   await mkdir(path.join(OUT_DIR, slug), { recursive: true });
   await writeFile(path.join(OUT_DIR, slug, "index.html"), html);
   built.push({ ...fm, slug });
-  console.log(`  insights/${slug}/`);
+  console.log(`  blog/${slug}/`);
 }
 
 /* --------------------------------------------- index, cluster hubs and feed */
 function listPage({ slug, eyebrow, title, lead, posts, jsonld, canonical }) {
-  const cards = posts.map((p) => `        <a class="insight-card" href="/insights/${p.slug}/">
+  const cards = posts.map((p) => `        <a class="insight-card" href="/blog/${p.slug}/">
           <p class="insight-card__eyebrow">${esc(String(p.cluster).replace(/-/g, " "))}</p>
           <h2 class="insight-card__title">${esc(p.title)}</h2>
           <p class="insight-card__line">${esc(p.description)}</p>
@@ -372,7 +372,7 @@ function listPage({ slug, eyebrow, title, lead, posts, jsonld, canonical }) {
 <meta property="og:url" content="${canonical}">
 <meta property="og:image" content="${BASE}/assets/img/og-card.png">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="alternate" type="application/rss+xml" title="Uplof insights" href="/insights/feed.xml">
+<link rel="alternate" type="application/rss+xml" title="Uplof blog" href="/blog/feed.xml">
 <link rel="icon" href="/assets/logo.svg" type="image/svg+xml">
 ${jsonld}
 <link rel="stylesheet" href="/css/tokens.css?v=${V}">
@@ -397,7 +397,7 @@ ${NAVBAR}
     <div class="insight-grid">
 ${cards}
     </div>
-${slug ? `    <p class="micro" style="margin-block-start:var(--space-8)"><a href="/insights/">All insights</a></p>` : ""}
+${slug ? `    <p class="micro" style="margin-block-start:var(--space-8)"><a href="/blog/">All posts</a></p>` : ""}
   </div>
 </main>
 ${FOOTER}
@@ -422,7 +422,7 @@ if (existsSync(OUT_DIR)) {
   for (const entry of await readdir(OUT_DIR, { withFileTypes: true })) {
     if (entry.isDirectory() && !keep.has(entry.name)) {
       await rm(path.join(OUT_DIR, entry.name), { recursive: true, force: true });
-      console.log(`  removed stale: insights/${entry.name}/`);
+      console.log(`  removed stale: blog/${entry.name}/`);
     }
   }
 }
@@ -433,22 +433,22 @@ if (built.length) {
 
   const blogNode = {
     "@type": "Blog",
-    "@id": `${BASE}/insights/#blog`,
-    name: "Uplof insights",
-    url: `${BASE}/insights/`,
+    "@id": `${BASE}/blog/#blog`,
+    name: "Uplof blog",
+    url: `${BASE}/blog/`,
     publisher: { "@id": `${BASE}/#organization` },
-    blogPost: built.map((p) => ({ "@id": `${BASE}/insights/${p.slug}/#article` })),
+    blogPost: built.map((p) => ({ "@id": `${BASE}/blog/${p.slug}/#article` })),
   };
   const indexLd = `<script type="application/ld+json">
 ${JSON.stringify({ "@context": "https://schema.org", "@graph": [...SHARED_GRAPH, blogNode] }, null, 2)}
 </script>`;
 
   await writeFile(path.join(OUT_DIR, "index.html"), listPage({
-    slug: "", eyebrow: "Insights", title: "Where enquiries go missing.",
+    slug: "", eyebrow: "Blog", title: "Where enquiries go missing.",
     lead: "Straight answers, written from real lead journeys rather than general advice.",
-    posts: built, jsonld: indexLd, canonical: `${BASE}/insights/`,
+    posts: built, jsonld: indexLd, canonical: `${BASE}/blog/`,
   }));
-  console.log(`  insights/  (${built.length} article${built.length === 1 ? "" : "s"})`);
+  console.log(`  blog/  (${built.length} article${built.length === 1 ? "" : "s"})`);
 
   // A hub per topic. These are what make a cluster a cluster rather than a pile
   // of articles, and they are the pages that will rank for the broad term.
@@ -458,19 +458,19 @@ ${JSON.stringify({ "@context": "https://schema.org", "@graph": [...SHARED_GRAPH,
     const ld = `<script type="application/ld+json">
 ${JSON.stringify({ "@context": "https://schema.org", "@graph": [...SHARED_GRAPH, {
       "@type": "CollectionPage",
-      "@id": `${BASE}/insights/${key}/#collection`,
-      name: `${label} — Uplof insights`,
-      url: `${BASE}/insights/${key}/`,
-      isPartOf: { "@id": `${BASE}/insights/#blog` },
-      hasPart: posts.map((p) => ({ "@id": `${BASE}/insights/${p.slug}/#article` })),
+      "@id": `${BASE}/blog/${key}/#collection`,
+      name: `${label} — Uplof blog`,
+      url: `${BASE}/blog/${key}/`,
+      isPartOf: { "@id": `${BASE}/blog/#blog` },
+      hasPart: posts.map((p) => ({ "@id": `${BASE}/blog/${p.slug}/#article` })),
     }] }, null, 2)}
 </script>`;
     await mkdir(path.join(OUT_DIR, key), { recursive: true });
     await writeFile(path.join(OUT_DIR, key, "index.html"), listPage({
-      slug: key, eyebrow: "Insights", title: label, lead, posts, jsonld: ld,
-      canonical: `${BASE}/insights/${key}/`,
+      slug: key, eyebrow: "Blog", title: label, lead, posts, jsonld: ld,
+      canonical: `${BASE}/blog/${key}/`,
     }));
-    console.log(`  insights/${key}/  (${posts.length})`);
+    console.log(`  blog/${key}/  (${posts.length})`);
   }
 
   // RSS. Cheap to produce, and it is how a reader, a newsreader or a crawler
@@ -478,15 +478,15 @@ ${JSON.stringify({ "@context": "https://schema.org", "@graph": [...SHARED_GRAPH,
   const rss = `<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Uplof insights</title>
-    <link>${BASE}/insights/</link>
+    <title>Uplof blog</title>
+    <link>${BASE}/blog/</link>
     <description>Where enquiries go missing between your website, search and follow-up.</description>
     <language>en-IN</language>
-    <atom:link href="${BASE}/insights/feed.xml" rel="self" type="application/rss+xml"/>
+    <atom:link href="${BASE}/blog/feed.xml" rel="self" type="application/rss+xml"/>
 ${built.map((p) => `    <item>
       <title>${esc(p.title)}</title>
-      <link>${BASE}/insights/${p.slug}/</link>
-      <guid isPermaLink="true">${BASE}/insights/${p.slug}/</guid>
+      <link>${BASE}/blog/${p.slug}/</link>
+      <guid isPermaLink="true">${BASE}/blog/${p.slug}/</guid>
       <pubDate>${new Date(p.publishDate).toUTCString()}</pubDate>
       <description>${esc(p.description)}</description>
     </item>`).join("\n")}
@@ -494,11 +494,11 @@ ${built.map((p) => `    <item>
 </rss>
 `;
   await writeFile(path.join(OUT_DIR, "feed.xml"), rss);
-  console.log("  insights/feed.xml");
+  console.log("  blog/feed.xml");
 }
 
 if (scheduled.length) {
   console.log("  scheduled, not due yet:");
   for (const sch of scheduled) console.log(`    ${sch.slug}  ->  due ${sch.date}`);
 }
-console.log(`insights: ${built.length} built, ${scheduled.length} scheduled (today is ${TODAY_IST} IST), 0 problems`);
+console.log(`blog: ${built.length} built, ${scheduled.length} scheduled (today is ${TODAY_IST} IST), 0 problems`);

@@ -21,9 +21,23 @@
   padding-block-end: clamp(var(--space-14), 6vw, var(--space-24));
 }
 
+/* One reading column, shared by the masthead and everything under it.
+   These were 900px (centred) and 68ch (left-aligned) respectively, so the
+   title started 130px to the right of the body text beneath it — it read as
+   two unrelated layouts stacked on top of each other. */
+:root {
+  /* An absolute measure, NOT ch. A ch unit is the width of "0" in the element's
+     own font, so 68ch in Glancyr (the masthead) and 68ch in Satoshi (the body)
+     resolve to different widths — they came out 743px and 733px, leaving the
+     title 5px off the text beneath it. 46rem is ~68 characters at the body size
+     and is identical everywhere. */
+  --measure: 46rem;
+}
+
 .masthead__inner {
   padding-block-start: clamp(var(--space-10), 5vw, var(--space-16));
-  max-inline-size: 900px;
+  max-inline-size: var(--measure);
+  margin-inline: auto;
 }
 
 .masthead__title {
@@ -62,7 +76,8 @@
    running legal copy. Restore document semantics inside .prose only. */
 
 .prose {
-  max-inline-size: 68ch;
+  max-inline-size: var(--measure);
+  margin-inline: auto;
   font-weight: var(--weight-light);
   font-size: var(--text-body);
   line-height: var(--leading-relaxed);
@@ -137,7 +152,9 @@
    targets, same card language as the rest of the site. */
 
 .legal-more {
+  max-inline-size: var(--measure);   /* same column as everything above it */
   margin-block-start: clamp(var(--space-16), 7vw, var(--space-24));
+  margin-inline: auto;
   padding-block-start: var(--space-10);
   border-block-start: var(--border-width) solid var(--border-hairline);
 }

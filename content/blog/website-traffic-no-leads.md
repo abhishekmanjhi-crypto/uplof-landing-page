@@ -19,7 +19,7 @@ related:
   - label: Contact
     url: /contact/
   - label: All insights
-    url: /insights/
+    url: /blog/
 draft: false
 ---
 
@@ -57,7 +57,7 @@ The second most common is step five. The enquiry arrived, somebody read it on
 their phone, meant to reply after lunch, and it moved up the inbox. There is no
 system failure to find — just no record that it was ever anyone's job. That is a
 follow-up problem, not a marketing one, and it is the cheapest of the five to
-fix — see the [other insights](/insights/) for how we usually close it.
+fix — see the [other posts](/blog/) for how we usually close it.
 
 ## When you do not need a new website
 

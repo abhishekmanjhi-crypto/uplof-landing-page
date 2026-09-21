@@ -15,7 +15,7 @@ cluster: local-seo
 evidence: none
 related:
   - label: Why traffic but no leads
-    url: /insights/website-traffic-no-leads/
+    url: /blog/website-traffic-no-leads/
   - label: Contact
     url: /contact/
 draft: false
@@ -114,7 +114,7 @@ Ranking is only the first handover. A profile that ranks, sends a call to a
 number nobody answers, and loses the customer is a different problem — and a
 more expensive one, because you paid attention to get there.
 
-That is the same gap covered in the [rest of the insights](/insights/): the
+That is the same gap covered in the [rest of the posts](/blog/): the
 places an enquiry disappears between being interested and being a customer. If
 you want yours traced rather than guessed at, [send me your
 details](/contact/).

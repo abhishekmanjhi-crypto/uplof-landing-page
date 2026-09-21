@@ -1,0 +1,9 @@
+# The blog lived at /insights/ for a few hours on 22 Sep 2026 and was submitted
+# to IndexNow under those URLs before being renamed to /blog/. These keep the
+# old paths working rather than returning 404 to anything that picked them up.
+#
+# Note for future edits: on Cloudflare Pages a static file always wins over a
+# redirect rule, so a rule can never hide a path that still exists on disk.
+# These work only because /insights/ no longer exists.
+/insights/feed.xml   /blog/feed.xml   301
+/insights/*          /blog/:splat     301

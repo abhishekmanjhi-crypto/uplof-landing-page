@@ -21,11 +21,11 @@ image optimisation — and `.tools/build-content.mjs` does both in one file, wit
 So nothing was migrated. The existing pages are untouched.
 
 ```
-content/insights/*.md        you write here (or the CMS writes here)
+content/blog/*.md        you write here (or the CMS writes here)
 content/uploads/*            original images, any size
         ↓  npm run build
-insights/<slug>/index.html   generated pages, same design system
-assets/insights/*.webp       480 / 900 / 1400px WebP, srcset wired up
+blog/<slug>/index.html   generated pages, same design system
+assets/blog/*.webp       480 / 900 / 1400px WebP, srcset wired up
 sitemap.xml                  updated automatically
 ```
 
@@ -137,7 +137,7 @@ Every message names the file and the rule. Nothing half-finished reaches the sit
 ## Things worth knowing
 
 - **Images stay in the repo at full size.** `content/uploads/` keeps the
-  originals; visitors only ever get the WebP versions from `assets/insights/`.
+  originals; visitors only ever get the WebP versions from `assets/blog/`.
   So a 3MB file in git with a 60KB file on the site is working correctly.
 - **The repo grows.** At a fortnightly article that is maybe 50MB a year. Fine.
   If it ever becomes a problem, a GitHub Action can downsize originals on push —
@@ -160,7 +160,7 @@ Every message names the file and the rule. Nothing half-finished reaches the sit
 | "Failed to authenticate" | The two secrets are missing or misspelled in the Worker |
 | Saves but nothing appears on the site | You did not run `npm run deploy`, or the article is still a Draft |
 | Build fails after saving | Read the messages — each names the file and the rule it broke |
-| Images look huge in the repo | Correct. Check `assets/insights/` for what is actually served |
+| Images look huge in the repo | Correct. Check `assets/blog/` for what is actually served |
 
 ---
 

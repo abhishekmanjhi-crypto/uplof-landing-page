@@ -40,7 +40,7 @@ almost nobody else publishing on this topic has.
 
 | Type | Purpose | URL shape | Schema |
 |---|---|---|---|
-| **Insight** | Answers one real question a business owner asks | `/insights/<slug>/` | `Article` |
+| **Post** | Answers one real question a business owner asks | `/blog/<slug>/` | `Article` |
 | **Service** | Commercial page for one thing we sell | `/<slug>/` | `Service` + `Organization` |
 | **Case study** | One real engagement, with evidence | `/work/<slug>/` | `Article` + `CreativeWork` |
 
@@ -50,7 +50,7 @@ Anything that does not fit one of these three probably should not be published.
 
 ## 2. The page format
 
-Every **insight** follows this order. It is not a suggestion — consistency is what
+Every **post** follows this order. It is not a suggestion — consistency is what
 lets a reader skim the fifth article as fast as the first, and what lets an AI
 system find the answer without guessing.
 
@@ -102,7 +102,7 @@ Nothing goes live until every box is ticked. The CMS enforces the ones marked
 - [ ] Reads out loud without embarrassment
 
 ### Metadata
-- [ ] Title tag: keyword-led on service pages, brand-led on the homepage, question-led on insights
+- [ ] Title tag: keyword-led on service pages, brand-led on the homepage, question-led on blog posts
 - [ ] Meta description 140–160 characters **(auto: length)**
 - [ ] Slug is short, lowercase, hyphenated, no dates, no stop words
 - [ ] Canonical URL set **(auto)**
@@ -144,22 +144,23 @@ Nothing goes live until every box is ticked. The CMS enforces the ones marked
 |---|---|
 | Write and edit without touching code | Sveltia CMS — a real editor UI over the repo |
 | Login with a password | GitHub OAuth via a Cloudflare Worker |
-| Automatic image compression | Astro's image pipeline at build: WebP/AVIF, responsive `srcset`, width/height injected |
-| Enforce the schema above | Astro content collections — a typed schema that fails the build if a required field is missing |
+| Automatic image compression | `sharp` at build: WebP at three widths, `srcset` and dimensions injected |
+| Enforce the schema above | `.tools/build-content.mjs` validates every file and fails the build on a violation |
 | No new hosting, no database | Everything stays on Cloudflare Pages; content is markdown in git |
-| Free | Sveltia and Astro are open source; the Worker is on the free tier |
+| Free | Sveltia is open source; the Worker is on the free tier |
 
 ### The three real candidates
 
-Astro sits underneath all three — the decision is only about where the content
-lives and what the writing interface is.
+The decision was only about where the content lives and what the writing
+interface is. Astro was the original plan for all three and was dropped — see
+CMS-SETUP.md for why.
 
 | | **Sveltia CMS** | **Sanity** | **WordPress** |
 |---|---|---|---|
 | Open source | Yes, fully | Studio yes, **content store no** | Yes |
 | Where content lives | Markdown in your git repo | Sanity's hosted Content Lake | Their MySQL database |
 | Cost | Free, no ceiling | Free tier, then $15/seat/mo | Hosting + plugins |
-| Image compression | Astro, at build | **Sanity CDN, on the fly** | Plugin |
+| Image compression | sharp, at build | **Sanity CDN, on the fly** | Plugin |
 | Login | GitHub OAuth | Email / Google / GitHub | Built in |
 | Editors need a GitHub account | **Yes** | No | No |
 | Survives you leaving it | Content is already markdown | Export as JSON | Export as XML |
@@ -235,7 +236,7 @@ and the switch costs about a day.
 ### Collection schema
 
 ```
-insights/
+blog/
   title            string, required
   slug             string, required, unique
   description      string, required, 140–160 chars

@@ -14,7 +14,7 @@ cluster: lead-management
 evidence: none
 related:
   - label: Stop losing leads in WhatsApp
-    url: /insights/whatsapp-leads-not-followed-up/
+    url: /blog/whatsapp-leads-not-followed-up/
   - label: Contact
     url: /contact/
 draft: false
@@ -90,7 +90,7 @@ one feature you actually needed.
 ## What I would do first, if the answer is "not yet"
 
 Do the three things in the [WhatsApp
-piece](/insights/whatsapp-leads-not-followed-up/) — label, owner, reminder. They
+piece](/blog/whatsapp-leads-not-followed-up/) — label, owner, reminder. They
 take an afternoon, cost nothing, and give you most of what a CRM would.
 
 Then run this test after a month: can you say what happened to every enquiry?

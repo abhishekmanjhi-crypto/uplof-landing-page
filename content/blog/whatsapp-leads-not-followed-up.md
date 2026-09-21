@@ -15,7 +15,7 @@ cluster: lead-management
 evidence: client-example
 related:
   - label: Why traffic but no leads
-    url: /insights/website-traffic-no-leads/
+    url: /blog/website-traffic-no-leads/
   - label: Contact
     url: /contact/
 draft: false
@@ -117,7 +117,7 @@ the source is gone. If you want to know which post or which ad produced a
 customer, either use a different pre-filled message per channel so the text
 itself identifies the source, or send people to a tagged page that has the
 WhatsApp button on it. There is more on that in the [rest of the
-insights](/insights/).
+insights](/blog/).
 
 ## What I would fix first
 

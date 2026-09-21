@@ -7,7 +7,7 @@ import os
 import re
 
 ROOT = "/Users/abhishek/Downloads/uplof-landing-page"
-V = "21"  # cache-bust version, bumped together with index.html
+V = "22"  # cache-bust version, bumped together with index.html
 
 _P0 = os.path.join(os.path.dirname(os.path.abspath(__file__)), "partials")
 SHARED_GRAPH_JSON = open(os.path.join(_P0, "graph.json"), encoding="utf-8").read()

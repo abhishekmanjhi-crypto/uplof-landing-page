@@ -24,15 +24,15 @@ public_folder: ""
 publish_mode: simple
 
 collections:
-  - name: insights
-    label: Insights
-    label_singular: Insight
-    folder: content/insights
+  - name: blog
+    label: Blog
+    label_singular: Post
+    folder: content/blog
     create: true
     slug: "{{fields.slug}}"
     extension: md
     format: yaml-frontmatter
-    preview_path: insights/{{fields.slug}}
+    preview_path: blog/{{fields.slug}}
     summary: "{{title}}"
     sortable_fields: [publishDate, title]
     fields:

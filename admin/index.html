@@ -100,7 +100,7 @@
       const h = window.createElement;
       if (!h || !CMS.registerPreviewTemplate) return true;
 
-      CMS.registerPreviewTemplate('insights', (props) => {
+      CMS.registerPreviewTemplate('blog', (props) => {
         try {
           const data = props.entry?.get ? props.entry.get('data') : props.entry?.data;
           const get = (k) => (data?.get ? data.get(k) : data?.[k]) ?? '';
