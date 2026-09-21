@@ -438,8 +438,12 @@
   font-size: var(--text-h3);
   letter-spacing: -0.02em;
   color: var(--fg-default);
-  text-shadow: 2px 2px 0 var(--red-900);
 }
+/* A 2px offset text-shadow in --red-900 used to sit under this. At display
+   size it rendered the name twice, a dark red copy peeking out from behind
+   every letter — it read as a printing misregistration, or as double vision.
+   A name is the one string on the page that must be unambiguous, so it is
+   set in a single colour. */
 
 /* ------------------------------------------------------------- 11. NAVBAR */
 

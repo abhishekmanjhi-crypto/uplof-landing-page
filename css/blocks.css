@@ -324,31 +324,43 @@
   background-color: var(--bg-inset);
   border: var(--border-width) solid var(--border-hairline);
 }
-/* the connector lives in the gap, not under the content */
+/* the connector lives in the gap, not under the content, and lines up with the
+   rule that trails each step's index so the sequence reads as one track */
 .tstep + .tstep::before {
   content: "";
   position: absolute;
   inset-inline-start: calc(var(--space-5) * -1);
-  inset-block-start: calc(var(--space-6) + 24px);
+  inset-block-start: calc(var(--space-6) + 0.6em);
   inline-size: var(--space-5);
   block-size: var(--border-width);
   background-color: var(--border-hairline);
 }
+
+/* The index was a 48px solid red square holding a 24px numeral — the loudest
+   thing in the section, so the eye landed on "1" before it landed on what
+   step one actually is. The ordinal is the least important word in the card:
+   it now reads as a small mono label trailed by a hairline, and the weight it
+   gave up goes to the step title. */
 .tstep__n {
-  inline-size: 48px;
-  block-size: 48px;
-  display: grid;
-  place-items: center;
-  background-color: var(--red-500);
-  color: var(--paper-000);
-  font-family: var(--font-display);
-  font-size: var(--text-ui);
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  font-size: var(--text-sm);
+  letter-spacing: 0.12em;
+  color: var(--red-500);
   position: relative;
   z-index: 1;
 }
-.tstep .icon { color: var(--red-500); font-size: 1.375rem; margin-block-start: var(--space-2); }
-.tstep__title { font-family: var(--font-display); font-size: var(--text-h4); letter-spacing: -0.02em; color: var(--fg-default); }
-.tstep__line { font-size: var(--text-sm); line-height: 1.4; color: var(--fg-muted); max-inline-size: 26ch; }
+.tstep__n::after {
+  content: "";
+  flex: 1 1 auto;
+  block-size: var(--border-width);
+  background-color: var(--border-hairline);
+}
+.tstep .icon { color: var(--red-500); font-size: 1.625rem; margin-block-start: var(--space-2); }
+.tstep__title { font-family: var(--font-display); font-size: var(--text-h3); letter-spacing: -0.02em; line-height: 1.15; color: var(--fg-default); }
+.tstep__line { font-size: var(--text-body); line-height: 1.5; color: var(--fg-muted); max-inline-size: 26ch; }
 
 /* --------------------------------------------------------- RESPONSIVE */
 @media (max-width: 1100px) {
@@ -452,7 +464,6 @@
 /* ------------------------------------------------------- HOW THE WORK RUNS
    The track now runs through the centre of the numbered badges instead of
    floating above them, and every step sits on the same baseline grid. */
-.tstep__n { font-size: var(--text-h4); }
 .tstep .icon { margin-block-start: 0; }
 .tstep__title { min-block-size: 2.4em; }   /* keeps the four bodies on one baseline */
 
@@ -522,7 +533,15 @@
     gap: var(--space-3);
   }
   .tstep:first-child { border-block-start: 0; padding-block-start: 0; }
-  .tstep__n { box-shadow: none; }
+  /* centred stack: the index keeps its rule but on both sides, so it still
+     reads as a track rather than a label hanging off to one edge */
+  .tstep__n { align-self: stretch; }
+  .tstep__n::before {
+    content: "";
+    flex: 1 1 auto;
+    block-size: var(--border-width);
+    background-color: var(--border-hairline);
+  }
   .tstep__line { max-inline-size: 32ch; margin-inline: auto; }
 
   /* headings and leads stop hugging the left edge */
@@ -546,13 +565,8 @@
     gap: var(--space-3);
   }
   .tstep:first-child { border-block-start: 0; padding-block-start: var(--space-2); }
-  .tstep__n {
-    inline-size: 56px;
-    block-size: 56px;
-    font-size: var(--text-h3);
-    box-shadow: none;
-  }
-  .tstep .icon { font-size: 1.5rem; }
+  .tstep__n { align-self: stretch; }
+  .tstep .icon { font-size: 1.75rem; }
   .tstep__title { min-block-size: 0; font-size: var(--text-h3); }
   .tstep__line { max-inline-size: 30ch; margin-inline: auto; }
 }
