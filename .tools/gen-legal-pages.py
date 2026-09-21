@@ -7,7 +7,9 @@ import os
 import re
 
 ROOT = "/Users/abhishek/Downloads/uplof-landing-page"
-V = "18"  # cache-bust version, bumped together with index.html
+V = "19"  # cache-bust version, bumped together with index.html
+
+SHARED_GRAPH_JSON = r"""[{"@type": "Organization", "@id": "https://uplof.me/#organization", "name": "Uplof", "alternateName": ["Uplof.me", "Uplof Digital"], "url": "https://uplof.me/", "logo": {"@type": "ImageObject", "url": "https://uplof.me/assets/email/logo.png", "width": 216, "height": 138}, "image": "https://uplof.me/assets/img/og-card.png", "description": "Uplof connects search, websites, lead capture, CRM and follow-up so fewer enquiries disappear between the steps.", "email": "hello@uplof.me", "telephone": "+91-77108-94943", "founder": {"@id": "https://uplof.me/#abhishek"}, "areaServed": {"@type": "City", "name": "Mumbai"}, "knowsAbout": ["Lead management", "Search engine optimisation", "Local SEO", "Conversion rate optimisation", "CRM implementation", "Marketing attribution"]}, {"@type": "WebSite", "@id": "https://uplof.me/#website", "url": "https://uplof.me/", "name": "Uplof", "publisher": {"@id": "https://uplof.me/#organization"}, "inLanguage": "en-IN"}, {"@type": "Person", "@id": "https://uplof.me/#abhishek", "name": "Abhishek Manjhi", "jobTitle": "Founder", "worksFor": {"@id": "https://uplof.me/#organization"}, "url": "https://uplof.me/#founder"}]"""
 
 PAGES = [
     {
@@ -112,6 +114,28 @@ PAGES = [
 SENTENCE_KEEP = ("Uplof", "WhatsApp")
 
 
+
+def jsonld_for(slug, title):
+    """Organization + WebSite on every legal page, plus its own breadcrumb trail.
+
+    LocalBusiness / ProfessionalService is deliberately NOT here yet: its address
+    and phone must match the Google Business Profile character for character, and
+    that profile does not exist. Publishing a mismatched one is worse than none.
+    """
+    import json as _json
+    graph = _json.loads(SHARED_GRAPH_JSON)
+    graph.append({
+        "@type": "BreadcrumbList",
+        "@id": "https://uplof.me/%s/#breadcrumb" % slug,
+        "itemListElement": [
+            {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://uplof.me/"},
+            {"@type": "ListItem", "position": 2, "name": title, "item": "https://uplof.me/%s/" % slug},
+        ],
+    })
+    return ('<script type="application/ld+json">\n'
+            + _json.dumps({"@context": "https://schema.org", "@graph": graph}, indent=2, ensure_ascii=False)
+            + '\n</script>')
+
 def sentence_case(text):
     """Title Case -> sentence case, preserving proper nouns."""
     words = text.split()
@@ -212,6 +236,7 @@ TEMPLATE = """<!doctype html>
 <meta name="twitter:description" content="{desc}">
 <meta name="twitter:image" content="https://uplof.me/assets/img/og-card.png">
 <link rel="icon" href="/assets/logo.svg" type="image/svg+xml">
+{jsonld}
 <link rel="stylesheet" href="/css/tokens.css?v={v}">
 <link rel="stylesheet" href="/css/base.css?v={v}">
 <link rel="stylesheet" href="/css/components.css?v={v}">
@@ -266,6 +291,7 @@ def indent(block, spaces):
 written = []
 for p in PAGES:
     html = TEMPLATE.format(
+        jsonld=jsonld_for(p["slug"], sentence_case(p["title"])),
         title=p["title"],
         heading=punctuate(sentence_case(p["title"])),
         notice=p["notice"],
