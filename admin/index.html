@@ -39,31 +39,31 @@
   // Mirrors the real article template closely enough to judge the page by:
   // brand masthead, the short-answer block, then the body in .prose.
   const SHELL = `
-    /* The preview pane is a narrow column, not a viewport. The first version
-       used clamp() with vw units and fixed padding, which in a 900px pane gave
-       a huge title jammed against the left edge. Everything here is sized in
-       rem against a container instead, and the masthead shares the body's
-       horizontal padding so the title lines up with the text beneath it. */
+    /* Each block constrains ITSELF rather than relying on a wrapper class.
+       The previous version put the width and padding on a .pv-wrap parent and
+       read --pv-pad from it; in the real preview frame that produced a
+       full-width red masthead with the eyebrow hard against the left edge, so
+       something between the CMS's own container and this rule was winning.
+       Self-contained blocks cannot be defeated that way, and box-sizing keeps
+       the padding inside the max-width instead of adding to it. */
     html, body { background: var(--bg-page); margin: 0; }
-
-    .pv-wrap { --pv-pad: 44px; max-inline-size: 680px; margin-inline: auto; }
+    .pv-masthead, .pv-body { box-sizing: border-box; max-inline-size: 760px; margin-inline: auto; }
 
     .pv-masthead {
       background: var(--red-500);
-      padding: 44px var(--pv-pad) 38px;
-      margin-block-end: 44px;
+      padding: 40px 40px 34px;
+      margin-block-end: 40px;
     }
     .pv-eyebrow {
       font-family: ui-monospace, "SF Mono", Menlo, monospace;
       font-size: 0.6875rem; letter-spacing: 0.12em; text-transform: uppercase;
-      color: var(--cream-100); opacity: 0.8;
-      margin: 0 0 18px;
+      color: var(--cream-100); opacity: 0.8; margin: 0 0 16px;
     }
     .pv-title {
       font-family: var(--font-display); font-weight: 500;
-      font-size: 2rem; line-height: 1.12; letter-spacing: -0.02em;
+      font-size: 1.875rem; line-height: 1.14; letter-spacing: -0.02em;
       color: var(--cream-100);
-      margin: 0 0 20px; padding-block-end: 0.28em;   /* descender room */
+      margin: 0 0 18px; padding-block-end: 0.28em;   /* descender room */
     }
     .pv-meta {
       font-family: ui-monospace, "SF Mono", Menlo, monospace;
@@ -71,18 +71,16 @@
       color: var(--cream-100); opacity: 0.75; margin: 0;
     }
 
-    .pv-body { padding: 0 var(--pv-pad) 80px; }
+    .pv-body { padding: 0 40px 80px; }
     .pv-body img { max-inline-size: 100%; block-size: auto; }
-    .pv-body > .insight__answer { margin-block-end: 40px; }
+    .pv-body > .insight__answer { margin-block-end: 36px; }
 
-    /* Tighter than the live page, because the pane is half the width */
-    .pv-body h2 { font-size: 1.5rem; margin-block: 36px 12px; }
-    .pv-body h3 { font-size: 1.125rem; margin-block: 28px 8px; }
-    .pv-body p, .pv-body li { font-size: 1rem; line-height: 1.6; }
+    /* Tighter than the live page, because the pane is narrower than a viewport */
+    .pv-body h2 { font-size: 1.375rem; margin-block: 32px 10px; }
+    .pv-body h3 { font-size: 1.0625rem; margin-block: 24px 8px; }
+    .pv-body p, .pv-body li { font-size: 0.9375rem; line-height: 1.6; }
 
     .pv-empty { color: var(--ink-500); font-style: italic; }
-
-    @media (max-width: 720px) { .pv-wrap { --pv-pad: 24px; } }
   `;
 
   const register = () => {
@@ -113,7 +111,7 @@
           const cluster = String(get('cluster') || '').replace(/-/g, ' ');
           const answer = get('quickAnswer');
 
-          return h('div', { className: 'pv-wrap' },
+          return h('div', null,
             h('header', { className: 'pv-masthead on-brand' },
               cluster ? h('p', { className: 'pv-eyebrow' }, cluster) : null,
               h('h1', { className: 'pv-title' }, get('title') || 'Untitled'),
