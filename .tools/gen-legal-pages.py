@@ -7,23 +7,23 @@ import os
 import re
 
 ROOT = "/Users/abhishek/Downloads/uplof-landing-page"
-V = "19"  # cache-bust version, bumped together with index.html
+V = "20"  # cache-bust version, bumped together with index.html
 
 SHARED_GRAPH_JSON = r"""[{"@type": "Organization", "@id": "https://uplof.me/#organization", "name": "Uplof", "alternateName": ["Uplof.me", "Uplof Digital"], "url": "https://uplof.me/", "logo": {"@type": "ImageObject", "url": "https://uplof.me/assets/email/logo.png", "width": 216, "height": 138}, "image": "https://uplof.me/assets/img/og-card.png", "description": "Uplof connects search, websites, lead capture, CRM and follow-up so fewer enquiries disappear between the steps.", "email": "hello@uplof.me", "telephone": "+91-77108-94943", "founder": {"@id": "https://uplof.me/#abhishek"}, "areaServed": {"@type": "City", "name": "Mumbai"}, "knowsAbout": ["Lead management", "Search engine optimisation", "Local SEO", "Conversion rate optimisation", "CRM implementation", "Marketing attribution"]}, {"@type": "WebSite", "@id": "https://uplof.me/#website", "url": "https://uplof.me/", "name": "Uplof", "publisher": {"@id": "https://uplof.me/#organization"}, "inLanguage": "en-IN"}, {"@type": "Person", "@id": "https://uplof.me/#abhishek", "name": "Abhishek Manjhi", "jobTitle": "Founder", "worksFor": {"@id": "https://uplof.me/#organization"}, "url": "https://uplof.me/#founder"}]"""
 
 PAGES = [
     {
         "slug": "privacy-policy",
-        "notice": "Uplof is a service business operated by Abhishek Kumar. For privacy questions or a request about your information, contact <a href=\"mailto:hello@uplof.me\">hello@uplof.me</a>.",
+        "notice": "Uplof is a service business operated by Abhishek Manjhi. For privacy questions or a request about your information, contact <a href=\"mailto:hello@uplof.me\">hello@uplof.me</a>.",
         "title": "Privacy Policy",
         "nav": "Privacy",
         "eyebrow": "Legal / Privacy",
         "desc": "How Uplof collects, uses, shares and protects the information you share when you enquire, and how to ask for access, correction or deletion of it.",
         "lead": "This policy explains how Uplof handles information you share when you visit our website or contact us about our services.",
-        # NOTE: the operator name is left EXACTLY as the original legal page had
-        # it ("Abhishek Kumar"), even though index.html and functions/api/lead.js
-        # both say "Abhishek Manjhi". Which is the correct legal name is the
-        # owner's call, not a design decision — flagged to the user, not guessed.
+        # The operator name was "Abhishek Kumar" here while index.html and
+        # functions/api/lead.js said "Abhishek Manjhi". Confirmed by the owner on
+        # 22 Sep 2026: Abhishek Manjhi is correct everywhere, including legal
+        # pages. One name across the whole business now.
         "body": """<h2>Information we collect</h2>
 <p>We may receive your name, business name, email address, phone number, website address and project details when you submit an enquiry, contact us by email, phone or WhatsApp, or otherwise choose to share them. We also receive limited technical information such as browser, device and approximate usage data when it is needed to keep the site secure and working.</p>
 
@@ -41,7 +41,7 @@ PAGES = [
     },
     {
         "slug": "terms-of-service",
-        "notice": "Uplof is a service business operated by Abhishek Kumar. For questions about these terms, contact <a href=\"mailto:hello@uplof.me\">hello@uplof.me</a>.",
+        "notice": "Uplof is a service business operated by Abhishek Manjhi. For questions about these terms, contact <a href=\"mailto:hello@uplof.me\">hello@uplof.me</a>.",
         "title": "Terms of Service",
         "nav": "Terms",
         "eyebrow": "Legal / Terms",
@@ -67,7 +67,7 @@ PAGES = [
     },
     {
         "slug": "refund-cancellation-policy",
-        "notice": "Uplof is a service business operated by Abhishek Kumar. For questions about a refund or cancellation, contact <a href=\"mailto:hello@uplof.me\">hello@uplof.me</a>.",
+        "notice": "Uplof is a service business operated by Abhishek Manjhi. For questions about a refund or cancellation, contact <a href=\"mailto:hello@uplof.me\">hello@uplof.me</a>.",
         "title": "Refund and Cancellation Policy",
         "nav": "Refunds",
         "eyebrow": "Legal / Payments",
@@ -90,7 +90,7 @@ PAGES = [
     },
     {
         "slug": "cookie-tracking-notice",
-        "notice": "Uplof is a service business operated by Abhishek Kumar. For questions about tracking on this website, contact <a href=\"mailto:hello@uplof.me\">hello@uplof.me</a>.",
+        "notice": "Uplof is a service business operated by Abhishek Manjhi. For questions about tracking on this website, contact <a href=\"mailto:hello@uplof.me\">hello@uplof.me</a>.",
         "title": "Cookie and Tracking Notice",
         "nav": "Cookies",
         "eyebrow": "Legal / Cookies",
