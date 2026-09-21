@@ -1,0 +1,58 @@
+# NOT ACTIVE YET. Copy this file to .github/workflows/publish.yml to turn on
+# scheduled publishing.
+#
+# It lives here rather than in .github/workflows/ because pushing a workflow
+# file needs the `workflow` OAuth scope, which the token on this machine does
+# not have. Two ways to activate it, both in CMS-SETUP.md step 6.
+#
+# Scheduled publishing.
+#
+# The build skips any article whose publishDate is still in the future, so
+# something has to come back later and build again. That is all this does.
+#
+# Twice a day rather than hourly: an article scheduled for a date does not need
+# to appear at a particular minute, and two runs is enough that a failure in one
+# is covered by the next. Times are chosen so the first run of an Indian working
+# day happens just after midnight IST.
+name: Publish scheduled content
+
+on:
+  schedule:
+    - cron: "45 18 * * *"   # 00:15 IST
+    - cron: "45 6 * * *"    # 12:15 IST
+  workflow_dispatch:         # and a button, for when you do not want to wait
+
+permissions:
+  contents: read
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: npm ci
+
+      # Runs the same three generators as `npm run build` on your machine, so a
+      # scheduled publish cannot produce something a local build would not.
+      # If an article fails validation the build exits non-zero and nothing is
+      # deployed — a broken scheduled post does not quietly go live.
+      - name: Build
+        run: npm run build
+
+      - name: Deploy to Cloudflare Pages
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: pages deploy . --project-name=uplof-landing-page --branch=main --commit-dirty=true

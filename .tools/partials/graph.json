@@ -1,0 +1,157 @@
+[
+  {
+    "@type": "Organization",
+    "@id": "https://uplof.me/#organization",
+    "name": "Uplof",
+    "alternateName": [
+      "Uplof.me",
+      "Uplof Digital"
+    ],
+    "url": "https://uplof.me/",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://uplof.me/assets/email/logo.png",
+      "width": 216,
+      "height": 138
+    },
+    "image": "https://uplof.me/assets/img/og-card.png",
+    "description": "Uplof connects search, websites, lead capture, CRM and follow-up so fewer enquiries disappear between the steps.",
+    "email": "hello@uplof.me",
+    "telephone": "+91-77108-94943",
+    "founder": {
+      "@id": "https://uplof.me/#abhishek"
+    },
+    "areaServed": {
+      "@type": "City",
+      "name": "Mumbai"
+    },
+    "knowsAbout": [
+      "Lead management",
+      "Search engine optimisation",
+      "Local SEO",
+      "Conversion rate optimisation",
+      "CRM implementation",
+      "Marketing attribution"
+    ]
+  },
+  {
+    "@type": "WebSite",
+    "@id": "https://uplof.me/#website",
+    "url": "https://uplof.me/",
+    "name": "Uplof",
+    "publisher": {
+      "@id": "https://uplof.me/#organization"
+    },
+    "inLanguage": "en-IN"
+  },
+  {
+    "@type": "Person",
+    "@id": "https://uplof.me/#abhishek",
+    "name": "Abhishek Manjhi",
+    "jobTitle": "Founder",
+    "worksFor": {
+      "@id": "https://uplof.me/#organization"
+    },
+    "url": "https://uplof.me/#founder"
+  },
+  {
+    "@type": "ProfessionalService",
+    "@id": "https://uplof.me/#business",
+    "name": "Uplof",
+    "parentOrganization": {
+      "@id": "https://uplof.me/#organization"
+    },
+    "url": "https://uplof.me/",
+    "image": "https://uplof.me/assets/img/og-card.png",
+    "telephone": "+91-77108-94943",
+    "email": "hello@uplof.me",
+    "priceRange": "₹₹",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Thane",
+      "addressRegion": "Maharashtra",
+      "postalCode": "400605",
+      "addressCountry": "IN"
+    },
+    "areaServed": [
+      {
+        "@type": "City",
+        "name": "Mumbai"
+      },
+      {
+        "@type": "City",
+        "name": "Navi Mumbai"
+      },
+      {
+        "@type": "City",
+        "name": "Thane"
+      }
+    ],
+    "founder": {
+      "@id": "https://uplof.me/#abhishek"
+    },
+    "openingHoursSpecification": [
+      {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": [
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday",
+          "Saturday"
+        ],
+        "opens": "10:00",
+        "closes": "19:00"
+      }
+    ],
+    "hasOfferCatalog": {
+      "@type": "OfferCatalog",
+      "name": "Services",
+      "itemListElement": [
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Lead journey audit"
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Lead management and CRM setup"
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "WhatsApp and follow-up systems"
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Lead generation websites and landing pages"
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Local SEO and Google Business Profile"
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Tracking and marketing attribution"
+          }
+        }
+      ]
+    }
+  }
+]

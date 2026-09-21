@@ -1,0 +1,82 @@
+/* ============================================================================
+   INSIGHT ARTICLES
+   Layered on top of legal.css, which already styles .prose. Only the parts an
+   article needs that a policy page does not live here.
+   ========================================================================== */
+
+/* ------------------------------------------------------------ SHORT ANSWER
+   The block most likely to be quoted by an AI answer, and the one a reader in
+   a hurry should be able to stop at. Given a left rule and inset background so
+   it reads as a pull-out rather than as the first paragraph. */
+.insight__answer {
+  margin-block-end: var(--space-8);
+  padding: var(--space-5) var(--space-6);
+  background-color: var(--bg-inset);
+  border-inline-start: 3px solid var(--fg-accent);
+}
+.insight__answer p { margin: 0; font-size: var(--text-lead); line-height: 1.5; }
+.insight__answer-label {
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  font-size: var(--text-micro);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--fg-accent);
+  margin-block-end: var(--space-2) !important;
+}
+
+/* ------------------------------------------------------------------ FIGURES
+   Images are emitted with width and height so the page never shifts as they
+   load; these rules let them scale without breaking that. */
+.insight__hero,
+.insight__figure { margin: var(--space-8) 0; }
+.insight__hero img,
+.insight__figure img {
+  inline-size: 100%;
+  block-size: auto;
+  border: var(--border-width) solid var(--border-hairline);
+}
+
+/* -------------------------------------------------------------- INDEX GRID */
+.insight-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: var(--space-5);
+}
+.insight-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-6);
+  background-color: var(--bg-inset);
+  border: var(--border-width) solid var(--border-hairline);
+  text-decoration: none;
+  transition: box-shadow var(--dur-fast) var(--ease-out),
+              transform var(--dur-fast) var(--ease-out);
+}
+.insight-card:hover { box-shadow: var(--shadow-brand); transform: translate(-2px, -2px); }
+.insight-card__eyebrow {
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  font-size: var(--text-micro);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--fg-accent);
+}
+.insight-card__title {
+  font-family: var(--font-display);
+  font-size: var(--text-h4);
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  color: var(--fg-default);
+}
+.insight-card__line { font-size: var(--text-sm); line-height: 1.45; color: var(--fg-muted); }
+
+@media (prefers-reduced-motion: reduce) {
+  .insight-card:hover { transform: none; }
+}
+
+/* --------------------------------------------------------- RELATED QUESTIONS
+   Google retired FAQ rich results in May 2026, so these are not here to win a
+   dropdown in the results page. They are here because they answer what the
+   reader wants to know next, and because an AI answer can quote them. */
+.insight__faq { margin-block-start: var(--space-10); }
+.insight__faq h2 { margin-block-end: var(--space-4); }
