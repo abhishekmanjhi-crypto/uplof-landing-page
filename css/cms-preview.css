@@ -1,0 +1,86 @@
+/* ============================================================================
+   CMS PREVIEW ONLY
+   Loaded into the Sveltia preview pane, never by a real page.
+
+   Two things this file exists to fix, both learned the hard way:
+
+   1. It is a FILE, not a raw string passed to registerPreviewStyle(css, true).
+      The raw form accepts its arguments without complaint and then the styles
+      never land, while file-registered stylesheets apply perfectly. Registering
+      by URL is the path that demonstrably works.
+
+   2. Every block sets its own width, centring and padding. Two earlier attempts
+      put those on a parent wrapper and both were overridden by whatever the CMS
+      wraps the preview in — the masthead kept running full-bleed with the
+      eyebrow against the left edge.
+
+   The layout properties carry !important for the same reason. Normally that
+   would be a smell; here it is the point, because this stylesheet is fighting
+   an opaque third-party frame it cannot inspect.
+   ========================================================================== */
+
+html,
+body {
+  background: var(--bg-page);
+  margin: 0;
+}
+
+/* One column, shared by both blocks, so the title lines up with the text. */
+.pv-masthead,
+.pv-body {
+  box-sizing: border-box !important;
+  max-inline-size: 760px !important;
+  margin-inline: auto !important;
+}
+
+.pv-masthead {
+  background: var(--red-500);
+  padding: 40px 40px 34px !important;
+  margin-block-end: 40px;
+}
+
+.pv-eyebrow {
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  font-size: 0.6875rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--cream-100);
+  opacity: 0.8;
+  margin: 0 0 16px;
+}
+
+.pv-title {
+  font-family: var(--font-display);
+  font-weight: var(--weight-medium);
+  font-size: 1.875rem;
+  line-height: 1.14;
+  letter-spacing: -0.02em;
+  color: var(--cream-100);
+  margin: 0 0 18px;
+  padding-block-end: 0.28em;   /* descenders, same fix as the live headings */
+}
+
+.pv-meta {
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  font-size: 0.6875rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--cream-100);
+  opacity: 0.75;
+  margin: 0;
+}
+
+.pv-body {
+  padding: 0 40px 80px !important;
+}
+.pv-body img { max-inline-size: 100%; block-size: auto; }
+.pv-body > .insight__answer { margin-block-end: 36px; }
+
+/* A notch tighter than the live page, because the pane is narrower than a
+   viewport and the live sizes read as oversized inside it. */
+.pv-body h2 { font-size: 1.375rem; margin-block: 32px 10px; }
+.pv-body h3 { font-size: 1.0625rem; margin-block: 24px 8px; }
+.pv-body p,
+.pv-body li { font-size: 0.9375rem; line-height: 1.6; }
+
+.pv-empty { color: var(--ink-500); font-style: italic; }
