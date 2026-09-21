@@ -7,7 +7,7 @@ import os
 import re
 
 ROOT = "/Users/abhishek/Downloads/uplof-landing-page"
-V = "17"  # cache-bust version, bumped together with index.html
+V = "18"  # cache-bust version, bumped together with index.html
 
 PAGES = [
     {

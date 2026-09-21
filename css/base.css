@@ -135,6 +135,29 @@ a {
   color: transparent;
 }
 
+/* ------------------------------------------------- DESCENDERS ON GRADIENT TEXT
+   `background-clip: text` paints the gradient only inside the element's
+   background box, and that box is the line box — so any glyph that hangs below
+   it simply is not painted. Glancyr's em box is about 1.5x its font size while
+   --leading-display is 1.01, which leaves roughly 0.245em of every line
+   sticking out top and bottom. Measured at the 54px heading size: 13.2px
+   unpainted below the baseline, which is most of a descender. Every y, g, p, q
+   and j in a gradient headline was being cut off.
+
+   Padding enlarges the background box; the matching negative margin takes the
+   space straight back, so the glyphs and every following element stay exactly
+   where they were (verified: 0px drift on both). 0.28em clears the 0.245em
+   overhang with a little room for rounding.
+
+   Any new gradient-clipped text belongs in this selector list. */
+.heading--gradient,
+.reason__n,
+.m-h2,
+.m-reason__n {
+  padding-block: 0.28em;
+  margin-block: -0.28em;
+}
+
 .title {
   font-family: var(--font-text);
   font-weight: var(--weight-bold);
