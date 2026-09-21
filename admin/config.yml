@@ -65,12 +65,16 @@ collections:
           have been helped. This is also the block most likely to be quoted by
           an AI answer. The build will reject anything outside 50–80 words.
 
-      - label: Published
+      - label: Publish on
         name: publishDate
         widget: datetime
         date_format: YYYY-MM-DD
         time_format: false
         picker_utc: true
+        hint: >-
+          Set a future date to schedule it. The site rebuilds twice a day and the
+          article appears on the morning of that date, India time. Nothing else
+          to do — just untick Draft and pick the date.
 
       - label: Last updated
         name: updatedDate
@@ -153,7 +157,10 @@ collections:
         name: draft
         widget: boolean
         default: true
-        hint: Drafts are skipped by the build. Untick when it is ready to go live.
+        hint: >-
+          Drafts are skipped entirely. Untick when it is finished — if the
+          publish date is in the future it will wait for that date instead of
+          going live immediately.
 
       - label: Body
         name: body

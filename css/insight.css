@@ -73,3 +73,10 @@
 @media (prefers-reduced-motion: reduce) {
   .insight-card:hover { transform: none; }
 }
+
+/* --------------------------------------------------------- RELATED QUESTIONS
+   Google retired FAQ rich results in May 2026, so these are not here to win a
+   dropdown in the results page. They are here because they answer what the
+   reader wants to know next, and because an AI answer can quote them. */
+.insight__faq { margin-block-start: var(--space-10); }
+.insight__faq h2 { margin-block-end: var(--space-4); }

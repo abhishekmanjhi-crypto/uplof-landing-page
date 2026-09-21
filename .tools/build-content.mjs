@@ -16,7 +16,7 @@
  * build FAILS on a violation rather than publishing something half-finished.
  * That is the point: the checklist is only real if something enforces it.
  */
-import { readFile, writeFile, mkdir, readdir, stat } from "node:fs/promises";
+import { readFile, writeFile, mkdir, readdir, stat, rm } from "node:fs/promises";
 import { existsSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -36,6 +36,9 @@ const BASE = "https://uplof.me";
 // source of it rather than a second place to forget.
 const V = (await readFile(path.join(ROOT, "index.html"), "utf8")).match(/\?v=(\d+)/)?.[1] ?? "1";
 
+// The same entity graph the legal pages carry. Without it the Article schema
+// references an author and publisher that exist nowhere on the page.
+const SHARED_GRAPH = JSON.parse(await readFile(path.join(HERE, "partials", "graph.json"), "utf8"));
 const NAVBAR = await readFile(path.join(HERE, "partials", "navbar.html"), "utf8");
 const FOOTER = await readFile(path.join(HERE, "partials", "footer.html"), "utf8");
 
@@ -137,6 +140,18 @@ function validate(file, fm, body, html) {
 
 /* ---------------------------------------------------------------- template */
 function page({ fm, bodyHtml, slug, hero, jsonld }) {
+  // Google retired FAQ rich results in May 2026, so these are not here for a
+  // dropdown in the results page — they are here because they answer the
+  // questions a reader actually has next, and because an AI answer can quote them.
+  const faqHtml = fm.faqs?.length
+    ? `<section class="insight__faq">
+  <h2>Related questions</h2>
+${fm.faqs.map((q) => `  <details class="faq__item">
+    <summary class="faq__q">${esc(q.question)}</summary>
+    <div class="faq__a">${marked.parse(String(q.answer))}</div>
+  </details>`).join("\n")}
+</section>`
+    : "";
   const url = `${BASE}/insights/${slug}/`;
   const heroImg = hero
     ? `<figure class="insight__hero">
@@ -162,10 +177,11 @@ function page({ fm, bodyHtml, slug, hero, jsonld }) {
 <meta property="og:title" content="${esc(fm.title)}">
 <meta property="og:description" content="${esc(fm.description)}">
 <meta property="og:url" content="${url}">
-<meta property="og:image" content="${BASE}/assets/img/og-card.png">
+<meta property="og:image" content="${hero ? BASE + hero.src : BASE + '/assets/img/og-card.png'}">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="${esc(fm.title)}">
 <meta name="twitter:description" content="${esc(fm.description)}">
+<link rel="alternate" type="application/rss+xml" title="Uplof insights" href="/insights/feed.xml">
 <link rel="icon" href="/assets/logo.svg" type="image/svg+xml">
 ${jsonld}
 <link rel="stylesheet" href="/css/tokens.css?v=${V}">
@@ -197,6 +213,7 @@ ${NAVBAR}
       </div>
 ${heroImg}
 ${bodyHtml}
+${faqHtml}
     </div>
 ${related ? `      <div class="legal-more">
         <p class="legal-more__title">Related</p>
@@ -220,7 +237,22 @@ if (!existsSync(SRC)) {
   process.exit(0);
 }
 
+/** YAML turns an unquoted date into a Date object, not a string, so a naive
+ *  String() gives "Fri Dec 25 2026 ..." and every comparison silently fails.
+ *  Normalise both shapes to YYYY-MM-DD. */
+function isoDate(v) {
+  if (v instanceof Date) return v.toISOString().slice(0, 10);
+  const m = String(v).match(/^(\d{4}-\d{2}-\d{2})/);
+  return m ? m[1] : null;
+}
+
+// Today's date where the business actually is.
+const TODAY_IST = new Intl.DateTimeFormat("en-CA", {
+  timeZone: "Asia/Kolkata", year: "numeric", month: "2-digit", day: "2-digit",
+}).format(new Date());
+
 const pending = [];
+const scheduled = [];
 const files = (await readdir(SRC)).filter((f) => f.endsWith(".md")).sort();
 const built = [];
 
@@ -229,6 +261,23 @@ for (const file of files) {
   const { data: fm, content } = matter(raw);
   const slug = fm.slug || file.replace(/\.md$/, "");
   if (fm.draft) { console.log(`  draft, skipped: ${slug}`); continue; }
+
+  // Scheduling. A publishDate in the future means the article is written and
+  // approved but not due yet, so it is skipped and a later build picks it up.
+  // The scheduled workflow in .github/workflows/publish.yml rebuilds twice a
+  // day, which is what actually makes it appear without anyone doing anything.
+  //
+  // Compared as plain YYYY-MM-DD strings in Asia/Kolkata, not as timestamps.
+  // Using UTC would hold an article dated today until after 05:30 IST, because
+  // UTC is still on yesterday's date for the first five and a half hours of an
+  // Indian working day.
+  if (fm.publishDate) {
+    const due = isoDate(fm.publishDate);
+    if (due && due > TODAY_IST) {
+      scheduled.push({ slug, date: due });
+      continue;
+    }
+  }
 
   // Every image the markdown references, plus the hero, resized once.
   const imageMap = new Map();
@@ -243,22 +292,41 @@ for (const file of files) {
   const bodyHtml = marked.parse(content, { renderer: renderer(imageMap) });
   validate(file, fm, content, bodyHtml);
 
-  const jsonld = `<script type="application/ld+json">
-${JSON.stringify({
-    "@context": "https://schema.org",
+  const article = {
     "@type": "Article",
+    "@id": `${BASE}/insights/${slug}/#article`,
     headline: fm.title,
     description: fm.description,
     datePublished: fm.publishDate,
     ...(fm.updatedDate ? { dateModified: fm.updatedDate } : {}),
     author: { "@id": `${BASE}/#abhishek` },
     publisher: { "@id": `${BASE}/#organization` },
+    isPartOf: { "@id": `${BASE}/insights/#blog` },
     mainEntityOfPage: `${BASE}/insights/${slug}/`,
+    ...(hero ? { image: `${BASE}${hero.src}` } : {}),
     ...(fm.faqs?.length ? {
-      mentions: fm.faqs.map((q) => ({ "@type": "Question", name: q.question,
-        acceptedAnswer: { "@type": "Answer", text: q.answer } })),
+      mentions: fm.faqs.map((q) => ({
+        "@type": "Question", name: q.question,
+        acceptedAnswer: { "@type": "Answer", text: q.answer },
+      })),
     } : {}),
-  }, null, 2)}
+  };
+
+  const breadcrumb = {
+    "@type": "BreadcrumbList",
+    "@id": `${BASE}/insights/${slug}/#breadcrumb`,
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: `${BASE}/` },
+      { "@type": "ListItem", position: 2, name: "Insights", item: `${BASE}/insights/` },
+      { "@type": "ListItem", position: 3, name: fm.title, item: `${BASE}/insights/${slug}/` },
+    ],
+  };
+
+  // The shared entity graph travels with every page, so the author and
+  // publisher the Article names actually resolve to nodes that are present.
+  const jsonld = `<script type="application/ld+json">
+${JSON.stringify({ "@context": "https://schema.org",
+                   "@graph": [...SHARED_GRAPH, article, breadcrumb] }, null, 2)}
 </script>`;
 
   pending.push({ fm, slug, html: page({ fm, bodyHtml, slug, hero, jsonld }) });
@@ -278,29 +346,32 @@ for (const { fm, slug, html } of pending) {
   console.log(`  insights/${slug}/`);
 }
 
-/* ------------------------------------------------------------ index page */
-if (built.length) {
-  built.sort((a, b) => new Date(b.publishDate) - new Date(a.publishDate));
-  const cards = built.map((p) => `        <a class="insight-card" href="/insights/${p.slug}/">
+/* --------------------------------------------- index, cluster hubs and feed */
+function listPage({ slug, eyebrow, title, lead, posts, jsonld, canonical }) {
+  const cards = posts.map((p) => `        <a class="insight-card" href="/insights/${p.slug}/">
           <p class="insight-card__eyebrow">${esc(String(p.cluster).replace(/-/g, " "))}</p>
           <h2 class="insight-card__title">${esc(p.title)}</h2>
           <p class="insight-card__line">${esc(p.description)}</p>
         </a>`).join("\n");
-
-  await writeFile(path.join(OUT_DIR, "index.html"), `<!doctype html>
+  return `<!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Insights | Uplof</title>
-<meta name="description" content="Straight answers about where enquiries get lost between your website, search and follow-up. Written from real lead journeys, not general advice.">
-<link rel="canonical" href="${BASE}/insights/">
+<title>${esc(title)} | Uplof</title>
+<meta name="description" content="${esc(lead)}">
+<link rel="canonical" href="${canonical}">
 <meta name="theme-color" content="#d12d34">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Insights | Uplof">
-<meta property="og:url" content="${BASE}/insights/">
+<meta property="og:site_name" content="Uplof">
+<meta property="og:title" content="${esc(title)} | Uplof">
+<meta property="og:description" content="${esc(lead)}">
+<meta property="og:url" content="${canonical}">
 <meta property="og:image" content="${BASE}/assets/img/og-card.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="alternate" type="application/rss+xml" title="Uplof insights" href="/insights/feed.xml">
 <link rel="icon" href="/assets/logo.svg" type="image/svg+xml">
+${jsonld}
 <link rel="stylesheet" href="/css/tokens.css?v=${V}">
 <link rel="stylesheet" href="/css/base.css?v=${V}">
 <link rel="stylesheet" href="/css/components.css?v=${V}">
@@ -313,9 +384,9 @@ if (built.length) {
 ${NAVBAR}
 <header class="masthead on-brand">
   <div class="container masthead__inner">
-    <p class="eyebrow">Insights</p>
-    <h1 class="masthead__title">Where enquiries go missing.</h1>
-    <p class="lead masthead__lead">Straight answers, written from real lead journeys rather than general advice.</p>
+    <p class="eyebrow">${esc(eyebrow)}</p>
+    <h1 class="masthead__title">${esc(title)}</h1>
+    <p class="lead masthead__lead">${esc(lead)}</p>
   </div>
 </header>
 <main class="section" id="main">
@@ -323,14 +394,108 @@ ${NAVBAR}
     <div class="insight-grid">
 ${cards}
     </div>
+${slug ? `    <p class="micro" style="margin-block-start:var(--space-8)"><a href="/insights/">All insights</a></p>` : ""}
   </div>
 </main>
 ${FOOTER}
 <script src="/cookie-consent.js?v=${V}" defer></script>
 </body>
 </html>
-`);
-  console.log(`  insights/  (${built.length} article${built.length === 1 ? "" : "s"})`);
+`;
 }
 
-console.log(`insights: ${built.length} built, 0 problems`);
+const CLUSTERS = {
+  "lead-management": ["Lead management", "Where enquiries get lost between your website, WhatsApp and follow-up, and how to close the gap."],
+  "websites": ["Websites", "Pages built to take an enquiry properly, not just to look good."],
+  "local-seo": ["Local SEO", "Getting found by people searching nearby, and turning those searches into calls."],
+  "tracking": ["Tracking", "Knowing which channel produced the customer, not just which produced the click."],
+};
+
+// Remove output for articles that no longer exist, were renamed, or are now
+// drafts or scheduled. Without this a deleted article stays live and the
+// sitemap keeps listing it.
+const keep = new Set([...pending.map((p) => p.slug), "index.html", "feed.xml", ...Object.keys(CLUSTERS)]);
+if (existsSync(OUT_DIR)) {
+  for (const entry of await readdir(OUT_DIR, { withFileTypes: true })) {
+    if (entry.isDirectory() && !keep.has(entry.name)) {
+      await rm(path.join(OUT_DIR, entry.name), { recursive: true, force: true });
+      console.log(`  removed stale: insights/${entry.name}/`);
+    }
+  }
+}
+
+
+if (built.length) {
+  built.sort((a, b) => new Date(b.publishDate) - new Date(a.publishDate));
+
+  const blogNode = {
+    "@type": "Blog",
+    "@id": `${BASE}/insights/#blog`,
+    name: "Uplof insights",
+    url: `${BASE}/insights/`,
+    publisher: { "@id": `${BASE}/#organization` },
+    blogPost: built.map((p) => ({ "@id": `${BASE}/insights/${p.slug}/#article` })),
+  };
+  const indexLd = `<script type="application/ld+json">
+${JSON.stringify({ "@context": "https://schema.org", "@graph": [...SHARED_GRAPH, blogNode] }, null, 2)}
+</script>`;
+
+  await writeFile(path.join(OUT_DIR, "index.html"), listPage({
+    slug: "", eyebrow: "Insights", title: "Where enquiries go missing.",
+    lead: "Straight answers, written from real lead journeys rather than general advice.",
+    posts: built, jsonld: indexLd, canonical: `${BASE}/insights/`,
+  }));
+  console.log(`  insights/  (${built.length} article${built.length === 1 ? "" : "s"})`);
+
+  // A hub per topic. These are what make a cluster a cluster rather than a pile
+  // of articles, and they are the pages that will rank for the broad term.
+  for (const [key, [label, lead]] of Object.entries(CLUSTERS)) {
+    const posts = built.filter((p) => p.cluster === key);
+    if (!posts.length) continue;          // never publish an empty hub
+    const ld = `<script type="application/ld+json">
+${JSON.stringify({ "@context": "https://schema.org", "@graph": [...SHARED_GRAPH, {
+      "@type": "CollectionPage",
+      "@id": `${BASE}/insights/${key}/#collection`,
+      name: `${label} — Uplof insights`,
+      url: `${BASE}/insights/${key}/`,
+      isPartOf: { "@id": `${BASE}/insights/#blog` },
+      hasPart: posts.map((p) => ({ "@id": `${BASE}/insights/${p.slug}/#article` })),
+    }] }, null, 2)}
+</script>`;
+    await mkdir(path.join(OUT_DIR, key), { recursive: true });
+    await writeFile(path.join(OUT_DIR, key, "index.html"), listPage({
+      slug: key, eyebrow: "Insights", title: label, lead, posts, jsonld: ld,
+      canonical: `${BASE}/insights/${key}/`,
+    }));
+    console.log(`  insights/${key}/  (${posts.length})`);
+  }
+
+  // RSS. Cheap to produce, and it is how a reader, a newsreader or a crawler
+  // subscribes without us having to be told about it.
+  const rss = `<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Uplof insights</title>
+    <link>${BASE}/insights/</link>
+    <description>Where enquiries go missing between your website, search and follow-up.</description>
+    <language>en-IN</language>
+    <atom:link href="${BASE}/insights/feed.xml" rel="self" type="application/rss+xml"/>
+${built.map((p) => `    <item>
+      <title>${esc(p.title)}</title>
+      <link>${BASE}/insights/${p.slug}/</link>
+      <guid isPermaLink="true">${BASE}/insights/${p.slug}/</guid>
+      <pubDate>${new Date(p.publishDate).toUTCString()}</pubDate>
+      <description>${esc(p.description)}</description>
+    </item>`).join("\n")}
+  </channel>
+</rss>
+`;
+  await writeFile(path.join(OUT_DIR, "feed.xml"), rss);
+  console.log("  insights/feed.xml");
+}
+
+if (scheduled.length) {
+  console.log("  scheduled, not due yet:");
+  for (const sch of scheduled) console.log(`    ${sch.slug}  ->  due ${sch.date}`);
+}
+console.log(`insights: ${built.length} built, ${scheduled.length} scheduled (today is ${TODAY_IST} IST), 0 problems`);

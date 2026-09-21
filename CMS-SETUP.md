@@ -161,3 +161,81 @@ Every message names the file and the rule. Nothing half-finished reaches the sit
 | Saves but nothing appears on the site | You did not run `npm run deploy`, or the article is still a Draft |
 | Build fails after saving | Read the messages — each names the file and the rule it broke |
 | Images look huge in the repo | Correct. Check `assets/insights/` for what is actually served |
+
+---
+
+## Step 6 — Scheduled publishing (optional, 5 minutes)
+
+Write something today, have it appear on a date you choose. The build already
+skips articles dated in the future; this is what comes back later and builds
+again.
+
+### Give GitHub permission to deploy
+
+1. **Cloudflare API token.** Cloudflare dashboard → My Profile → API Tokens →
+   **Create Token** → use the **Edit Cloudflare Workers** template, or a custom
+   token with `Account → Cloudflare Pages → Edit`. Copy it.
+2. **Account ID.** On any Cloudflare dashboard page, right-hand sidebar.
+3. In GitHub → your repo → **Settings** → **Secrets and variables** → **Actions**
+   → **New repository secret**, add both:
+
+   | Name | Value |
+   |---|---|
+   | `CLOUDFLARE_API_TOKEN` | the token from step 1 |
+   | `CLOUDFLARE_ACCOUNT_ID` | the ID from step 2 |
+
+### Activate the workflow
+
+The workflow file is in the repo at `.tools/publish-workflow.yml`, **not** yet at
+`.github/workflows/publish.yml`. GitHub refuses a push that adds a workflow file
+unless the token has the `workflow` scope, and the token on this machine does not.
+
+Pick whichever is easier:
+
+**Option A — grant the scope once, then move the file:**
+
+```bash
+gh auth refresh -h github.com -s workflow
+cd ~/Downloads/uplof-landing-page
+mkdir -p .github/workflows
+git mv .tools/publish-workflow.yml .github/workflows/publish.yml
+git commit -m "Activate scheduled publishing" && git push
+```
+
+**Option B — do it in the browser:** open `.tools/publish-workflow.yml` on GitHub,
+copy the contents, then Actions → New workflow → set up a workflow yourself →
+paste → name it `publish.yml` → commit.
+
+Once it is at `.github/workflows/publish.yml` it runs at **00:15 and 12:15 IST**
+and whenever you trigger it by hand from the Actions tab.
+
+### How you schedule something
+
+1. Write the article in `/admin/`
+2. Set **Publish on** to a future date
+3. **Untick Draft** — this is the bit people miss. A draft is skipped whatever
+   its date says
+4. Save
+
+The build logs it every run until it is due:
+
+```
+scheduled, not due yet:
+  my-article  ->  due 2026-10-14
+```
+
+On the morning of the 14th, IST, it publishes itself. Sitemap, RSS, cluster page
+and index all update in the same run.
+
+### Worth knowing
+
+- **Dates are compared in Asia/Kolkata**, not UTC. An article dated today
+  publishes on today's first run — using UTC would have held it until 05:30 IST,
+  which is most of an Indian working day.
+- **A scheduled article that fails validation does not go live.** The build exits
+  non-zero, the deploy step never runs, and the previous version stays up.
+- **Deleting or renaming an article removes its old page.** The build clears
+  output for anything that no longer exists, so a deleted article does not linger
+  at its URL or in the sitemap.
+- **You can still deploy by hand** with `npm run deploy`. The workflow is an
+  addition, not a replacement.

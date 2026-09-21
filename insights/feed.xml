@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Uplof insights</title>
+    <link>https://uplof.me/insights/</link>
+    <description>Where enquiries go missing between your website, search and follow-up.</description>
+    <language>en-IN</language>
+    <atom:link href="https://uplof.me/insights/feed.xml" rel="self" type="application/rss+xml"/>
+    <item>
+      <title>Why is my website getting traffic but no leads?</title>
+      <link>https://uplof.me/insights/website-traffic-no-leads/</link>
+      <guid isPermaLink="true">https://uplof.me/insights/website-traffic-no-leads/</guid>
+      <pubDate>Tue, 22 Sep 2026 00:00:00 GMT</pubDate>
+      <description>Traffic without enquiries usually means one of four things is broken. Here is how to find which one, in about twenty minutes, before spending more.</description>
+    </item>
+  </channel>
+</rss>
